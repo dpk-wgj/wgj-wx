@@ -1,0 +1,29 @@
+page{
+  height: 100%;
+  background: rgb(242, 243, 245); 
+  padding-top: 20px;
+}
+scroll-view{
+  height: 100%;
+}
+.content{
+  background: #fff;
+  font-size: 30rpx;
+  height: 200px;
+  color: rgb(163, 163, 163);
+  margin: 10rpx 10rpx 10rpx;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow: 2px;
+  padding: 20px 15rpx;
+}
+.status{
+  /* background: burlywood; */
+  float: right;
+}
+.status image{
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 5px; 
+}

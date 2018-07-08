@@ -1,0 +1,4 @@
+<!--pages/test/test.wxml-->
+<button disabled='{{disabled}}' data-id="2" bindtap="getVerificationCode">
+{{time}}
+</button>

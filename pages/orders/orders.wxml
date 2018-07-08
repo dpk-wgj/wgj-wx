@@ -1,0 +1,18 @@
+<view class='container'>
+  <scroll-view scroll-y>
+    <block wx:for="{{list}}" wx:key="list">
+      <!-- <navigator url=''> -->
+        <view class='content'>
+          <view class='status'>
+            <text>{{item.status}}</text>
+            <image src='../../assets/images/more.png' mode='aspectFit'></image>
+          </view>
+          <view class='time'>
+            <image src='../../assets/images/more.png'></image>
+          </view>
+        </view>
+      <!-- </navigator> -->
+    </block>
+  </scroll-view>
+  
+</view>

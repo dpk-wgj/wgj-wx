@@ -1,0 +1,28 @@
+<view class="main">
+    <view class="container">
+        <view class="hd">
+            <text class="login">登录</text>
+        </view>
+        <!--手机号  -->
+        <view class="bd1">
+            <input type="text" class="bd-tel" value="{{phone}}" bindinput="phoneInput" placeholder="请输入手机号"
+                   placeholder-style="color:#999999"/>
+              <image class="bd-img" wx:if="{{phone.length>0}}" bindtap="deletePhone" src="../../assets/images/cancel.png"/>
+        </view>
+        <!--验证码  -->
+        <view class="bd2">
+            <input type="text" class="bd-tel" value="{{captcha}}" bindinput="captchaInput" placeholder="请输入验证码"
+                   placeholder-style="color:#999999"/>
+            
+            <image class="bd-img" wx:if="{{captcha.length>0}}" bindtap="deleteCaptha" src="../../assets/images/cancel.png"/>
+        </view>
+        <view class='t'>
+          <button class='btn' size='mini' disabled='{{disabled}}' data-id="2" bindtap="getVerificationCode">{{time}}</button>
+        </view>
+        <view class="hd">
+            <button class="didi-btn next-step" disabled="{{nextBtnDisabled}}" bindtap="login"
+                    style="background-color: {{nextBtnBc}};color:#fff">登录
+            </button>
+        </view>
+    </view>
+</view>
