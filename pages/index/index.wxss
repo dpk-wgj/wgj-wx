@@ -42,9 +42,22 @@ page{
   z-index: 999;
   right: 0rpx;
   top: 0;
-  background-color: #fff;
+  background-color: #fff;  
   transform: scale(.18);
   margin-right: 80rpx;
+}
+.nav-all image{
+  width: 280rpx; 
+}
+.nav-all .point{
+  width: 60rpx;
+  height: 60rpx;
+  border: 1px solid red;
+  background: red;
+  border-radius: 30rpx;
+  position: absolute;
+  top: 100rpx;
+  left: 200rpx;
 }
 .nav-me{
   height:30rpx;
@@ -77,6 +90,8 @@ page{
   -webkit-box-shadow:1px 1px 6px #f4f6f8;
   box-shadow:1px 1px 6px #f4f6f8;
 }
+
+
 .container .didi-time{
   position: absolute;
   width: 100%;

@@ -1,34 +1,23 @@
-// pages/my/my.js
-const app = getApp();
+// pages/message/message.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    list:[{
+      title: '意见或建议意见或建议意见或建议意见或建议意见或建议意见或建议意见或建议意见或建议',
+      time1: '2018-07-09 13:00',
+      response: '反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈反馈',
+      time2: '2018-07-09 13:30'
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              that.setData({
-                avatar: res.userInfo.avatarUrl,
-                nickName: res.userInfo.nickName 
-              })
-            }
-          })
-        }
-      }
-    })
+  
   },
 
   /**

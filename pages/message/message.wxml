@@ -1,0 +1,13 @@
+<view class='container'>
+  <scroll-view scroll-y>
+    <view class='header'>反馈</view>
+    <block wx:for='{{list}}' wx:key=''>
+      <view class='content'>
+        <view class='title'>{{item.title}}</view>
+        <view class='time1'>{{item.time1}}</view>
+        <view class='time2'>{{item.time2}}</view>
+        <view class='response'>{{item.response}}</view>
+      </view>
+    </block>
+  </scroll-view>
+</view>

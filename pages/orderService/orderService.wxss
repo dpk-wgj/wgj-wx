@@ -45,17 +45,16 @@
    box-sizing: border-box
 }
 .ft-cancel{
-    width: 50%;
+    width: 100%;
     text-align: center;
     border-right: 1px solid #f5f5f5;
- 
 }
-.ft-help{
+/* .ft-help{
     width: 50%;
     text-align: center;
     border-right: 1px solid #f5f5f5;
    
-}
+} */
 /* .ft-app{
    
     text-align: center;

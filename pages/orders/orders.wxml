@@ -1,18 +1,109 @@
 <view class='container'>
-  <scroll-view scroll-y>
-    <block wx:for="{{list}}" wx:key="list">
-      <!-- <navigator url=''> -->
-        <view class='content'>
-          <view class='status'>
-            <text>{{item.status}}</text>
-            <image src='../../assets/images/more.png' mode='aspectFit'></image>
-          </view>
-          <view class='time'>
-            <image src='../../assets/images/more.png'></image>
-          </view>
-        </view>
-      <!-- </navigator> -->
-    </block>
-  </scroll-view>
-  
+<!-- 头部导航  -->
+  <view class="header">
+    <block wx:for="{{swiperTitle}}" wx:key="">
+      <view class="title {{index==currentPage?'selected':''}}" data-index="{{index}}"
+      bindtap="turnPage">{{item.text}}</view>
+    </block> 
+  </view>
+  <swiper class="swiper" current="{{currentPage}}" bindchange="turnTitle" style="height:{{scrollHeight}}px;">
+    <!-- 全部  -->
+    <swiper-item id="allPage">
+      <scroll-view scroll-y>
+        <block wx:for="{{allList}}" wx:key="list">
+          <navigator url='/pages/ordersDetail/ordersDetail'> 
+            <view class='content'>
+              <view class='st'>
+                <view class='info'>{{item.name}}</view>
+                <view class='status'>
+                  <text>{{item.status}}</text>
+                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
+                </view>
+              </view>
+              <view class='con'>
+                <view class='time'>
+                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
+                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
+                  <text>{{item.startLocation}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
+                  <text>{{item.endLocation}}</text>
+                </view>
+              </view>
+            </view>
+          </navigator> 
+        </block>
+      </scroll-view>
+    </swiper-item>
+
+    <!--已完成  -->
+    <swiper-item id="comPage">
+       <scroll-view scroll-y>
+        <block wx:for="{{comList}}" wx:key="list">
+          <navigator url='/pages/ordersDetail/ordersDetail'> 
+            <view class='content'>
+              <view class='st'>
+                <view class='info'>{{item.name}}</view>
+                <view class='status'>
+                  <text>{{item.status}}</text>
+                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
+                </view>
+              </view>
+              <view class='con'>
+                <view class='time'>
+                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
+                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
+                  <text>{{item.startLocation}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
+                  <text>{{item.endLocation}}</text>
+                </view>
+              </view>
+            </view>
+          </navigator> 
+        </block>
+      </scroll-view>
+    </swiper-item>
+
+    <!--未完成  -->
+    <swiper-item id="uncomPage">
+    <scroll-view scroll-y>
+        <block wx:for="{{uncomList}}" wx:key="list">
+          <navigator url='/pages/ordersDetail/ordersDetail'> 
+            <view class='content'>
+              <view class='st'>
+                <view class='info'>{{item.name}}</view>
+                <view class='status'>
+                  <text>{{item.status}}</text>
+                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
+                </view>
+              </view>
+              <view class='con'>
+                <view class='time'>
+                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
+                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
+                  <text>{{item.startLocation}}</text>
+                </view>
+                <view class='time'>
+                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
+                  <text>{{item.endLocation}}</text>
+                </view>
+              </view>
+            </view>
+          </navigator> 
+        </block>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
 </view>

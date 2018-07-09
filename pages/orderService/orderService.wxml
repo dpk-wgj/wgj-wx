@@ -44,8 +44,7 @@
     </cover-view>
     <cover-view class="ft">
         <cover-view class="ft-cancel"bindtap="toCancel">取消订单</cover-view>
-        <cover-view class="ft-help" bindtap="toEvaluation">结束行程</cover-view>
-        <!-- <cover-view class="ft-app" bindtap="toApp">下载滴滴APP</cover-view> -->
+        <!-- <cover-view class="ft-help" bindtap="toEvaluation">结束行程</cover-view> -->
     </cover-view>
 </map>
 </view>

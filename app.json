@@ -1,29 +1,30 @@
 {
   "pages": [
-    
-    "pages/orders/orders",
-
-    "pages/login/login",
-    "pages/index/index",
+    "pages/evaluation/evaluation",
     "pages/orderService/orderService",
-    "pages/test/test",
-    "pages/wait/wait",
-    "pages/captcha/captcha",
-    "pages/carts/carts",
+    "pages/index/index",
+    "pages/message/message",
+    
+    "pages/complain/complain",
+    "pages/orders/orders",
     "pages/my/my",
+    
+    "pages/ordersDetail/ordersDetail",
+    "pages/login/login",
+    "pages/wait/wait",
+    "pages/carts/carts",
     "pages/logs/logs",
     "pages/starting/starting",
     "pages/destination/destination",
     "pages/order/order",
     "pages/orderClosed/orderClosed",
-    "pages/cancel/cancel",
-    "pages/evaluation/evaluation"
+    "pages/cancel/cancel"
     
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1b1b1f",
-    "navigationBarTitleText": "滴滴出行",
+    "navigationBarTitleText": "微公交",
     "navigationBarTextStyle": "white"
   }
 }

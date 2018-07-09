@@ -1,2 +1,40 @@
-<!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class="container">
+  <view class="header">
+    <navigator url='../information/information'>
+      <view class='user-nav'>
+        <view class="userImg">
+          <image class='user-img' src='{{avatar}}'></image>
+        </view>
+        <view class="user-name">{{nickName}}</view>
+      </view>
+    </navigator>
+  </view>
+  <view class="content">
+    <navigator url='/pages/orders/orders'>
+      <view class="collection con">
+        <view class='collection-icon icon'>
+          <image src='../../assets/images/order.png' mode='aspectFit'></image>
+        </view>
+        <view class='collection-title title'>订单</view>
+        <view class='collection-img img'>
+          <image src='../../assets/images/more.png' mode='aspectFit'></image>
+        </view>
+      </view>
+    </navigator>
+    <navigator url='/pages/message/message'>
+    <view class="footprint con">
+      <view class='footprint-icon icon'>
+        <image src='../../assets/images/message.png' mode='aspectFit'></image>
+      </view>
+      <view class='footprint-title title'>消息</view>
+      <view class='footprint-img img'>
+        <image src='../../assets/images/more.png' mode='aspectFit'></image>
+      </view>
+    </view>
+    </navigator>
+     
+  </view>
+  <view class="ft">
+          <button>退出登录</button>
+      </view>
+</view>

@@ -7,16 +7,8 @@ Page({
     starMap: [
        '','','','','',
     ],
-    ischecked:false,
     play:'',
-    choose: [],
-    list: [
-      {id:0,name: 'clean', value: '车内整洁',checked:false},
-      {id:1, name: 'stable', value: '开车平稳', checked: false},
-      {id:2, name: 'dirction', value: '认路正确',checked:false},
-      {id:3,name: 'attitude', value: '态度良好',checked:false }
-    ],
-   
+    content:''
   },
   myStarChoose(e) {
       let star = parseInt(e.target.dataset.star) || 0;
@@ -59,25 +51,7 @@ Page({
       play: app.globalData.play
     })
   },
-  // 获取投诉内容
-  bindTextAreaBlur: function (e) {
-    this.setData({
-      content: e.detail.value
-    })
-  },
-  // 提交投诉
-  submit: function (e) {
-    console.log(this.data.content)
-    wx.showToast({
-      title: '提交中',
-      icon: 'success'
-    })
-    setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    }, 2000)
-  },
+
   // 拨打电话
   calling: function () {
     var that = this;
@@ -103,5 +77,23 @@ Page({
         console.log("拨打电话失败")
       }
     })
+  },
+  // 获取投诉内容
+  bindTextAreaBlur: function(e){
+    this.setData({
+      content: e.detail.value
+    })
+  },
+  // 提交投诉
+  submit: function(e) {
+    console.log(this.data.content)
+    wx.showLoading({
+      title: '提交中',
+    })
+    setTimeout(() => {
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+    }, 2000)
   }
 });

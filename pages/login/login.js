@@ -75,6 +75,7 @@ Page({
   },
   // 登录
   login: function () {
+    app.globalData.userInfo = { phone: this.data.phone, captcha: this.data.captha }
     wx.navigateTo({
       url: '/pages/index/index',
     })
@@ -107,22 +108,7 @@ Page({
   },
 
   onLoad: function (options) {
-    var that = this;
-    var currentTime = that.data.currentTime
-    var interval = setInterval(function () {
-      currentTime--;
-      that.setData({
-        time: currentTime + '秒'
-      })
-      if (currentTime <= 0) {
-        clearInterval(interval)
-        that.setData({
-          time: '发送',
-          currentTime: 61,
-          disabled: false
-        })
-      }
-    }, 1000)
+    
   }
 
 })

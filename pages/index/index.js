@@ -19,10 +19,12 @@ Page({
         destination: '',
         bluraddress : '',
         index: '',
+        hasMessage: false
     },
     onLoad: function(options) {
        this.requestCart();
        this.requestWaitingtime();
+       this.hasMessage();
     },
     requestCart(e){
         util.request({
@@ -77,33 +79,8 @@ Page({
             duration: 1000
           })
       }else{
-
-        let {endLatitude,endLongitude} = app.globalData
-        qqmapsdk.calculateDistance({
-            mode: 'driving',
-            to:[ {
-              latitude: endLatitude,
-              longitude:endLongitude
-          }],
-          success: (res)=> {
-            // console.log(res.result.elements[0].distance)
-            var num1 = 8+1.9*(res.result.elements[0].distance/1000)
-            var num2= 12+1.8*(res.result.elements[0].distance/1000)
-            var num3= 16+2.9*(res.result.elements[0].distance/1000)
-            var play1 = num1.toFixed(1)
-            var play2 = num2.toFixed(1)
-            var play3 = num3.toFixed(1)
-            this.setData({
-                play1:play1,
-                play2:play2,
-                play3:play3,
-            })
-          },
-         
-          });
-        this.setData({
-        
-            callCart: false
+        wx.navigateTo({
+          url: '/pages/wait/wait',
         })
       }
         
@@ -156,7 +133,8 @@ Page({
       console.log(app.globalData.userInfo.phone)
       console.log(app.globalData.userInfo.captcha)
     // 如果全局未存手机号进入登录页
-      if (app.globalData.userInfo && app.globalData.userInfo.phone && app.globalData.userInfo.captcha){
+      if (app.globalData.userInfo && app.globalData.userInfo.phone){
+      
       wx.navigateTo({
         url: "/pages/my/my",
       })
@@ -172,5 +150,13 @@ Page({
             currentCost
         })
       
+    },
+
+    // 判断是否有新消息
+    hasMessage: function() {
+      this.setData({
+        hasMessage: true
+      })
     }
+
 })

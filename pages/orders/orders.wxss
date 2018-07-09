@@ -1,29 +1,65 @@
 page{
   height: 100%;
-  background: rgb(242, 243, 245); 
-  padding-top: 20px;
+  background: #f4f6f8; 
 }
-scroll-view{
+
+.header{
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1rpx solid #DCDCDC;
+  background: #fff;
+}
+.header .title{
+  height: 40px; 
+  width: 180rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+.header .title.selected{
+  border-bottom: 7rpx solid #000;
+  font-weight: 600;
+}
+
+ scroll-view{
   height: 100%;
-}
+} 
+
+
 .content{
   background: #fff;
   font-size: 30rpx;
-  height: 200px;
+  height: 120px;
   color: rgb(163, 163, 163);
-  margin: 10rpx 10rpx 10rpx;
+  margin: 20rpx 10rpx 10rpx;
   border: 1px solid #fff;
   border-radius: 5px;
-  box-shadow: 2px;
+  box-shadow: 0px 2px 5px #888888;
   padding: 20px 15rpx;
 }
-.status{
-  /* background: burlywood; */
+.st .info{
+  float: left;
+  font-size: 35rpx;
+}
+.st .status{
   float: right;
 }
-.status image{
+.st .status image{
   width: 20px;
   height: 20px;
   position: relative;
   top: 5px; 
+}
+.con{
+  /* background: yellow; */
+  margin-top: 40px;
+}
+.con time{
+  padding: 5px 5rpx;
+}
+.con image{
+  margin-right: 10rpx;
+  /* background: yellow; */
+  width: 20px;
+  height: 15px;
 }

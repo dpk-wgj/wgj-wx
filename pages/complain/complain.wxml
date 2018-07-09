@@ -19,43 +19,24 @@
             </view>
             
             <view class="driver-message">
+                    <view class="mas">
+                            <image style="width: 70rpx;height: 70rpx;" src="../../assets/images/msm.png"/>
+                        </view>
                         <view class="phone" bindtap='calling'>
                             <image style="width: 70rpx;height: 70rpx;" src="../../assets/images/phone.png"/>
                         </view>
             </view>
         </view>
 
-        <!--星级评价  -->
-        <view class="evaluation">
-            <view class="evaluation-name">匿名评价司机</view>
-                <view class="evaluation-stars" bindtap="myStarChoose">
-                    <block wx:for="{{starMap}}"wx:key="{{index}}">
-                        <text wx:if="{{star>=index+1}}"  class="stars-solid" data-star="{{index+1}}">★</text>
-                        <text wx:if="{{star<index+1}}"  class="stars-empty" data-star="{{index+1}}">☆</text>
-                    </block>
-                </view>
-                <text class="zan-c-gray-dark">{{starMap[star-1]}}</text>
-            </view>
-
-        <!--评价内容选择  -->
-        <view class='list'>
-          <view class='tab'>请选择标签</view>
-          <checkbox-group class="checkbox-group" bindchange="serviceValChange">
-            <label wx:for="{{list}}" wx:key="{{list.name}}" class='{{item.checked?"ischecked":"choose"}}'>
-              <checkbox value="{{item.id}}" checked="{{item.checked}}" hidden='false'/>{{item.value}}
-            </label>
-          </checkbox-group>
-        </view>
-
         <!-- 输入评价内容 -->
         <view class='msg'>
-          <textarea bindblur="bindTextAreaBlur" placeholder='请输入评价内容' value=''></textarea>
+          <textarea bindblur="bindTextAreaBlur" placeholder='请输入投诉内容' value='{{content}}'></textarea>
         </view>
 
       </view>
 
         
       <view class="ft">
-          <button form-type='submit' bindtap='submit'>提交评价</button>
+          <button form-type='submit' bindtap='submit'>提交投诉</button>
       </view>
 </view>
