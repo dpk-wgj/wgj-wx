@@ -82,14 +82,14 @@
               <view class='st'>
                 <view class='info'>{{item.name}}</view>
                 <view class='status'>
-                  <text>{{item.status}}</text>
+                  <text>未完成</text>
                   <image src='../../assets/images/more.png' mode='aspectFit'></image>
                 </view>
               </view>
               <view class='con'>
                 <view class='time'>
                   <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                  <text>{{item.startTime}} - {{item.endTime}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>

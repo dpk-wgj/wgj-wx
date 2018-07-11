@@ -1,13 +1,13 @@
 <view class="container">
   <view class="header">
-    <navigator url='../information/information'>
+    <!-- <navigator url='../information/information'> -->
       <view class='user-nav'>
         <view class="userImg">
           <image class='user-img' src='{{avatar}}'></image>
         </view>
         <view class="user-name">{{nickName}}</view>
       </view>
-    </navigator>
+    <!-- </navigator> -->
   </view>
   <view class="content">
     <navigator url='/pages/orders/orders'>

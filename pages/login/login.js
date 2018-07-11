@@ -44,13 +44,13 @@ Page({
     var isPhone = _self.testPhone(e.detail.value)
     if (isPhone) {
       _self.setData({
-        // nextBtnDisabled: false,
-        // nextBtnBc: '#4a4c5b'
+        nextBtnDisabled: false,
+        nextBtnBc: '#4a4c5b'
       })
     } else {
       _self.setData({
-        // nextBtnDisabled: true,
-        // nextBtnBc: '#bcbcbc'
+        nextBtnDisabled: true,
+        nextBtnBc: '#bcbcbc'
       })
     }
   },

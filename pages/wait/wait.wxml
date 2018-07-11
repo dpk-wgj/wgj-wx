@@ -5,8 +5,7 @@
     </view>
     <view class="bd">
     <view class="bd_titl">
-        <text class="titl-maxdesc">正在为您寻找车辆和拼友</text>
-        <text class="title-mindesc">每人一小步，更快更顺路</text>
+        <text class="titl-maxdesc">正在为您寻找车辆</text>
     </view>
      <view class='progress_box'>
         <canvas class="progress_bg"   canvas-id="canvasProgressbg">  </canvas>
@@ -18,7 +17,6 @@
     </view>
     </view>
     <view class="ft">
-        <view class="cancel" bindtap="toCancel">取消订单</view>
-        <view class="notcarpool" bindtap="backIndex">不拼车</view>
+        <button class="cancel" bindtap="toCancel">取消订单</button>
     </view>
 </view>

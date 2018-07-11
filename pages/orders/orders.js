@@ -1,4 +1,5 @@
 // pages/orders/orders.js
+import util from '../../utils/index';
 Page({
 
   /**
@@ -26,24 +27,6 @@ Page({
       endTime: '11:30',
       startLocation: "丽水学院",
       endLocation: "丽水站"
-    },{
-      id: 0,
-      name: '陈师傅',
-      status: '已完成',
-      date: '7月8日',
-      startTime: '11:10',
-      endTime: '11:30',
-      startLocation: "丽水学院",
-      endLocation: "丽水站"
-      },{
-        id: 0,
-        name: '陈师傅',
-        status: '已完成',
-        date: '7月8日',
-        startTime: '11:10',
-        endTime: '11:30',
-        startLocation: "丽水学院",
-        endLocation: "丽水站"
     }],
     comList:[],
     uncomList:[]
@@ -67,9 +50,9 @@ Page({
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
-        console.info(res.windowHeight);
+        // console.info(res.windowHeight);
         var height = res.windowHeight;
-        console.log(height);
+        // console.log(height);
         that.setData({
           scrollHeight: height
         });
@@ -88,7 +71,45 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    util.request({
+      url: "http://localhost:8000/api/passenger/getOrderInfoByPassengerId",
+      method: "get"
+    }).then((res) => {
+      console.log(res)
+      for (var i=0; i<res.result.length; i++){
+        var startTime = that.timeFormat(res.result[i].startTime)
+        res.result[i].startTime = startTime
+        var endTime = that.timeFormat(res.result[i].endTime)
+        res.result[i].endTime = endTime
+      }
+      if (res.status == 3){
+        for (var i = 0; i < res.result.length; i++) {
+          res.result[i].status = '已完成'
+        }
+        that.setData({
+          comList: res.result,
+          allList: res.result
+        })
+      } else {
+        for (var i = 0; i < res.result.length; i++) {
+          res.result[i].status = '未完成'
+        }
+        that.setData({
+          uncomList: res.result,
+          allList: res.result
+        })
+      }
+      
+
+    })
+  },
+  // 时间格式化
+  timeFormat(e){
+    var time = e;
+    var d = new Date(time);
+    var times = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds(); 
+    return times;
   },
 
   /**

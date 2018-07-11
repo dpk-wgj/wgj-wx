@@ -1,9 +1,7 @@
-
-
 <view class="container">
    <view class="location">
     <view class="location-city">
-      <text>南昌</text>
+      <text>青田</text>
     </view>
     <input type="text" class="location-input"placeholder="你在哪儿上车"placeholder-style="color:#cccccc"/>
     <navigator url="/pages/index/index" redirect ><view class="location-cancel">取消</view></navigator>

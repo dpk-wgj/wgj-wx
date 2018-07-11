@@ -59,13 +59,13 @@ Page({
       play: app.globalData.play
     })
   },
-  // 获取投诉内容
+  // 获取评价内容
   bindTextAreaBlur: function (e) {
     this.setData({
       content: e.detail.value
     })
   },
-  // 提交投诉
+  // 提交评价
   submit: function (e) {
     console.log(this.data.content)
     wx.showToast({

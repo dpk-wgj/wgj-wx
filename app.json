@@ -1,25 +1,26 @@
 {
   "pages": [
-    "pages/evaluation/evaluation",
     "pages/orderService/orderService",
     "pages/index/index",
+    "pages/evaluation/evaluation",
+    
+    "pages/wait/wait",
+    
+    "pages/orders/orders",
+    "pages/destination/destination",
+    "pages/cancel/cancel",
+    "pages/complain/complain",
+    
     "pages/message/message",
     
-    "pages/complain/complain",
-    "pages/orders/orders",
     "pages/my/my",
-    
     "pages/ordersDetail/ordersDetail",
     "pages/login/login",
-    "pages/wait/wait",
-    "pages/carts/carts",
     "pages/logs/logs",
     "pages/starting/starting",
-    "pages/destination/destination",
-    "pages/order/order",
-    "pages/orderClosed/orderClosed",
-    "pages/cancel/cancel"
     
+    "pages/order/order",
+    "pages/orderClosed/orderClosed"
   ],
   "window": {
     "backgroundTextStyle": "light",

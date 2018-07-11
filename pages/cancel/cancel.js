@@ -7,6 +7,7 @@ Page({
   data: {
   
   },
+  // 确认取消
   toOrder(){
     wx.showModal({
       content: '确定要取消行程吗',
@@ -25,11 +26,11 @@ Page({
       }
     })
   },
+  // 暂不取消
   BackWait(){
-    // console.log("a")
+    console.log("a")
     wx.navigateBack({
-      url:  "/pages/wait/wait",
-      
+      url: '/pages/wait/wait',
     })
   },
 

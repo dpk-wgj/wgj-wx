@@ -11,8 +11,6 @@ Page({
     longitude: 0,
     address: '',
     bluraddress: '',
-   
-   
   },
   onLoad: function (options) {
     wx.getLocation({
@@ -31,8 +29,7 @@ Page({
         longitude: res.longitude,
     },
       success: function (res) {
-      
-        app.globalData.location=location
+        app.globalData.bluraddress=location
         that.setData({
           address: res.result.address,
           bluraddress: res.result.formatted_addresses.recommend
@@ -114,9 +111,10 @@ Page({
   movetoPosition: function(){
     this.mapCtx.moveToLocation();
   },
+  // 确定
 toIndex(){
   let  bluraddress = this.data.bluraddress;
- app.globalData.bluraddress=bluraddress
+ app.globalData.bluraddress=bluraddress;
   wx.redirectTo({
     url: "/pages/index/index",
   })

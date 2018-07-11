@@ -51,30 +51,10 @@ Page({
           id: 1,
           iconPath: '../../assets/images/mapCart.png',
           position: {
-            left: res.windowWidth/2 - 11,
-            top: res.windowHeight/2 - 60,
+            left: res.windowWidth/2 - 20,
+            top: res.windowHeight/2 - 80,
             width: 22,
             height: 45
-            },
-          clickable: true
-        },{
-          id: 2,
-          iconPath: '../../assets/images/location.png',
-          position: {
-            left: 20, // 单位px
-            top: res.windowHeight -150, 
-            width: 40, // 控件宽度/px
-            height: 40,
-            },
-          clickable: true
-        },{
-          id: 3,
-          iconPath: '../../assets/images/walk.png',
-          position: {
-            left: 20, // 单位px
-            top: res.windowHeight -200, 
-            width: 40, // 控件宽度/px
-            height: 40,
             },
           clickable: true
         }],
@@ -89,11 +69,16 @@ Page({
     this.requesDriver();
     this.mapCtx = wx.createMapContext("didiMap");
     this.movetoPosition();
+    setInterval(function () {
+      // console.log('ok')
+    }, 1000) //循环时间 这里是1秒 
   },
+  // 获取司机信息
   requesDriver(){
     util.request({
       url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-      mock: false,
+      // mock: false,
+
     }).then((res)=>{
       
       const drivers = res.data.drivers
@@ -123,11 +108,20 @@ Page({
   bindregionchange: (e)=>{
 
   },
+  // 取消订单
   toCancel(){
-    wx.redirectTo({
-      url: "/pages/cancel/cancel"
+    // wx.redirectTo({
+    //   url: "/pages/cancel/cancel"
+    // })
+    wx.showToast({
+      title: '取消中',
+      icon: 'loading'
     })
-   
+    setTimeout(() => {
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+    }, 2000)
   },
   
   toEvaluation(){

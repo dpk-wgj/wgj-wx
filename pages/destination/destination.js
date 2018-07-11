@@ -27,6 +27,7 @@ requestHistory(e){
       })
     })
   },
+  // 跳转到首页
   toIndex(e){
     const destination = e.currentTarget.dataset.destination;
     const endAddress =  e.currentTarget.dataset.end;
@@ -34,7 +35,7 @@ requestHistory(e){
       address: endAddress,
       success: function(res){
         app.globalData.endLatitude=res.result.location.lat;
-        app.globalData. endLongitude= res.result.location.lng;
+        app.globalData.endLongitude= res.result.location.lng;
       }
     })
     app.globalData.destination=destination,

@@ -9,7 +9,7 @@ Page({
     data: {
         currentTab: 1,
         currentCost: 0,
-        cart: '快车',
+        cart: '',
         navScrollLeft: 0,
         duration: 1000,
         interval: 5000,
@@ -19,12 +19,28 @@ Page({
         destination: '',
         bluraddress : '',
         index: '',
-        hasMessage: false
+        address: '',
+        hasMessage: false,
+        startLatitude: '',
+        startLongitude: '',
+        endLatitude: '',
+        endLongitude: ''
     },
     onLoad: function(options) {
        this.requestCart();
        this.requestWaitingtime();
        this.hasMessage();
+      var that = this
+      setTimeout(function () {
+        that.setData({
+          address: app.globalData.bluraddress,
+          startLatitude: app.globalData.strLatitude,
+          startLongitude: app.globalData.strLongitude,
+          destination: app.globalData.destination,
+          currentTab: app.globalData.id,
+        })
+      }, 1000)
+      
     },
     requestCart(e){
         util.request({
@@ -43,11 +59,13 @@ Page({
           })
     },
     onShow(){
-        this.setData({
-            address:app.globalData.bluraddress,
-            destination:app.globalData.destination,
-            currentTab:app.globalData.id,
-        })
+        // this.setData({
+        //     address:app.globalData.bluraddress,
+        //     destination:app.globalData.destination,
+        //     currentTab:app.globalData.id,
+        // })
+      
+        
     },
     requestWaitingtime(){
         setTimeout(() => {
@@ -68,8 +86,9 @@ Page({
               })
         }, 1000);
     },
-   
-    toCast(e){
+  //  一键叫车
+    toWait(e){
+      var that = this
       const destination =this.data.destination
       if(destination==''){
         wx.showToast({
@@ -79,22 +98,27 @@ Page({
             duration: 1000
           })
       }else{
+        let param = {
+          startLocation: app.globalData.strLatitude + ',' + app.globalData.strLongitude,
+          endLocation: app.globalData.endLatitude + ',' + app.globalData.endLongitude,
+          locationInfo: app.globalData.strLatitude + ',' + app.globalData.strLongitude + '-' +      app.globalData.endLatitude + ',' + app.globalData.endLongitude
+        }
+        // console.log(param)
+        util.request({
+          url: "http://localhost:8000/api/passenger/addOrderInfo",
+          method: "post",
+          data : param
+        }).then((res) => {
+          console.log(res)
+        })
+
         wx.navigateTo({
           url: '/pages/wait/wait',
         })
       }
-        
+      
        
     },
-  toWait(e){
-   
-    wx.reLaunch({
-        url:  "/pages/wait/wait",
-    }),
-    wx.setTopBarText({
-        text: '等待应答'
-        })
-  },
     switchNav(event){
      
         this.requestWaitingtime();
@@ -129,9 +153,11 @@ Page({
             navScrollLeft: (cur - 1) * singleNavWidth
         });
     },
+
+    // 点击用户
     showUser(){
-      console.log(app.globalData.userInfo.phone)
-      console.log(app.globalData.userInfo.captcha)
+      // console.log(app.globalData.userInfo.phone)
+      // console.log(app.globalData.userInfo.captcha)
     // 如果全局未存手机号进入登录页
       if (app.globalData.userInfo && app.globalData.userInfo.phone){
       
@@ -157,6 +183,34 @@ Page({
       this.setData({
         hasMessage: true
       })
-    }
+    },
+    // 获取位置
+    // getLoc: function(){
+    //   var that = this;
+    //   wx.getLocation({
+    //     type: 'wgs84',
+    //     success: function(res) {
+    //       console.log(res)
+    //       qqmapsdk.reverseGeocoder({
+    //         location: {
+    //           latitude: res.latitude,
+    //           longitude: res.longitude
+    //         },
+    //         success: function (addressRes) {
+    //           var address = addressRes.result.formatted_addresses.recommend;
+    //           // console.log(address)
+    //           app.globalData.bluraddress = address;
+    //           app.globalData.strLatitude = addressRes.result.location.lat;
+    //           app.globalData.strLongitude = addressRes.result.location.lng;
+    //           that.setData({
+    //             address: app.globalData.bluraddress,
+    //           })
+    //           console.log('index.app:' + app.globalData.bluraddress)
+    //           console.log('index.address:' + that.data.address)
+    //         }
+    //       })
+    //     },
+    //   })
+    // }
 
 })

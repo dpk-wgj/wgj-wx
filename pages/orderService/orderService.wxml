@@ -23,7 +23,7 @@
                    
                     <cover-view class="detailed-Cartnumber">{{driver.Cartnumber}}</cover-view>
 
-                    <cover-view class="detailed-cart">{{driver.cart}}</cover-view>
+                    <!-- <cover-view class="detailed-cart">{{driver.cart}}</cover-view> -->
                 </cover-view>
             </cover-view>
             <cover-view class="driver-message">
@@ -33,17 +33,16 @@
             </cover-view>
           
         </cover-view>
-        <cover-view class="total-looking">
+        <!-- <cover-view class="total-looking">
             <cover-image class="looking-img" style="width: 30rpx;height: 30rpx;" src="../../assets/images/looking.png"  ></cover-image>
             <cover-view class="looking-desc">寻找拼友</cover-view>
         </cover-view>
-        <cover-view class="total-prompt">请在2分1秒内走到上车点
-        </cover-view>
+        <cover-view class="total-prompt">请在2分1秒内走到上车点</cover-view> -->
 
 
     </cover-view>
     <cover-view class="ft">
-        <cover-view class="ft-cancel"bindtap="toCancel">取消订单</cover-view>
+        <cover-view class="ft-cancel" bindtap="toCancel">取消订单</cover-view>
         <!-- <cover-view class="ft-help" bindtap="toEvaluation">结束行程</cover-view> -->
     </cover-view>
 </map>
