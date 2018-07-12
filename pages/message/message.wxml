@@ -1,13 +1,38 @@
 <view class='container'>
-  <scroll-view scroll-y>
-    <view class='header'>反馈</view>
-    <block wx:for='{{list}}' wx:key=''>
-      <view class='content'>
-        <view class='title'>{{item.title}}</view>
-        <view class='time1'>{{item.time1}}</view>
-        <view class='time2'>{{item.time2}}</view>
-        <view class='response'>{{item.response}}</view>
-      </view>
-    </block>
-  </scroll-view>
+<!-- 头部导航  -->
+  <view class="header">
+    <block wx:for="{{swiperTitle}}" wx:key="">
+      <view class="title {{index==currentPage?'selected':''}}" data-index="{{index}}"
+      bindtap="turnPage">{{item.text}}</view>
+    </block> 
+  </view>
+  <swiper class="swiper" current="{{currentPage}}" bindchange="turnTitle" style="height:{{scrollHeight}}px;">
+    
+    <!--已反馈  -->
+    <swiper-item id="comPage">
+       <scroll-view scroll-y>
+        <block wx:for="{{comList}}" wx:key="list">
+          <view class='content'>
+            <view class='title'>{{item.title}}</view>
+            <view class='time1'>{{item.time1}}</view>
+            <view class='time2'>{{item.time2}}</view>
+            <view class='response'>{{item.response}}</view>
+          </view>
+        </block>
+      </scroll-view>
+    </swiper-item>
+
+    <!--未反馈  -->
+    <swiper-item id="uncomPage">
+    <scroll-view scroll-y>
+        <block wx:for="{{uncomList}}" wx:key="list">
+          <view class='content'>
+            <view class='title'>{{item.complaintContent}}</view>
+            <view class='time11'>{{item.time1}}</view>
+            <view data-id='{{item.complaintId}}' class='cancel' bindtap='cancel'>撤销投诉</view>
+          </view>
+        </block>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
 </view>

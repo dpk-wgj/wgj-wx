@@ -14,7 +14,6 @@ App({
       success: res => {
         var d = this.globalData;//这里存储了appid、secret、token串  
         var url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + d.appid + '&secret=' + d.secret + '&js_code=' + res.code + '&grant_type=authorization_code';
-
         // console.log(res)
         util.request({
           url: url
@@ -32,6 +31,8 @@ App({
               data: param
             }).then(res2 => {
               // console.log("后台请求登录：", res2)
+              this.globalData.passengerId = res2.result.passenger.passengerId
+              // console.log(this.globalData.passengerId)
               // util.request({
               //   url: "http://localhost:8000/api/getUserInfoById",
               //   method: "post",
@@ -52,6 +53,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
+    
     // 获取位置
     var that = this;
     wx.getLocation({

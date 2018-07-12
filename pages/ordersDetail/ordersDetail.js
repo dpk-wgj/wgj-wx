@@ -7,29 +7,24 @@ Page({
     ],
     play: '',
     id: 0,
-    time: '7月8日 11：11 - 11:30',
-    startLocation: '丽水学院',
-    endLocation: '丽水站'
+    startTime: '',
+    endTime: '',
+    startLocation: '',
+    endLocation: ''
   },
-  toComplain () {
-    wx.navigateTo({
-      url: '/pages/complain/complain',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
-  },
+  
   myStarChoose(e) {
     let star = parseInt(e.target.dataset.star) || 0;
     this.setData({
       star: star,
     });
   },
-  onLoad() {
+  onLoad(options) {
+    // console.log(options)
     wx.getStorage({
       key: 'driver',
       success: (res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.setData({
           driver: res.data
         })
@@ -37,7 +32,12 @@ Page({
     })
     // console.log(app.globalData.play)
     this.setData({
-      play: app.globalData.play
+      play: app.globalData.play,
+      id: options.id,
+      startTime: options.startTime,
+      endTime: options.endTime,
+      startLocation: options.startLocation,
+      endLocation: options.endLocation
     })
   },
   toIndex() {

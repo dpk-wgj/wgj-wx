@@ -1,11 +1,12 @@
 <view class="container">
   <view class="header">
     <!-- <navigator url='../information/information'> -->
-      <view class='user-nav'>
-        <view class="userImg">
-          <image class='user-img' src='{{avatar}}'></image>
+      <view class='userinfo'>
+        <view class='user-imgv'>
+          <open-data class='user-img' type='userAvatarUrl'></open-data>
         </view>
-        <view class="user-name">{{nickName}}</view>
+        
+        <open-data class="user-name" type="userNickName"></open-data>
       </view>
     <!-- </navigator> -->
   </view>
@@ -26,7 +27,7 @@
       <view class='footprint-icon icon'>
         <image src='../../assets/images/message.png' mode='aspectFit'></image>
       </view>
-      <view class='footprint-title title'>消息</view>
+      <view class='footprint-title title'>投诉</view>
       <view class='footprint-img img'>
         <image src='../../assets/images/more.png' mode='aspectFit'></image>
       </view>

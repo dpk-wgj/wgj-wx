@@ -18,50 +18,26 @@
     color: #000;
     font-size: 40rpx;
 }
-.bd1{
+.bd{
     border: 1px solid #eeeff0;
     background-color: #fff;
    margin-top: 90rpx;
    box-shadow:0 0 1rpx #e5e6e7;
 }
-.bd1 .bd-tel{
-    width: 80%; 
+.bd .bd-tel{
     height: 122rpx;
+    /* background: yellow; */
+    width: 80%;
     padding-left: 45rpx;
 }
-.bd1 .bd-img{
+ .bd .bd-img{
      position: absolute;
      float: right;
      top: 340rpx;
      right: 55rpx;
      width: 35rpx;
      height: 35rpx;
- } 
-
-.bd2{
-    border: 1px solid #eeeff0;
-    background-color: #fff;
-   margin-top: 10rpx;
-   box-shadow:0 0 1rpx #e5e6e7;
-}
-.bd2 .bd-tel{
-    height: 122rpx;
-    width: 60%;
-    padding-left: 45rpx;
-}
-.t{
-  width: 20%;
-  position: absolute;
-  top: 470rpx;
-  right: 0;
-}
- .bd2 .bd-img{
-     position: absolute;
-     float: right;
-     top: 480rpx;
-     right: 170rpx;
-     width: 35rpx;
-     height: 35rpx;
+     
  }
 .hd{
     margin-top: 28rpx;

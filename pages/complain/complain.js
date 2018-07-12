@@ -1,3 +1,4 @@
+import util from '../../utils/index';
 const app = getApp()
 var array = [];
 Page({
@@ -8,7 +9,8 @@ Page({
        '','','','','',
     ],
     play:'',
-    content:''
+    content:'',
+    orderId: ''
   },
   myStarChoose(e) {
       let star = parseInt(e.target.dataset.star) || 0;
@@ -17,30 +19,12 @@ Page({
       });
   },
 
- 
-
-  serviceValChange: function (e) {
-    var allGoodsFilte = this.data.list;
-    var checkArr = e.detail.value;
-    for (var i = 0; i < allGoodsFilte.length; i++) {
-      if (checkArr.indexOf(i+"")!=-1) {
-        allGoodsFilte[i].checked = true;
-        console.log(allGoodsFilte[i].checked)
-      } else {
-        allGoodsFilte[i].checked = false;
-        console.log(allGoodsFilte[i].checked)
-      }
-    }
-    this.setData({
-      list: allGoodsFilte
-    })
-  },
-
-  onLoad(){
+  onLoad(options){
+    // console.log(options)
     wx.getStorage({
       key:'driver',
       success: (res)=>{
-          console.log(res.data)
+          // console.log(res.data)
           this.setData({
             driver:res.data
           })
@@ -48,7 +32,8 @@ Page({
     })
   // console.log(app.globalData.play)
     this.setData({
-      play: app.globalData.play
+      play: app.globalData.play,
+      orderId: options.id
     })
   },
 
@@ -86,7 +71,24 @@ Page({
   },
   // 提交投诉
   submit: function(e) {
-    console.log(this.data.content)
+    console.log(e)
+    var that = this
+    setTimeout(() => {
+      let param ={
+        complaintContent: that.data.content,
+        complaintStatus: 0,
+        orderId: that.data.orderId,
+        passengerId: app.globalData.passengerId
+      }
+      util.request({
+        url: "http://localhost:8000/api/passenger/addComplaintInfoByOrderId",
+        method: "post",
+        data: param
+      }).then((res) => {
+        console.log(res)
+      })
+    }, 1000)
+    
     wx.showLoading({
       title: '提交中',
     })

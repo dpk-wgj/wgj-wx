@@ -18,16 +18,7 @@ Page({
     }],
     currentPage: 0,
 
-    allList:[{
-      id: 0,
-      name: '陈师傅',
-      status: '已完成',
-      date: '7月8日',
-      startTime: '11:10',
-      endTime: '11:30',
-      startLocation: "丽水学院",
-      endLocation: "丽水站"
-    }],
+    allList:[],
     comList:[],
     uncomList:[]
   },
@@ -76,11 +67,11 @@ Page({
       url: "http://localhost:8000/api/passenger/getOrderInfoByPassengerId",
       method: "get"
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       for (var i=0; i<res.result.length; i++){
-        var startTime = that.timeFormat(res.result[i].startTime)
+        var startTime = that.startTimeFormat(res.result[i].startTime)
         res.result[i].startTime = startTime
-        var endTime = that.timeFormat(res.result[i].endTime)
+        var endTime = that.endTimeFormat(res.result[i].endTime)
         res.result[i].endTime = endTime
       }
       if (res.status == 3){
@@ -100,15 +91,21 @@ Page({
           allList: res.result
         })
       }
-      
 
     })
   },
-  // 时间格式化
-  timeFormat(e){
+  // 开始时间格式化
+  startTimeFormat(e){
     var time = e;
     var d = new Date(time);
     var times = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds(); 
+    return times;
+  },
+  // 结束时间格式化
+  endTimeFormat(e){
+    var time = e;
+    var d = new Date(time);
+    var times = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
     return times;
   },
 

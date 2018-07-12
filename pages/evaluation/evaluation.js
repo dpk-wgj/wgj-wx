@@ -1,3 +1,4 @@
+import util from '../../utils/index';
 const app = getApp()
 var array = [];
 Page({
@@ -16,32 +17,35 @@ Page({
       {id:2, name: 'dirction', value: '认路正确',checked:false},
       {id:3,name: 'attitude', value: '态度良好',checked:false }
     ],
-   
+    checkedList: []
   },
   myStarChoose(e) {
       let star = parseInt(e.target.dataset.star) || 0;
       this.setData({
           star: star,
       });
+      // console.log(this.data.star)
   },
 
  
-
+  // 选择标签
   serviceValChange: function (e) {
     var allGoodsFilte = this.data.list;
     var checkArr = e.detail.value;
     for (var i = 0; i < allGoodsFilte.length; i++) {
       if (checkArr.indexOf(i+"")!=-1) {
         allGoodsFilte[i].checked = true;
-        console.log(allGoodsFilte[i].checked)
+        // console.log(allGoodsFilte[i].checked)
       } else {
         allGoodsFilte[i].checked = false;
-        console.log(allGoodsFilte[i].checked)
+        // console.log(allGoodsFilte[i].checked)
       }
     }
     this.setData({
-      list: allGoodsFilte
+      list: allGoodsFilte,
+      checkedList: e.detail.value
     })
+    // console.log(this.data.checkedList)
   },
 
   onLoad(){
@@ -58,25 +62,63 @@ Page({
     this.setData({
       play: app.globalData.play
     })
+    // console.log('play:'+this.data.play)
   },
   // 获取评价内容
   bindTextAreaBlur: function (e) {
     this.setData({
       content: e.detail.value
     })
+    // console.log('text:' + this.data.content)
   },
   // 提交评价
   submit: function (e) {
-    console.log(this.data.content)
+    setTimeout(() => {
+      var isClear = 0;
+      var isStable = 0;
+      var isKnow = 0;
+      var isGood = 0;
+      // console.log('btn:' + this.data.content)
+      // console.log(this.data.checkedList)
+      for (var i = 0; i < this.data.checkedList.length; i++){
+        var is = this.data.checkedList[i]
+        if (is == 0){
+          isClear = 1;
+        } else if(is == 1){
+          isStable = 1;
+        } else if (is == 2) {
+          isKnow = 1;
+        } else if (is == 3) {
+          isGood = 1;
+        }
+      }
+      let param = {
+        commentContent: this.data.content,
+        isClear: isClear,
+        isStable: isStable,
+        isKnow: isKnow,
+        isGood: isGood,
+        orderId: 100
+      }
+      console.log(param)
+      util.request({
+        url: "http://localhost:8000/api/passenger/addCommentInfoByOrderId",
+        method: "post",
+        data: param
+      }).then((res) => {
+        console.log(res)
+      })
+    }, 900)
+    
     wx.showToast({
       title: '提交中',
       icon: 'success'
     })
-    setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    }, 2000)
+    // setTimeout(() => {
+    //   wx.redirectTo({
+    //     url: '/pages/index/index',
+    //   })
+    // }, 2000)
   },
   // 拨打电话
   calling: function () {

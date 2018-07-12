@@ -27,9 +27,9 @@ Page({
         endLongitude: ''
     },
     onLoad: function(options) {
-       this.requestCart();
-       this.requestWaitingtime();
-       this.hasMessage();
+      this.requestCart();
+      this.requestWaitingtime();
+      this.hasMessage();
       var that = this
       setTimeout(function () {
         that.setData({

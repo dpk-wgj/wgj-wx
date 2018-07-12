@@ -11,7 +11,7 @@
     <swiper-item id="allPage">
       <scroll-view scroll-y>
         <block wx:for="{{allList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderId}}&startTime={{item.startTime}}&endTime={{item.endTime}}&startLocation={{item.startLocation}}&endLocation={{item.endLocation}}'> 
             <view class='content'>
               <view class='st'>
                 <view class='info'>{{item.name}}</view>

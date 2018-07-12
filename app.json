@@ -1,24 +1,21 @@
 {
   "pages": [
-    "pages/orderService/orderService",
-    "pages/index/index",
-    "pages/evaluation/evaluation",
-    
-    "pages/wait/wait",
-    
     "pages/orders/orders",
+    "pages/message/message",
+    "pages/index/index",
+    
+    
+    "pages/complain/complain",
+    "pages/my/my",
+    "pages/evaluation/evaluation",
+    "pages/orderService/orderService",
+    "pages/wait/wait",
     "pages/destination/destination",
     "pages/cancel/cancel",
-    "pages/complain/complain",
-    
-    "pages/message/message",
-    
-    "pages/my/my",
-    "pages/ordersDetail/ordersDetail",
     "pages/login/login",
+    "pages/ordersDetail/ordersDetail",
     "pages/logs/logs",
     "pages/starting/starting",
-    
     "pages/order/order",
     "pages/orderClosed/orderClosed"
   ],

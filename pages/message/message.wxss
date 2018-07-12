@@ -1,14 +1,31 @@
 page{
-  background: #f4f6f8;
+  height: 100%;
+  background: #f4f6f8; 
 }
+
 .header{
-  padding: 10rpx 30rpx;
-  font-size: 35rpx;
-  color: rgb(152, 152, 152);
-  border-bottom: 1px solid #fff;
-  /* box-shadow: 10px 10px 5px #888888; */
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1rpx solid #DCDCDC;
   background: #fff;
 }
+.header .title{
+  height: 40px; 
+  width: 180rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+.header .title.selected{
+  border-bottom: 7rpx solid #000;
+  font-weight: 600;
+}
+
+ scroll-view{
+  height: 100%;
+} 
+
+
 .content{
   font-size: 30rpx;
   background: #fff;
@@ -36,4 +53,20 @@ page{
 .content .response{
   padding-top: 39px;
   color: red;
+}
+.content .time11{
+  font-size: 25rpx;
+  color: rgb(130, 130, 130);
+  padding: 10px 0;
+}
+.content .cancel{
+  font-size: 28rpx;
+  color: #696969;
+  border: 1px solid #e0e0e0;
+  margin-left: 470rpx;
+  padding: 5px 20rpx;
+  width: 115rpx;
+  align-content: center;
+  border-radius: 5px;
+  background: #e0e0e0
 }

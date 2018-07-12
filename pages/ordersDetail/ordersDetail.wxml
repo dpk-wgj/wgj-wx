@@ -26,13 +26,15 @@
         </view>
         <!--订单内容  -->
         <view class='order'>
-          <view class='time o'>{{time}}</view>
+          <view class='time o'>{{startTime}} - {{endTime}} </view>
           <view class='startLocation o'>起点：{{startLocation}}</view>
           <view class='endLocation o'>终点：{{endLocation}}</view>
         </view>
         <!--投诉  -->
         <view class='btn'>
-          <button bindtap='toComplain'>投诉</button>
+          <navigator url='/pages/complain/complain?id={{id}}'>
+            <button bindtap='toComplain'>投诉</button>
+          </navigator>
         </view>
   </view>
   
