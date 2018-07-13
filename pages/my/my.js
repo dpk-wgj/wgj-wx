@@ -17,7 +17,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     // setTimeout(function () {
-      console.log(app.globalData.userInfo)
+      // console.log(app.globalData.userInfo)
       // that.setData({
 
       // })
@@ -59,6 +59,11 @@ Page({
           }
         })
       }
+  },
+  toTel: function(e){
+    wx.navigateTo({
+      url: '/pages/tel/tel',
+    })
   },
   getUserInfo: function (e) {
     console.log(e)

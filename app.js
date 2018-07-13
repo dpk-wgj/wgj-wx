@@ -77,6 +77,7 @@ App({
     // 获取用户信息
   },
   globalData: {
+    passengerId: 0,
     userInfo: null,
     bluraddress: '公交站',
     destination: '',

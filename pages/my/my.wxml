@@ -11,18 +11,31 @@
     <!-- </navigator> -->
   </view>
   <view class="content">
-    <navigator url='/pages/orders/orders'>
+    <!-- 订单 -->
+    <navigator url='../orders/orders'>
+    <view class="discount con">
+      <view class='discount-icon icon'>
+        <image src='../../assets/images/order.png' mode='aspectFit'></image>
+      </view>
+      <view class='discount-title title'>订单</view>
+      <view class='discount-img img'>
+        <image src='../../assets/images/more.png' mode='aspectFit'></image>
+      </view>
+    </view>
+    </navigator>
+    <!-- <navigator url='../evaluations/evaluations'>
       <view class="collection con">
         <view class='collection-icon icon'>
-          <image src='../../assets/images/order.png' mode='aspectFit'></image>
+          <image src='../../assets/images/evaluation.png' mode='aspectFit'></image>
         </view>
-        <view class='collection-title title'>订单</view>
+        <view class='collection-title title'>评价</view>
         <view class='collection-img img'>
           <image src='../../assets/images/more.png' mode='aspectFit'></image>
         </view>
       </view>
-    </navigator>
-    <navigator url='/pages/message/message'>
+    </navigator> -->
+    <!-- 投诉  -->
+    <navigator url='../message/message'>
     <view class="footprint con">
       <view class='footprint-icon icon'>
         <image src='../../assets/images/message.png' mode='aspectFit'></image>
@@ -36,6 +49,6 @@
      
   </view>
   <view class="ft">
-          <button>退出登录</button>
+          <button bindtap='toTel'>切换手机号</button>
       </view>
 </view>

@@ -65,8 +65,8 @@ page{
 .content .coupon .coupon-img{
    padding-left: 470rpx; 
 }
-.content .address .address-img{
-   padding-left: 470rpx; 
+.content .discount .discount-img{
+   padding-left: 540rpx; 
 }
 .content .collection .collection-img{
    padding-left: 540rpx; 

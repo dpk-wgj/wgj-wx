@@ -18,7 +18,15 @@ Page({
     }],
     currentPage: 0,
 
-    allList:[],
+    allList:[{
+      orderId: 1,
+      status: 0,
+      date: '2018/7/12',
+      startTime: '12:12:12',
+      endTime: '12:30:00',
+      startLocation: "丽水",
+      endLocation: '杭州'
+    }],
     comList:[],
     uncomList:[]
   },

@@ -71,7 +71,7 @@ Page({
   },
   // 提交投诉
   submit: function(e) {
-    console.log(e)
+    // console.log(e)
     var that = this
     setTimeout(() => {
       let param ={
@@ -85,7 +85,7 @@ Page({
         method: "post",
         data: param
       }).then((res) => {
-        console.log(res)
+        // console.log(res)
       })
     }, 1000)
     
@@ -93,8 +93,8 @@ Page({
       title: '提交中',
     })
     setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
+      wx.navigateBack({
+        delta: 1
       })
     }, 2000)
   }

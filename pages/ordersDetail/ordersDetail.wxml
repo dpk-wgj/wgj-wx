@@ -30,12 +30,35 @@
           <view class='startLocation o'>起点：{{startLocation}}</view>
           <view class='endLocation o'>终点：{{endLocation}}</view>
         </view>
-        <!--投诉  -->
+        <!--按钮  -->
         <view class='btn'>
-          <navigator url='/pages/complain/complain?id={{id}}'>
-            <button bindtap='toComplain'>投诉</button>
-          </navigator>
+          <block wx:if="{{!isComment}}">
+            <button class='ebtn' bindtap='toEvaluation'>评价</button>
+          </block>
+          <block>
+            <button class='cbtn' bindtap='toComplain'>投诉</button>
+          </block>
         </view>
   </view>
-  
+  <block wx:if="{{isComment}}">
+  <view class='evaluation'>
+    <view class='top'>
+       <view class='star'>
+        <image src='../../assets/images/star.png' mode='aspectFit'></image>
+        {{star}}
+      </view> 
+      <view class='time'>{{time}}</view>
+    </view>
+    <view class='allTag'>
+      <view class='tag1 tag'>{{clear}}</view>
+      <view class='tag2 tag'>{{stable}}</view>
+      <view class='tag3 tag'>{{know}}</view>
+      <view class='tag4 tag'>{{good}}</view>
+    </view>
+    <view class='con'>{{commentContent}}</view>
+    <view class='cancelBtn'>
+      <button bindtap='cancel'>删除</button>
+    </view>
+  </view>
+  </block>
 </view>

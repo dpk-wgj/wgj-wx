@@ -32,7 +32,7 @@ Page({
   },
   // 撤销投诉
   cancel: function(e){
-    console.log(e.currentTarget.dataset.id)
+    // console.log(e.currentTarget.dataset.id)
     let p = {
       complaintId: e.currentTarget.dataset.id
     }
@@ -41,7 +41,7 @@ Page({
       method: "post",
       data: p
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
     })
     wx.redirectTo({
       url: '/pages/message/message',
@@ -71,22 +71,33 @@ Page({
       method: "post"
     }).then((res) => {
       // console.log(res)
-      // for(var i=0; i<res.result.length; i++){
-      //   console.log(res.result)
-      // }
-      if(res.status == 1){    //未反馈状态
-        var result = res.result
-        var uncomList = result.reverse();
-        that.setData({
-          uncomList: uncomList
-        })
-      } else{     //反馈状态
-        var result = res.result
-        var comList = result.reverse();
-        that.setData({
-          comList: comList
-        })
+      var list1 = []
+      var list2=[]
+      var result1
+      var result2
+      for(var i=0; i<res.result.length; i++){
+        if (res.result[i].complaintStatus == 0) {    //未反馈状态
+          result1 = res.result[i]
+          // console.log('result', i, result1)
+          result1.complaintCreateTime = that.timeFormat(result1.complaintCreateTime)
+          list1.push(result1)
+          // console.log('list', list1)
+          
+        } else{     //反馈状态
+          var result2 = res.result[i]
+          result2.complaintCreateTime = that.timeFormat(result2.complaintCreateTime)
+          result2.complaintFeedbackTime = that.timeFormat(result2.complaintFeedbackTime)
+          list2.push(result2)
+        }
       }
+      var uncomList = list1.reverse();
+      var comList = list2.reverse();
+      that.setData({
+        uncomList: uncomList,
+        comList: comList
+      })
+      // console.log(that.data.comList)
+      
     })
   },
 
@@ -101,38 +112,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this
-    // util.request({
-    //   url: "http://localhost:8000/api/passenger/getOrderInfoByPassengerId",
-    //   method: "get"
-    // }).then((res) => {
-    //   console.log(res)
-    //   for (var i=0; i<res.result.length; i++){
-    //     var startTime = that.timeFormat(res.result[i].startTime)
-    //     res.result[i].startTime = startTime
-    //     var endTime = that.timeFormat(res.result[i].endTime)
-    //     res.result[i].endTime = endTime
-    //   }
-    //   if (res.status == 3){
-    //     for (var i = 0; i < res.result.length; i++) {
-    //       res.result[i].status = '已完成'
-    //     }
-    //     that.setData({
-    //       comList: res.result,
-    //       allList: res.result
-    //     })
-    //   } else {
-    //     for (var i = 0; i < res.result.length; i++) {
-    //       res.result[i].status = '未完成'
-    //     }
-    //     that.setData({
-    //       uncomList: res.result,
-    //       allList: res.result
-    //     })
-    //   }
-      
-
-    // })
+    
   },
   // 时间格式化
   timeFormat(e){

@@ -16,13 +16,73 @@ page{
 .btn{
   background: #fff;
   height: 50px;
+  display: flex;
 }
-.btn button{
-  position: absolute;
+.btn .ebtn{
+  position: absolute; 
+  right: 250rpx;
+  height: 30px;
+  font-size: 30rpx;
+  color: rgb(150, 150, 150);
+  line-height: 30px;
+}
+.btn .cbtn{
+  position: absolute; 
   right: 50rpx;
-  width: 20%;
   height: 30px;
   font-size: 30rpx;
   color: rgb(150, 150, 150);
   line-height: 30px;
 } 
+.evaluation{
+  font-size: 30rpx;
+  background: #fff;
+  margin: 10px 20rpx;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow:3px 5px 10px #e0e0e0; 
+  padding: 10px 20rpx;
+  width: 89%;
+  position: absolute;
+  top: 300px;
+}
+.evaluation .top{
+  display: flex;
+}
+.evaluation .star{
+  font-size: 30rpx;
+  color: rgb(130, 130, 130);
+}
+.evaluation .star image{
+  width: 35rpx;
+  height: 35rpx;
+}
+.evaluation .time{
+  margin-left: 360rpx;
+  font-size: 25rpx;
+  color: rgb(130, 130, 130);
+  padding: 10px 0;
+}
+.cancelBtn{
+  margin-left: 250rpx;
+}
+.cancelBtn button{
+  right: 50rpx;
+  width: 30%;
+  height: 30px;
+  font-size: 30rpx;
+  color: rgb(150, 150, 150);
+  line-height: 30px;
+  margin-left: 300rpx; 
+}
+.allTag{
+  display: flex;
+  color: orange;
+}
+.allTag .tag{
+  /* border: 1px solid orange; */
+  padding: 0 10rpx;
+  margin: 0 10rpx 5px 0;
+  border-radius: 5px;
+  font-size: 25rpx;
+}

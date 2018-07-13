@@ -48,11 +48,11 @@ Page({
     // console.log(this.data.checkedList)
   },
 
-  onLoad(){
+  onLoad(options){
     wx.getStorage({
       key:'driver',
       success: (res)=>{
-          console.log(res.data)
+          // console.log(res.data)
           this.setData({
             driver:res.data
           })
@@ -60,8 +60,10 @@ Page({
     })
   // console.log(app.globalData.play)
     this.setData({
-      play: app.globalData.play
+      play: app.globalData.play,
+      id: options.id
     })
+    // console.log('评价：', this.data.id)
     // console.log('play:'+this.data.play)
   },
   // 获取评价内容
@@ -73,6 +75,7 @@ Page({
   },
   // 提交评价
   submit: function (e) {
+    var that = this
     setTimeout(() => {
       var isClear = 0;
       var isStable = 0;
@@ -92,33 +95,34 @@ Page({
           isGood = 1;
         }
       }
+      var point = that.data.star * 20
       let param = {
         commentContent: this.data.content,
         isClear: isClear,
         isStable: isStable,
         isKnow: isKnow,
         isGood: isGood,
-        orderId: 100
+        orderId: that.data.id,
+        commentPoint: point
       }
-      console.log(param)
+      // console.log('评价传值：',param)
       util.request({
         url: "http://localhost:8000/api/passenger/addCommentInfoByOrderId",
         method: "post",
         data: param
       }).then((res) => {
-        console.log(res)
+        // console.log(res)
       })
     }, 900)
     
-    wx.showToast({
-      title: '提交中',
-      icon: 'success'
+    wx.showLoading({
+      title: '提交中'
     })
-    // setTimeout(() => {
-    //   wx.redirectTo({
-    //     url: '/pages/index/index',
-    //   })
-    // }, 2000)
+    setTimeout(() => {
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+    }, 2000)
   },
   // 拨打电话
   calling: function () {
