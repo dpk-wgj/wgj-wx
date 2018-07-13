@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/index/index",
+    
     "pages/orders/orders",
+    "pages/index/index",
+    "pages/ordersDetail/ordersDetail",
     "pages/login/login",
     
     "pages/my/my",
@@ -17,7 +19,7 @@
     "pages/destination/destination",
     "pages/cancel/cancel",
     
-    "pages/ordersDetail/ordersDetail",
+   
     "pages/logs/logs",
     "pages/starting/starting",
     "pages/order/order",

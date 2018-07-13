@@ -1,4 +1,4 @@
-const app = getApp()
+ const app = getApp()
 import util from '../../utils/index';
 Page({
   data: {
@@ -36,7 +36,7 @@ Page({
     wx.navigateTo({
       url: '/pages/evaluation/evaluation?id=' + this.data.id,
       success: function(e){
-        // console.log('跳转评价成功')
+         console.log('跳转评价成功')
       },
       fail: function (e) {
         console.log('跳转评价失败')
@@ -49,14 +49,14 @@ Page({
     wx.navigateTo({
       url: '/pages/complain/complain?id=' + that.data.id,
       success: function (e) {
-        // console.log('跳转投诉成功')
+         console.log('跳转投诉成功')
       },
       fail: function(e){
         console.log('跳转投诉失败')
       }
     })
   },
-  // 删除订单
+  // 删除评价
   cancel(e) {
     var that = this
     // console.log(this.data.commentId)
@@ -96,7 +96,7 @@ Page({
       startLocation: options.startLocation,
       endLocation: options.endLocation
     })
-    // 获取订单
+    // 获取评价
     let param = {
       orderId: this.options.id
     }
@@ -106,7 +106,7 @@ Page({
       method: "post",
       data: param
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
       if(res.status == 0){
         that.setData({
           isComment: false
