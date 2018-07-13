@@ -26,12 +26,15 @@ App({
               // driverName: 
             }
             util.request({
-              url: 'http://localhost:8000/public/passenger/login',
+              url: `${this.globalData.baseUrl}/public/passenger/login`,
               method: "post",
               data: param
             }).then(res2 => {
-              // console.log("后台请求登录：", res2)
-              this.globalData.passengerId = res2.result.passenger.passengerId
+              if(res2.status === 1){
+                // console.log(res2)
+                this.globalData.userInfo = res2.result.passenger
+              }              // console.log("后台请求登录：", res2)
+              // this.globalData.passengerId = res2.result.passenger.passengerId
               // console.log(this.globalData.passengerId)
               // util.request({
               //   url: "http://localhost:8000/api/getUserInfoById",
@@ -77,8 +80,12 @@ App({
     // 获取用户信息
   },
   globalData: {
+    baseUrl: 'http://10.30.211.120:8000',
     passengerId: 0,
     userInfo: null,
+    driverInfo: null,
+    socketOpen: false,
+    socketMsgQueue: [],
     bluraddress: '公交站',
     destination: '',
     id: '快车',

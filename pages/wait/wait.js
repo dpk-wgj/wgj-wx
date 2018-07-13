@@ -9,7 +9,78 @@ Page({
   randomTime: 100,
   flag: false
   },
-parseTime: function(time){
+
+  onLoad(option){
+    let userId = app.globalData.userInfo.passengerId
+    console.log("呼车传过来的订单id：",option.orderId)
+    let _this = this
+    let socketTimer
+    /**
+     * 连接websocket
+     */
+    wx.connectSocket({
+      url: `ws://10.30.211.120:8000/ws/passenger/${userId}/${option.orderId}`
+    })
+    wx.onSocketError(function (res) {
+      app.globalData.socketOpen = false
+      console.log('WebSocket连接打开失败，请检查！')
+    })
+    wx.onSocketOpen(function (res) {
+      console.log('WebSocket连接已打开！')
+      let t = 0
+      _this.sendSocketMessage("passenger,toWait")
+      socketTimer = setInterval(() => {
+        t++
+        _this.sendSocketMessage("passenger,toWait")
+        wx.getLocation({
+          type: "gcj02",
+          success: (res) => {
+            console.log("ws中获取经纬度", res)
+            let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
+            _this.setData({
+              longitude: res.longitude,
+              latitude: res.latitude
+            })
+          }
+        })
+      }, 1000)
+      app.globalData.socketOpen = true
+      for (var i = 0; i < app.globalData.socketMsgQueue.length; i++) {
+        _this.sendSocketMessage(app.globalData.socketMsgQueue[i])
+      }
+      app.globalData.socketMsgQueue = []
+    })
+
+    wx.onSocketMessage(function (res) {
+      res = JSON.parse(res.data)
+      console.log('收到服务器内容：', res)
+      if (res.status === 1) {
+        app.globalData.driverInfo = res.result
+        clearInterval(socketTimer)
+        // wx.closeSocket()
+        wx.navigateTo({
+          url: `/pages/orderService/orderService`,
+        })
+      }
+    })
+    wx.onSocketClose(function (res) {
+      app.globalData.socketOpen = false
+      console.log('WebSocket 已关闭！')
+    })
+    console.log("是否打开：", app.globalData.socketOpen)
+  },
+
+
+  sendSocketMessage: function (msg) {
+    if (app.globalData.socketOpen) {
+      wx.sendSocketMessage({
+        data: msg
+      })
+    } else {
+      app.globalData.socketMsgQueue.push(msg)
+    }
+  },  
+  parseTime: function(time){
   var time = time.toString();
     return time[1]?time:'0'+time;
 },

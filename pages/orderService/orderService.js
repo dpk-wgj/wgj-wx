@@ -6,65 +6,109 @@ qqmapsdk = new QQMapWX({
 import util from '../../utils/index';
 
 const app = getApp();
+
 Page({
   data: {
     scale: 14,
-    hiddenLoading:false
+    hiddenLoading:false,
+    canICancel: true
   },
-  onLoad: function () {
+  onLoad: function (option) {
 
-    let { bluraddress,strLatitude,strLongitude,endLatitude,endLongitude} = app.globalData
-    this.setData({
-      markers: [{
-        iconPath: "../../assets/images/str.png",
-        id: 0,
-        latitude: strLatitude,
-        longitude:strLongitude,
-        width: 30,
-        height: 30
-      },{
-        iconPath: "../../assets/images/end.png",
-        id: 0,
-        latitude: endLatitude,
-        longitude:endLongitude,
-        width: 30,
-        height: 30
-      }],
-      polyline: [{
-        points: [{
-          longitude: strLongitude,
-          latitude: strLatitude
-        }, {
-          longitude:endLongitude,
-          latitude:endLatitude
-        }],
-        color:"red",
-        width: 4,
-        dottedLine: true
-      }],
-  
+    let driverInfo = app.globalData.driverInfo
+    console.log("接收到的司机信息：", driverInfo)
+    let userId = app.globalData.userInfo.passengerId
+    console.log("呼车传过来的订单id：", option.orderId)
+    let _this = this
+
+    wx.onSocketMessage(function (res) {
+      res = JSON.parse(res.data)
+      console.log('收到服务器内容：', res)
+
+      if (res.status === 1) {//司机端确认接到乘客
+        _this.setData({
+          canICancel: false
+        })
+        console.log("司机端接到了乘客！！！！！")
+      }else if(res.status === 2){
+        console.log("本次派送已经结束了")
+        wx.redirectTo({
+          url: '/pages/evaluation/evaluation',
+        })
+      }
+    })
+    wx.setStorage({
+      key: "driverInfo",
+      data: driverInfo
     });
-  wx.getSystemInfo({
-    success: (res)=>{
-      this.setData({
-        controls:[{
-          id: 1,
-          iconPath: '../../assets/images/mapCart.png',
-          position: {
-            left: res.windowWidth/2 - 20,
-            top: res.windowHeight/2 - 80,
-            width: 22,
-            height: 45
-            },
-          clickable: true
-        }],
+    console.log("dasdasdas", driverInfo.driverInfo.driverName)
+    this.setData({
+      hiddenLoading: true,
+      driver: driverInfo,
+      canICancel: true
+    })
+    // console.log("12121",this.data.driver.driverInfo.driverName)
+  //   let { bluraddress,strLatitude,strLongitude,endLatitude,endLongitude} = app.globalData
+  //   this.setData({
+  //     markers: [{
+  //       iconPath: "../../assets/images/str.png",
+  //       id: 0,
+  //       latitude: strLatitude,
+  //       longitude:strLongitude,
+  //       width: 30,
+  //       height: 30
+  //     },{
+  //       iconPath: "../../assets/images/end.png",
+  //       id: 0,
+  //       latitude: endLatitude,
+  //       longitude:endLongitude,
+  //       width: 30,
+  //       height: 30
+  //     }],
+  //     polyline: [{
+  //       points: [{
+  //         longitude: strLongitude,
+  //         latitude: strLatitude
+  //       }, {
+  //         longitude:endLongitude,
+  //         latitude:endLatitude
+  //       }],
+  //       color:"red",
+  //       width: 4,
+  //       dottedLine: true
+  //     }],
+  
+  //   });
+  // wx.getSystemInfo({
+  //   success: (res)=>{
+  //     this.setData({
+  //       controls:[{
+  //         id: 1,
+  //         iconPath: '../../assets/images/mapCart.png',
+  //         position: {
+  //           left: res.windowWidth/2 - 20,
+  //           top: res.windowHeight/2 - 80,
+  //           width: 22,
+  //           height: 45
+  //           },
+  //         clickable: true
+  //       }],
      
-      })
-    }
-  })
+  //     })
+  //   }
+  // })
   
   },
 
+  sendSocketMessage: function (msg) {
+    if (app.globalData.socketOpen) {
+      wx.sendSocketMessage({
+        data: msg
+      })
+    } else {
+      app.globalData.socketMsgQueue.push(msg)
+    }
+  },
   onShow(){
     this.requesDriver();
     this.mapCtx = wx.createMapContext("didiMap");
@@ -75,23 +119,23 @@ Page({
   },
   // 获取司机信息
   requesDriver(){
-    util.request({
-      url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-      // mock: false,
+    // util.request({
+    //   url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
+    //   // mock: false,
 
-    }).then((res)=>{
+    // }).then((res)=>{
       
-      const drivers = res.data.drivers
-      const driver = drivers[Math.floor(Math.random()*drivers.length)];
-      wx.setStorage({
-        key:"driver",
-        data:driver
-      });
-      this.setData({
-        hiddenLoading:true,
-        driver:driver
-      })
-    })
+    //   const drivers = res.data.drivers
+    //   const driver = drivers[Math.floor(Math.random()*drivers.length)];
+    //   wx.setStorage({
+    //     key:"driver",
+    //     data:driver
+    //   });
+    //   this.setData({
+    //     hiddenLoading:true,
+    //     driver:driver
+    //   })
+    // })
 
   },
   bindcontroltap: (e)=>{
@@ -113,15 +157,27 @@ Page({
     // wx.redirectTo({
     //   url: "/pages/cancel/cancel"
     // })
-    wx.showToast({
-      title: '取消中',
-      icon: 'loading'
-    })
-    setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    }, 2000)
+    let _this = this
+    wx.showModal({
+      title: '提示',
+      content: '您确认要取消此次订单吗',
+      success: function (res) {
+        if (res.confirm) {
+          _this.sendSocketMessage("passenger,cancelOrder")
+          wx.showToast({
+            title: '取消中',
+            icon: 'loading'
+          })
+          setTimeout(() => {
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          }, 2000)
+
+        } else if (res.cancel) {
+        }
+      }
+    })  
   },
   
   toEvaluation(){

@@ -29,7 +29,7 @@
           <view class='content'>
             <view class='title'>{{item.complaintContent}}</view>
             <view class='time11'>{{item.complaintCreateTime}}</view>
-            <view data-id='{{item.complaintId}}' class='cancel' bindtap='cancel'>撤销投诉</view>
+            <view data-complaintId='{{item.complaintId}}' data-orderId='{{item.orderId}}' class='cancel' bindtap='cancel'>撤销投诉</view>
           </view>
         </block>
       </scroll-view>

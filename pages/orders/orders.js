@@ -1,5 +1,6 @@
 // pages/orders/orders.js
 import util from '../../utils/index';
+const app = getApp()
 Page({
 
   /**
@@ -72,10 +73,10 @@ Page({
   onShow: function () {
     var that = this
     util.request({
-      url: "http://localhost:8000/api/passenger/getOrderInfoByPassengerId",
+      url: `${app.globalData.baseUrl}/api/passenger/getOrderInfoByPassengerId`,
       method: "get"
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
       for (var i=0; i<res.result.length; i++){
         var startTime = that.startTimeFormat(res.result[i].startTime)
         res.result[i].startTime = startTime
@@ -148,7 +149,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
-  }
+  onShareAppMessage: function () {}
 })

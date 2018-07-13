@@ -34,14 +34,15 @@ Page({
   cancel: function(e){
     // console.log(e.currentTarget.dataset.id)
     let p = {
-      complaintId: e.currentTarget.dataset.id
+      complaintId: e.currentTarget.dataset.complaintId,
+      orderId: e.currentTarget.dataset.orderId,
     }
     util.request({
       url: "http://localhost:8000/api/passenger/deleteComplaintInfoByCommentId",
       method: "post",
       data: p
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
     })
     wx.redirectTo({
       url: '/pages/message/message',
@@ -70,7 +71,7 @@ Page({
       url: "http://localhost:8000/api/passenger/getComplaintInfoByPassengerId",
       method: "post"
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
       var list1 = []
       var list2=[]
       var result1
@@ -96,7 +97,7 @@ Page({
         uncomList: uncomList,
         comList: comList
       })
-      // console.log(that.data.comList)
+      console.log(that.data.uncomList)
       
     })
   },

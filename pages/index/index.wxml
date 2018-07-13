@@ -27,7 +27,7 @@
         <input type="text" class="didi-input-end" value="{{destination}}"  style="color: #333333" placeholder="你要去哪儿" placeholder-color="#ccccccc" focus="{{false}}"/>
       </navigator>
       <view class="circle-end"></view>
-      <button class="didi-btn" bindtap="toWait">一键叫车</button>
+      <button class="didi-btn" bindtap="callingCar">一键叫车</button>
     </view>
     <swiper class="tab-box"  current="{{currentTab}}"  bindchange="switchTab">        
       <swiper-item class="tab-express"></swiper-item>

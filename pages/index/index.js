@@ -40,7 +40,30 @@ Page({
           currentTab: app.globalData.id,
         })
       }, 1000)
-      
+
+    },
+    
+    callingCar(e){
+      //创建订单
+      let params = {
+        "startLocation": "1,1",
+        "endLocation": "3,4",
+        "locationInfo": "1,1-3,4"
+      }
+      util.request({
+        url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
+        method: 'post',
+        data: params
+      }).then(res => {
+        if(res.status === 1){
+          console.log("创建订单成功",res.result.orderId)
+          wx.navigateTo({
+            url: `/pages/wait/wait?orderId=${res.result.orderId}`,
+          })
+        }
+      })
+
+
     },
     requestCart(e){
         util.request({
@@ -105,7 +128,7 @@ Page({
         }
         // console.log(param)
         util.request({
-          url: "http://localhost:8000/api/passenger/addOrderInfo",
+          url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
           method: "post",
           data : param
         }).then((res) => {

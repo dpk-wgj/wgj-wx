@@ -16,12 +16,12 @@
                     <cover-image style="width: 150rpx;height: 150rpx;"src="../../assets/images/driver.png"/>
                 </cover-view>
                 <cover-view class="driver-detailed" >
-                    <cover-view class="detailed-name">{{driver.name}}
+                    <cover-view class="detailed-name">{{driver.driverInfo.driverName}}
                         <cover-image class="star" style="width: 35rpx;height: 35rpx;display: inline-block;" src="../../assets/images/star.png" ></cover-image>
-                        <cover-view class="orderTotal">{{driver.stars}}</cover-view>
+                        <cover-view class="orderTotal">{{driver.driverInfo.driverLevelStar}}</cover-view>
                     </cover-view>
                    
-                    <cover-view class="detailed-Cartnumber">{{driver.Cartnumber}}</cover-view>
+                    <cover-view class="detailed-Cartnumber">{{driver.carInfo.carNumber}}</cover-view>
 
                     <!-- <cover-view class="detailed-cart">{{driver.cart}}</cover-view> -->
                 </cover-view>
@@ -41,7 +41,7 @@
 
 
     </cover-view>
-    <cover-view class="ft">
+    <cover-view class="ft" hidden='{{!canICancel}}'>
         <cover-view class="ft-cancel" bindtap="toCancel">取消订单</cover-view>
         <!-- <cover-view class="ft-help" bindtap="toEvaluation">结束行程</cover-view> -->
     </cover-view>

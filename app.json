@@ -1,16 +1,15 @@
 {
   "pages": [
-    
-    "pages/orders/orders",
     "pages/index/index",
-    "pages/ordersDetail/ordersDetail",
-    "pages/login/login",
+    "pages/orders/orders",
     
+    "pages/login/login",
+    "pages/message/message",
     "pages/my/my",
     "pages/tel/tel",
     "pages/evaluations/evaluations",
     
-    "pages/message/message",
+    
     
     "pages/complain/complain",
     "pages/evaluation/evaluation",

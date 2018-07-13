@@ -80,12 +80,13 @@ Page({
         orderId: that.data.orderId,
         passengerId: app.globalData.passengerId
       }
+      console.log('提交投诉',param)
       util.request({
         url: "http://localhost:8000/api/passenger/addComplaintInfoByOrderId",
         method: "post",
         data: param
       }).then((res) => {
-        // console.log(res)
+        console.log(res)
       })
     }, 1000)
     
