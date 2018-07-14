@@ -200,18 +200,6 @@ Page({
   // 拨打电话
   calling: function () {
     var that = this;
-    // wx.request({
-    //   url: '',
-    //   method: 'GET',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   success: function (res) {
-    //     that.setData({
-    //       phone: res.data.phone
-    //     })
-    //   }
-    // })
     wx.makePhoneCall({
       // phoneNumber: this.phone,
       phoneNumber: "12345678900",

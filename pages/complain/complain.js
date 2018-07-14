@@ -21,45 +21,37 @@ Page({
 
   onLoad(options){
     // console.log(options)
-    wx.getStorage({
-      key:'driver',
-      success: (res)=>{
-          // console.log(res.data)
-          this.setData({
-            driver:res.data
-          })
-      } 
-    })
+    // wx.getStorage({
+    //   key:'driver',
+    //   success: (res)=>{
+    //       // console.log(res.data)
+    //       this.setData({
+    //         driver:res.data
+    //       })
+    //   } 
+    // })
   // console.log(app.globalData.play)
     this.setData({
       play: app.globalData.play,
-      orderId: options.id
+      orderId: options.id,
+      driverName: options.driverName,
+      driverLevelStar: options.driverLevelStar,
+      driverPhoneNumber: options.driverPhoneNumber
     })
   },
 
   // 拨打电话
   calling: function () {
     var that = this;
-    // wx.request({
-    //   url: '',
-    //   method: 'GET',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   success: function (res) {
-    //     that.setData({
-    //       phone: res.data.phone
-    //     })
-    //   }
-    // })
+    var that = this;
+    // console.log('手机号：', that.data.driverPhoneNumber)
     wx.makePhoneCall({
-      // phoneNumber: this.phone,
-      phoneNumber: "12345678900",
+      phoneNumber: that.data.driverPhoneNumber,
       success: function () {
-        console.log("拨打电话成功")
+        // console.log("拨打电话成功")
       },
       fail: function () {
-        console.log("拨打电话失败")
+        // console.log("拨打电话失败")
       }
     })
   },
@@ -86,7 +78,7 @@ Page({
         method: "post",
         data: param
       }).then((res) => {
-        console.log(res)
+        // console.log(res)
       })
     }, 1000)
     
@@ -94,8 +86,8 @@ Page({
       title: '提交中',
     })
     setTimeout(() => {
-      wx.navigateBack({
-        delta: 1
+      wx.navigateTo({
+        url: '/pages/message/message',
       })
     }, 2000)
   }

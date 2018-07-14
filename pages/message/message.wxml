@@ -7,7 +7,20 @@
     </block> 
   </view>
   <swiper class="swiper" current="{{currentPage}}" bindchange="turnTitle" style="height:{{scrollHeight}}px;">
-    
+  
+    <!--未反馈  -->
+    <swiper-item id="uncomPage">
+    <scroll-view scroll-y>
+        <block wx:for="{{uncomList}}" wx:key="list">
+          <view class='content'>
+            <view class='title'>{{item.complaintContent}}</view>
+            <view class='time11'>{{item.complaintCreateTime}}</view>
+            <view data-complaintId='{{item.complaintId}}' data-orderId='{{item.orderId}}' class='cancel' bindtap='cancel'>撤销投诉</view>
+          </view>
+        </block>
+      </scroll-view>
+    </swiper-item>
+
     <!--已反馈  -->
     <swiper-item id="comPage">
        <scroll-view scroll-y>
@@ -17,19 +30,6 @@
             <view class='time1'>{{item.complaintCreateTime}}</view>
             <view class='time2'>{{item.complaintFeedbackTime}}</view>
             <view class='response'>{{item.complaintFeedback}}</view>
-          </view>
-        </block>
-      </scroll-view>
-    </swiper-item>
-
-    <!--未反馈  -->
-    <swiper-item id="uncomPage">
-    <scroll-view scroll-y>
-        <block wx:for="{{uncomList}}" wx:key="list">
-          <view class='content'>
-            <view class='title'>{{item.complaintContent}}</view>
-            <view class='time11'>{{item.complaintCreateTime}}</view>
-            <view data-complaintId='{{item.complaintId}}' data-orderId='{{item.orderId}}' class='cancel' bindtap='cancel'>撤销投诉</view>
           </view>
         </block>
       </scroll-view>

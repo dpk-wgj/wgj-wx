@@ -36,6 +36,7 @@ requestHistory(e){
       success: function(res){
         app.globalData.endLatitude=res.result.location.lat;
         app.globalData.endLongitude= res.result.location.lng;
+        // console.log('搜索到:',app.globalData.endLongitude, app.globalData.endLatitude)
       }
     })
     app.globalData.destination=destination,

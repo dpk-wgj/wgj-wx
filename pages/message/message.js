@@ -8,10 +8,10 @@ Page({
    */
   data: {
     swiperTitle: [{
-      text: '已反馈',
+      text: '未反馈',
       id: 1
     }, {
-      text: "未反馈",
+      text: "已反馈",
       id: 2
     }],
     currentPage: 0,
@@ -32,17 +32,20 @@ Page({
   },
   // 撤销投诉
   cancel: function(e){
-    // console.log(e.currentTarget.dataset.id)
+    console.log(e)
+    // console.log('complaintId',e.currentTarget.dataset.complaintid)
+    // console.log('orderId',e.currentTarget.dataset.orderid)
     let p = {
-      complaintId: e.currentTarget.dataset.complaintId,
-      orderId: e.currentTarget.dataset.orderId,
+      complaintId: e.currentTarget.dataset.complaintid,
+      orderId: e.currentTarget.dataset.orderid,
     }
+    // console.log(p)
     util.request({
-      url: "http://localhost:8000/api/passenger/deleteComplaintInfoByCommentId",
+      url: `${app.globalData.baseUrl}/api/passenger/deleteComplaintInfoByCommentId`,
       method: "post",
       data: p
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
     })
     wx.redirectTo({
       url: '/pages/message/message',
@@ -68,10 +71,10 @@ Page({
       }
     });
     util.request({
-      url: "http://localhost:8000/api/passenger/getComplaintInfoByPassengerId",
+      url: `${app.globalData.baseUrl}/api/passenger/getComplaintInfoByPassengerId`,
       method: "post"
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       var list1 = []
       var list2=[]
       var result1
@@ -97,7 +100,7 @@ Page({
         uncomList: uncomList,
         comList: comList
       })
-      console.log(that.data.uncomList)
+      // console.log(that.data.uncomList)
       
     })
   },

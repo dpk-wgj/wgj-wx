@@ -14,15 +14,8 @@ Page({
     endTime: '',
     startLocation: '',
     endLocation: '',
-    isComment: false
-    // commentList:[{
-    //   commentContent: '',
-    //   commentId: '',
-    //   clear: '',
-    //   stable: '',
-    //   know: '',
-    //   good: '',
-    // }]
+    isComment: false,
+    isfinished: true
   },
   myStarChoose(e) {
     let star = parseInt(e.target.dataset.star) || 0;
@@ -34,12 +27,12 @@ Page({
   toEvaluation: function(){
     var that = this
     wx.navigateTo({
-      url: '/pages/evaluation/evaluation?id=' + this.data.id,
+      url: '/pages/evaluationafter/evaluationafter?id=' + this.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber,
       success: function(e){
-         console.log('跳转评价成功')
+        //  console.log('跳转评价成功')
       },
       fail: function (e) {
-        console.log('跳转评价失败')
+        // console.log('跳转评价失败')
       }
     })
   },
@@ -47,12 +40,12 @@ Page({
   toComplain: function(){
     var that = this
     wx.navigateTo({
-      url: '/pages/complain/complain?id=' + that.data.id,
+      url: '/pages/complain/complain?id=' + that.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber,
       success: function (e) {
-         console.log('跳转投诉成功')
+        //  console.log('跳转投诉成功')
       },
       fail: function(e){
-        console.log('跳转投诉失败')
+        // console.log('跳转投诉失败')
       }
     })
   },
@@ -78,15 +71,6 @@ Page({
   onLoad(options) {
     var that = this
     // console.log(options)
-    wx.getStorage({
-      key: 'driver',
-      success: (res) => {
-        // console.log(res.data)
-        this.setData({
-          driver: res.data
-        })
-      }
-    })
     // console.log(app.globalData.play)
     this.setData({
       play: app.globalData.play,
@@ -94,64 +78,87 @@ Page({
       startTime: options.startTime,
       endTime: options.endTime,
       startLocation: options.startLocation,
-      endLocation: options.endLocation
+      endLocation: options.endLocation,
+      driverName: options.driverName,
+      driverLevelStar: options.driverLevelStar,
+      driverPhoneNumber: options.driverPhoneNumber,
+      orderStatus: options.orderStatus
     })
-    // 获取评价
-    let param = {
-      orderId: this.options.id
-    }
-    // console.log(this.options.id)
-    util.request({
-      url: "http://localhost:8000/api/passenger/getCommendInfoByOrderId",
-      method: "post",
-      data: param
-    }).then((res) => {
-      console.log(res)
-      if(res.status == 0){
-        that.setData({
-          isComment: false
-        })
-      } else{
-        if (res.result.commentId != null) {
-          that.setData({
-            isComment: true
-          })
-        }
-        // var clear, good, know, stable
-        if (res.result.isClear == 1) {
-          that.setData({
-            clear: '车内整洁'
-          })
-        }
-        if (res.result.isGood == 1) {
-          that.setData({
-            good: '态度良好'
-          })
-        }
-        if (res.result.isKnow == 1) {
-          that.setData({
-            know: '认路正确'
-          })
-        }
-        if (res.result.isStable == 1) {
-          that.setData({
-            stable: '开车平稳'
-          })
-        }
-        var star = res.result.commentPoint/20
-        that.setData({
-          commentId: res.result.commentId,
-          commentContent: res.result.commentContent,
-          isClear: res.result.isClear,
-          isGood: res.result.isGood,
-          isKnow: res.result.isKnow,
-          isStable: res.result.isStable,
-          isComment: true,
-          star: star
-        })
+    // 订单是否已完成=>按钮是否显示
+    if (that.data.orderStatus == "未完成"){
+      this.setData({
+        isfinished: false
+      })
+    } else{
+      // 获取评价
+      let param = {
+        orderId: this.options.id
       }
-      
-      
+      // console.log(this.options.id)
+      util.request({
+        url: "http://localhost:8000/api/passenger/getCommendInfoByOrderId",
+        method: "post",
+        data: param
+      }).then((res) => {
+        // console.log(res)
+        if (res.status == 0) {
+          that.setData({
+            isComment: false
+          })
+        } else {
+          if (res.result.commentId != null) {
+            that.setData({
+              isComment: true
+            })
+          }
+          // var clear, good, know, stable
+          if (res.result.isClear == 1) {
+            that.setData({
+              clear: '车内整洁'
+            })
+          }
+          if (res.result.isGood == 1) {
+            that.setData({
+              good: '态度良好'
+            })
+          }
+          if (res.result.isKnow == 1) {
+            that.setData({
+              know: '认路正确'
+            })
+          }
+          if (res.result.isStable == 1) {
+            that.setData({
+              stable: '开车平稳'
+            })
+          }
+          var star = res.result.commentPoint / 20
+          that.setData({
+            commentId: res.result.commentId,
+            commentContent: res.result.commentContent,
+            isClear: res.result.isClear,
+            isGood: res.result.isGood,
+            isKnow: res.result.isKnow,
+            isStable: res.result.isStable,
+            isComment: true,
+            star: star
+          })
+        }
+      })
+    }
+  },
+  // 拨打电话
+  calling: function () {
+    var that = this;
+    // console.log('手机号：', that.data.driverPhoneNumber)
+    wx.makePhoneCall({
+      phoneNumber: that.data.driverPhoneNumber,
+      success: function () {
+        // console.log("拨打电话成功")
+      },
+      fail: function () {
+        // console.log("拨打电话失败")
+      }
     })
   },
   onShow: function(options){

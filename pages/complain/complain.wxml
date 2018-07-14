@@ -7,14 +7,13 @@
                     <image style="width: 150rpx;height: 150rpx;"src="../../assets/images/driver.png"/>
                 </view>
                 <view class="driver-detailed" >
-                    <view class="detailed-name">{{driver.name}}
+                    <view class="detailed-name">{{driverName}}
                         <image class="star" style="width: 35rpx;height: 35rpx;display: inline-block;" src="../../assets/images/star.png" ></image>
-                        <view class="orderTotal">{{driver.stars}}</view>
+                        <view class="orderTotal">{{driverLevelStar}}</view>
                     </view>
                    
                     <view class="detailed-Cartnumber">{{driver.Cartnumber}}</view>
 
-                    <view class="detailed-cart">{{driver.cart}}</view>
                 </view>
             </view>
             

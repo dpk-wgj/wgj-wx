@@ -48,7 +48,8 @@ Page({
   login: function () {
     app.globalData.userInfo = {phone: this.data.phone}
     // console.log(this.data.phone)
-    // console.log(app.globalData.passengerId)
+    // console.log(app.globalData.userInfo.phone)
+    // console.log(app.globalData.userInfo)
     let param = {
       passengerId: app.globalData.passengerId,
       passengerPhoneNumber: this.data.phone

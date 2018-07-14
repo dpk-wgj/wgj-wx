@@ -27,6 +27,12 @@ Page({
         endLongitude: ''
     },
     onLoad: function(options) {
+      // let param = {
+      //   startLocation: app.globalData.strLatitude + ',' + app.globalData.strLongitude,
+      //   endLocation: app.globalData.endLatitude + ',' + app.globalData.endLongitude,
+      //   locationInfo: app.globalData.strLatitude + ',' + app.globalData.strLongitude + '-' + app.globalData.endLatitude + ',' + app.globalData.endLongitude
+      // }
+      //   console.log('p:',param)
        this.requestCart();
        this.requestWaitingtime();
        this.hasMessage();
@@ -36,34 +42,60 @@ Page({
           address: app.globalData.bluraddress,
           startLatitude: app.globalData.strLatitude,
           startLongitude: app.globalData.strLongitude,
+          endLatitude: app.globalData.endLatitude,
+          endLongitude: app.globalData.endLongitude,
           destination: app.globalData.destination,
           currentTab: app.globalData.id,
         })
+        // console.log('onLoad,startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
+        // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
       }, 1000)
-
     },
-    
+    // 一键叫车
     callingCar(e){
-      //创建订单
-      let params = {
-        "startLocation": "1,1",
-        "endLocation": "3,4",
-        "locationInfo": "1,1-3,4"
-      }
-      util.request({
-        url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
-        method: 'post',
-        data: params
-      }).then(res => {
-        if(res.status === 1){
-          console.log("创建订单成功",res.result.orderId)
+      var that = this
+      const destination = this.data.destination
+      if (app.globalData.userInfo.phone === undefined){
+        wx.showToast({
+          title: '未绑定手机号',
+          icon: 'none',
+          mask: true
+        })
+        setTimeout(() => {
           wx.navigateTo({
-            url: `/pages/wait/wait?orderId=${res.result.orderId}`,
+            url: `/pages/login/login`,
           })
+        }, 2000)
+        
+      } else if (destination == '') {
+        wx.showToast({
+          title: '目的地不能为空',
+          icon: 'none',
+          mask: true,
+          duration: 1000
+        })
+      } else {
+        //创建订单
+        let params = {
+          "startLocation": this.data.startLongitude + "," + this.data.startLatitude,
+          "endLocation": this.data.endLongitude + "," + this.data.endtLatitude,
+          "locationInfo": this.data.startLongitude + "," + this.data.startLatitude + "-" + this.data.endLongitude + "," + this.data.endLatitude
         }
-      })
-
-
+        // console.log('params:',params)
+        util.request({
+          url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
+          method: 'post',
+          data: params
+        }).then(res => {
+          console.log(res)
+          if(res.status === 1){
+            console.log("创建订单成功",res.result.orderId)
+            wx.navigateTo({
+              url: `/pages/wait/wait?orderId=${res.result.orderId}`,
+            })
+          }
+        })
+      }
     },
     requestCart(e){
         util.request({
@@ -99,48 +131,13 @@ Page({
                 }
               }).then((res)=>{
               const arr = res.data.waitingTimes;
-            //   console.log(arr)
                 var index = Math.floor((Math.random()*arr.length));
-                // console.log(arr[index])
                 this.setData({
                 isLoading:false,
                 waitingTimes: arr[index]
                 })
               })
         }, 1000);
-    },
-  //  一键叫车
-    toWait(e){
-      var that = this
-      const destination =this.data.destination
-      if(destination==''){
-        wx.showToast({
-            title: '目的地不能为空',
-            icon: 'fail',
-           mask: true,
-            duration: 1000
-          })
-      }else{
-        let param = {
-          startLocation: app.globalData.strLatitude + ',' + app.globalData.strLongitude,
-          endLocation: app.globalData.endLatitude + ',' + app.globalData.endLongitude,
-          locationInfo: app.globalData.strLatitude + ',' + app.globalData.strLongitude + '-' +      app.globalData.endLatitude + ',' + app.globalData.endLongitude
-        }
-        // console.log(param)
-        util.request({
-          url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
-          method: "post",
-          data : param
-        }).then((res) => {
-          console.log(res)
-        })
-
-        wx.navigateTo({
-          url: '/pages/wait/wait',
-        })
-      }
-      
-       
     },
     switchNav(event){
      

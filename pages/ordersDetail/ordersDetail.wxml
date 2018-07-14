@@ -7,21 +7,21 @@
                     <image style="width: 150rpx;height: 150rpx;"src="../../assets/images/driver.png"/>
                 </view>
                 <view class="driver-detailed" >
-                    <view class="detailed-name">{{driver.name}}
+                    <view class="detailed-name">{{driverName}}
                         <image class="star" style="width: 35rpx;height: 35rpx;display: inline-block;" src="../../assets/images/star.png" ></image>
-                        <view class="orderTotal">{{driver.stars}}</view>
+                        <view class="orderTotal">{{driverLevelStar}}</view>
                     </view>
                    
                     <view class="detailed-Cartnumber">{{driver.Cartnumber}}</view>
 
-                    <view class="detailed-cart">{{driver.cart}}</view>
+                    <!-- <view class="detailed-cart">{{driver.cart}}</view> -->
                 </view>
             </view>
             
             <view class="driver-message">
-                        <view class="phone" bindtap='calling'>
-                            <image style="width: 70rpx;height: 70rpx;" src="../../assets/images/phone.png"/>
-                        </view>
+              <view class="phone" bindtap='calling'>
+                <image style="width: 70rpx;height: 70rpx;" src="../../assets/images/phone.png"/>
+              </view>
             </view>
         </view>
         <!--订单内容  -->
@@ -31,14 +31,16 @@
           <view class='endLocation o'>终点：{{endLocation}}</view>
         </view>
         <!--按钮  -->
-        <view class='btn'>
-          <block wx:if="{{!isComment}}">
-            <button class='ebtn' bindtap='toEvaluation'>评价</button>
-          </block>
-          <block>
-            <button class='cbtn' bindtap='toComplain'>投诉</button>
-          </block>
-        </view>
+        <block wx:if="{{isfinished}}">
+          <view class='btn'>
+            <block wx:if="{{!isComment}}">
+              <button class='ebtn' bindtap='toEvaluation'>评价</button>
+            </block>
+            <block>
+              <button class='cbtn' bindtap='toComplain'>投诉</button>
+            </block>
+          </view>
+        </block>
   </view>
   <block wx:if="{{isComment}}">
   <view class='evaluation'>

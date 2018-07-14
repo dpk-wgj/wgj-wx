@@ -1,24 +1,21 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/orders/orders",
     
+    "pages/orders/orders",
+    "pages/index/index",
     "pages/login/login",
     "pages/message/message",
     "pages/my/my",
     "pages/tel/tel",
     "pages/evaluations/evaluations",
-    
-    
-    
+    "pages/evaluationafter/evaluationafter",
+    "pages/ordersDetail/ordersDetail",
     "pages/complain/complain",
     "pages/evaluation/evaluation",
     "pages/orderService/orderService",
     "pages/wait/wait",
     "pages/destination/destination",
     "pages/cancel/cancel",
-    
-   
     "pages/logs/logs",
     "pages/starting/starting",
     "pages/order/order",

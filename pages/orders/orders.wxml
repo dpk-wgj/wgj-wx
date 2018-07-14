@@ -11,27 +11,27 @@
     <swiper-item id="allPage">
       <scroll-view scroll-y>
         <block wx:for="{{allList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderId}}&startTime={{item.startTime}}&endTime={{item.endTime}}&startLocation={{item.startLocation}}&endLocation={{item.endLocation}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
             <view class='content'>
               <view class='st'>
-                <view class='info'>{{item.name}}</view>
+                <view class='info'>{{item.driverInfo.driverName}}</view>
                 <view class='status'>
-                  <text>{{item.status}}</text>
+                  <text>{{item.orderInfo.orderStatus}}</text>
                   <image src='../../assets/images/more.png' mode='aspectFit'></image>
                 </view>
               </view>
               <view class='con'>
                 <view class='time'>
                   <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.startLocation}}</text>
+                  <text>{{item.orderInfo.startLocation}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.endLocation}}</text>
+                  <text>{{item.orderInfo.endLocation}}</text>
                 </view>
               </view>
             </view>
@@ -44,27 +44,27 @@
     <swiper-item id="comPage">
        <scroll-view scroll-y>
         <block wx:for="{{comList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderId}}&startTime={{item.startTime}}&endTime={{item.endTime}}&startLocation={{item.startLocation}}&endLocation={{item.endLocation}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
             <view class='content'>
               <view class='st'>
-                <view class='info'>{{item.name}}</view>
+                <view class='info'>{{item.driverInfo.driverName}}</view>
                 <view class='status'>
-                  <text>{{item.status}}</text>
+                  <text>{{item.orderInfo.orderStatus}}</text>
                   <image src='../../assets/images/more.png' mode='aspectFit'></image>
                 </view>
               </view>
               <view class='con'>
                 <view class='time'>
                   <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.date}}{{item.startTime}} - {{item.endTime}}</text>
+                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.startLocation}}</text>
+                  <text>{{item.orderInfo.startLocation}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.endLocation}}</text>
+                  <text>{{item.orderInfo.endLocation}}</text>
                 </view>
               </view>
             </view>
@@ -77,27 +77,27 @@
     <swiper-item id="uncomPage">
     <scroll-view scroll-y>
         <block wx:for="{{uncomList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderId}}&startTime={{item.startTime}}&endTime={{item.endTime}}&startLocation={{item.startLocation}}&endLocation={{item.endLocation}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
             <view class='content'>
               <view class='st'>
-                <view class='info'>{{item.name}}</view>
+                <view class='info'>{{item.driverInfo.driverName}}</view>
                 <view class='status'>
-                  <text>未完成</text>
+                  <text>{{item.orderInfo.orderStatus}}</text>
                   <image src='../../assets/images/more.png' mode='aspectFit'></image>
                 </view>
               </view>
               <view class='con'>
                 <view class='time'>
                   <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.startTime}} - {{item.endTime}}</text>
+                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.startLocation}}</text>
+                  <text>{{item.orderInfo.startLocation}}</text>
                 </view>
                 <view class='time'>
                   <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.endLocation}}</text>
+                  <text>{{item.orderInfo.endLocation}}</text>
                 </view>
               </view>
             </view>

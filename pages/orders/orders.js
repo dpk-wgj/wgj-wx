@@ -19,15 +19,7 @@ Page({
     }],
     currentPage: 0,
 
-    allList:[{
-      orderId: 1,
-      status: 0,
-      date: '2018/7/12',
-      startTime: '12:12:12',
-      endTime: '12:30:00',
-      startLocation: "丽水",
-      endLocation: '杭州'
-    }],
+    allList:[],
     comList:[],
     uncomList:[]
   },
@@ -76,31 +68,34 @@ Page({
       url: `${app.globalData.baseUrl}/api/passenger/getOrderInfoByPassengerId`,
       method: "get"
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
+      var all = []
+      var com = []
+      var uncom = []
       for (var i=0; i<res.result.length; i++){
-        var startTime = that.startTimeFormat(res.result[i].startTime)
-        res.result[i].startTime = startTime
-        var endTime = that.endTimeFormat(res.result[i].endTime)
-        res.result[i].endTime = endTime
-      }
-      if (res.status == 3){
-        for (var i = 0; i < res.result.length; i++) {
-          res.result[i].status = '已完成'
+        var startTime = that.startTimeFormat(res.result[i].orderInfo.startTime)
+        res.result[i].orderInfo.startTime = startTime
+        var endTime = that.endTimeFormat(res.result[i].orderInfo.endTime)
+        res.result[i].orderInfo.endTime = endTime
+        if (res.result[i].orderInfo.orderStatus == 3){        //正确 == 3
+          res.result[i].orderInfo.orderStatus = "已完成"
+          all.push(res.result[i])
+          com.push(res.result[i])
+        } else{
+          if (res.result[i].orderInfo.orderStatus == 0){
+            res.result[i].driverInfo.driverName = "司机未接单"
+          }
+          res.result[i].orderInfo.endTime = ''
+          res.result[i].orderInfo.orderStatus = "未完成"
+          all.push(res.result[i])
+          uncom.push(res.result[i])
         }
-        that.setData({
-          comList: res.result,
-          allList: res.result
-        })
-      } else {
-        for (var i = 0; i < res.result.length; i++) {
-          res.result[i].status = '未完成'
-        }
-        that.setData({
-          uncomList: res.result,
-          allList: res.result
-        })
       }
-
+      that.setData({
+        comList: com,
+        uncomList: uncom,
+        allList: all
+      })
     })
   },
   // 开始时间格式化

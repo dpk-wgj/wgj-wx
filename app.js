@@ -80,7 +80,7 @@ App({
     // 获取用户信息
   },
   globalData: {
-    baseUrl: 'http://10.30.211.120:8000',
+    baseUrl: 'http://localhost:8000',
     passengerId: 0,
     userInfo: null,
     driverInfo: null,

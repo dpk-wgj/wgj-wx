@@ -55,16 +55,6 @@ Page({
               height: 45
               },
             clickable: true
-          },{
-            id: 2,
-            iconPath: '../../assets/images/location.png',
-            position: {
-              left: 20, // 单位px
-              top: res.windowHeight -200, 
-              width: 40, // 控件宽度/px
-              height: 40,
-              },
-            clickable: true
           }],
         })
       }
@@ -90,6 +80,7 @@ Page({
       success: function (res) {
         app.globalData.strLatitude=res.latitude
         app.globalData.strLongitude= res.longitude
+        // console.log(app.globalData.strLatitude, app.globalData.strLongitude)
       qqmapsdk.reverseGeocoder({
         location: {
           latitude:  res.latitude,

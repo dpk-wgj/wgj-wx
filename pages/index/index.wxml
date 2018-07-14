@@ -16,7 +16,7 @@
   <!-- 位置信息 -->
   <repeat>
     <view class="content">
-      <view class="didi-time">{{waitingTimes}}</view>  
+      <!-- <view class="didi-time">{{waitingTimes}}</view>   -->
       <import  src="/templates/sprinner.wxml" />
       <template is="sprinner" data='{{isLoading}}'></template> 
       <view class="circle-str"></view>

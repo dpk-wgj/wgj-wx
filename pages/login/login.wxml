@@ -1,7 +1,7 @@
 <view class="main">
     <view class="container">
         <view class="hd">
-            <text class="login">登录</text>
+            <text class="login">绑定手机号</text>
         </view>
         <view class="bd">
             <input type="text" class="bd-tel" value="{{phone}}" bindinput="phoneInput" placeholder="请输入手机号"
@@ -10,7 +10,7 @@
         </view>
         <view class="hd">
             <button class="didi-btn next-step" disabled="{{nextBtnDisabled}}" bindtap="login"
-                    style="background-color: {{nextBtnBc}};color:#fff">登录
+                    style="background-color: {{nextBtnBc}};color:#fff">绑定
             </button>
         </view>
     </view>
