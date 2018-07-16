@@ -12,44 +12,48 @@ Page({
 
   onLoad(option){
     let userId = app.globalData.userInfo.passengerId
-    console.log("呼车传过来的订单id：",option.orderId)
+    console.log("呼车传过来的订单id：", option.orderId, app.globalData.userInfo)
+    this.setData({
+      orderId: option.orderId
+    })
     let _this = this
     let socketTimer
     /**
      * 连接websocket
      */
     wx.connectSocket({
-      url: `ws://10.30.211.120:8000/ws/passenger/${userId}/${option.orderId}`
+      url: `${app.globalData.baseWsUrl}/ws/passenger/${userId}/${option.orderId}`
     })
     wx.onSocketError(function (res) {
       app.globalData.socketOpen = false
       console.log('WebSocket连接打开失败，请检查！')
     })
-    wx.onSocketOpen(function (res) {
-      console.log('WebSocket连接已打开！')
-      let t = 0
-      _this.sendSocketMessage("passenger,toWait")
-      socketTimer = setInterval(() => {
-        t++
+      wx.onSocketOpen(function (res) {
+        console.log('WebSocket连接已打开！')
+        let t = 0
         _this.sendSocketMessage("passenger,toWait")
-        wx.getLocation({
-          type: "gcj02",
-          success: (res) => {
-            console.log("ws中获取经纬度", res)
-            let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
-            _this.setData({
-              longitude: res.longitude,
-              latitude: res.latitude
-            })
-          }
-        })
-      }, 1000)
-      app.globalData.socketOpen = true
-      for (var i = 0; i < app.globalData.socketMsgQueue.length; i++) {
-        _this.sendSocketMessage(app.globalData.socketMsgQueue[i])
-      }
-      app.globalData.socketMsgQueue = []
-    })
+        socketTimer = setInterval(() => {
+          t++
+          _this.sendSocketMessage("passenger,toWait")
+          wx.getLocation({
+            type: "gcj02",
+            success: (res) => {
+              console.log("ws中获取经纬度", res)
+              let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
+              _this.setData({
+                longitude: res.longitude,
+                latitude: res.latitude
+              })
+            }
+          })
+        }, 1000)
+        app.globalData.socketOpen = true
+        for (var i = 0; i < app.globalData.socketMsgQueue.length; i++) {
+          _this.sendSocketMessage(app.globalData.socketMsgQueue[i])
+        }
+        app.globalData.socketMsgQueue = []
+      })
+    
 
     wx.onSocketMessage(function (res) {
       res = JSON.parse(res.data)
@@ -58,8 +62,8 @@ Page({
         app.globalData.driverInfo = res.result
         clearInterval(socketTimer)
         // wx.closeSocket()
-        wx.navigateTo({
-          url: `/pages/orderService/orderService`,
+        wx.redirectTo({
+          url: `/pages/orderService/orderService?orderId=` + _this.data.orderId,
         })
       }
     })
@@ -84,7 +88,7 @@ Page({
   var time = time.toString();
     return time[1]?time:'0'+time;
 },
-// 得到订单
+// 动画
 countInterval: function () {
   var curr = 0;
   var timer = new Date(0, 0);
@@ -100,20 +104,14 @@ countInterval: function () {
       curr++;
       this.drawProgress(this.data.count / (60 / 2))
       this.data.count++;
-      if (this.data.count > randomTime){
-        wx.showToast({
-          title: '请重新叫车',
-          icon: 'loading'
-        })
-        setTimeout(() => {
-          wx.redirectTo({
-            url: '/pages/index/index',
-          })
-        }, 2000)
-      clearInterval(this.countTimer);
-      } else {
-        // 
-      }
+      // if (this.data.count > randomTime){
+      //   wx.redirectTo({
+      //     url: '/pages/index/index?overtime=' + true,
+      //   })
+      // clearInterval(this.countTimer);
+      // } else {
+      //   // 
+      // }
     // } else {
     //   this.setData({
     //     progress_txt: "匹配成功"
@@ -140,9 +138,6 @@ countInterval: function () {
     this.setData({
       address: app.globalData.bluraddress,
     })
-    setInterval(function () {   
-      // console.log('ok')
-    }, 1000) //循环时间 这里是1秒 
   },
   onReady: function () {
     this.drawProgressbg();
@@ -157,23 +152,29 @@ countInterval: function () {
     context.setLineCap('round')
     context.beginPath();
       // 参数step 为绘制的圆环周长，从0到2为一周 。 -Math.PI / 2 将起始角设在12点钟位置 ，结束角 通过改变 step 的值确定
-    context.arc(110, 110, 100, -Math.PI /5, step*Math.PI /5-Math.PI /5, false);
+    context.arc(110, 110, 100, -Math.PI /2, step*Math.PI /2-Math.PI /2, false);
     context.stroke();
     context.draw()
   },
   // 取消订单
   toCancel(){
-    wx.showToast({
-      title: '取消成功',
-      icon: 'success'
+    var cancelId = this.data.orderId
+    wx.showModal({
+      content: '确定退出等待返回首页吗',
+      cancelColor: '#cccccc',
+      confirmColor: '#fc9c56',
+      success: function (res) {
+        // console.log(res)
+        if (res.confirm) {
+          wx.redirectTo({
+            url: "/pages/index/index?cancel=" + true + "&cancelId=" + cancelId,
+          })
+        }
+      }
     })
-    setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    }, 2000)
    
   },
+
   backIndex(){
     wx.redirectTo({
       url:  "/pages/index/index",

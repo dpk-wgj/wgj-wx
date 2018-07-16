@@ -27,15 +27,24 @@ Page({
         endLongitude: ''
     },
     onLoad: function(options) {
-      // let param = {
-      //   startLocation: app.globalData.strLatitude + ',' + app.globalData.strLongitude,
-      //   endLocation: app.globalData.endLatitude + ',' + app.globalData.endLongitude,
-      //   locationInfo: app.globalData.strLatitude + ',' + app.globalData.strLongitude + '-' + app.globalData.endLatitude + ',' + app.globalData.endLongitude
-      // }
-      //   console.log('p:',param)
-       this.requestCart();
-       this.requestWaitingtime();
-       this.hasMessage();
+      // 取消订单
+      if(options.cancel){
+        let params = {
+          orderId: options.cancelId
+        }
+        // console.log(params)
+        util.request({
+          url: `${app.globalData.baseUrl}/api/passenger/updateOrderInfoByOrderId`,
+          method: 'post',
+          data: params
+        }).then(res => {
+          // console.log(res)
+        })
+      }
+      
+      this.requestCart();
+      this.requestWaitingtime();
+      this.hasMessage();
       var that = this
       setTimeout(function () {
         that.setData({
@@ -45,10 +54,16 @@ Page({
           endLatitude: app.globalData.endLatitude,
           endLongitude: app.globalData.endLongitude,
           destination: app.globalData.destination,
-          currentTab: app.globalData.id,
+          currentTab: app.globalData.id
         })
         // console.log('onLoad,startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
         // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
+        if(options.overtime){
+          wx.showToast({
+            title: '请重新叫车',
+            icon: 'none',
+          })
+        }
       }, 1000)
     },
     // 一键叫车
@@ -59,13 +74,15 @@ Page({
         wx.showToast({
           title: '未绑定手机号',
           icon: 'none',
-          mask: true
+          mask: true,
+          success: function(e){
+            setTimeout(function () {
+              wx.redirectTo({
+                url: `/pages/login/login`,
+              })
+            }, 1000);
+          }
         })
-        setTimeout(() => {
-          wx.navigateTo({
-            url: `/pages/login/login`,
-          })
-        }, 2000)
         
       } else if (destination == '') {
         wx.showToast({
@@ -204,6 +221,7 @@ Page({
         hasMessage: true
       })
     },
+
     // 获取位置
     // getLoc: function(){
     //   var that = this;

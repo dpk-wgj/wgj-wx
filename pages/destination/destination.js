@@ -60,7 +60,7 @@ requestHistory(e){
    
     qqmapsdk.getSuggestion({
       keyword: value,
-      region: '南昌',
+      region: '青田',
       success: function(res){
         let data = res.data
       that.setData({

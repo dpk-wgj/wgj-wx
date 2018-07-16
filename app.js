@@ -81,6 +81,7 @@ App({
   },
   globalData: {
     baseUrl: 'http://localhost:8000',
+    baseWsUrl: 'ws://localhost:8000',
     passengerId: 0,
     userInfo: null,
     driverInfo: null,

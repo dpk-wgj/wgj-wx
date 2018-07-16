@@ -12,7 +12,7 @@
                         <view class="orderTotal">{{driverLevelStar}}</view>
                     </view>
                    
-                    <view class="detailed-Cartnumber">{{}}</view>
+                    <view class="detailed-Cartnumber">{{carNumber}}</view>
 
                 </view>
             </view>

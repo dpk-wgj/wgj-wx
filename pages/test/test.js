@@ -8,9 +8,18 @@ Page({
     test: ''
   },
   bindAction: function(){
-    wx.navigateTo({
-      url: "/pages/test1/test1?test=" + "123"
+    wx.showModal({
+      title: '。。。',
+      content: '。。。',
+      success: function(res){
+        if(res.confirm){
+          console.log('ok')
+          this.test()
+        }
+      }
     })
+  },
+  test: function(){
     console.log('test')
   },
 

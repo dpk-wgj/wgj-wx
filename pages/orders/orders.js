@@ -68,7 +68,7 @@ Page({
       url: `${app.globalData.baseUrl}/api/passenger/getOrderInfoByPassengerId`,
       method: "get"
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
       var all = []
       var com = []
       var uncom = []

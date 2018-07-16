@@ -14,13 +14,19 @@ Page({
     canICancel: true
   },
   onLoad: function (option) {
+    this.setData({
+      // orderId: option.orderId
+      orderId: 483
+    })
 
     let driverInfo = app.globalData.driverInfo
     console.log("接收到的司机信息：", driverInfo)
     let userId = app.globalData.userInfo.passengerId
     console.log("呼车传过来的订单id：", option.orderId)
+    
     let _this = this
-
+    
+    //websocket
     wx.onSocketMessage(function (res) {
       res = JSON.parse(res.data)
       console.log('收到服务器内容：', res)
@@ -33,21 +39,25 @@ Page({
       }else if(res.status === 2){
         console.log("本次派送已经结束了")
         wx.redirectTo({
-          url: '/pages/evaluation/evaluation',
+          url: '/pages/evaluation/evaluation?orderId=' + _this.data.orderId + '&driver=' + driverInfo,
         })
       }
     })
+
+
     wx.setStorage({
       key: "driverInfo",
       data: driverInfo
     });
-    console.log("dasdasdas", driverInfo.driverInfo.driverName)
+    // console.log("dasdasdas", driverInfo.driverInfo.driverName)
     this.setData({
       hiddenLoading: true,
       driver: driverInfo,
       canICancel: true
     })
     // console.log("12121",this.data.driver.driverInfo.driverName)
+
+    // 无用
   //   let { bluraddress,strLatitude,strLongitude,endLatitude,endLongitude} = app.globalData
   //   this.setData({
   //     markers: [{
@@ -110,34 +120,32 @@ Page({
     }
   },
   onShow(){
-    this.requesDriver();
+    // this.requesDriver();
     this.mapCtx = wx.createMapContext("didiMap");
     this.movetoPosition();
-    setInterval(function () {
-      // console.log('ok')
-    }, 1000) //循环时间 这里是1秒 
   },
-  // 获取司机信息
-  requesDriver(){
-    // util.request({
-    //   url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-    //   // mock: false,
+  // 无用
+  // requesDriver(){
+  //   util.request({
+  //     url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
+  //     // mock: false,
 
-    // }).then((res)=>{
+  //   }).then((res)=>{
       
-    //   const drivers = res.data.drivers
-    //   const driver = drivers[Math.floor(Math.random()*drivers.length)];
-    //   wx.setStorage({
-    //     key:"driver",
-    //     data:driver
-    //   });
-    //   this.setData({
-    //     hiddenLoading:true,
-    //     driver:driver
-    //   })
-    // })
+  //     const drivers = res.data.drivers
+  //     const driver = drivers[Math.floor(Math.random()*drivers.length)];
+  //     wx.setStorage({
+  //       key:"driver",
+  //       data:driver
+  //     });
+  //     this.setData({
+  //       hiddenLoading:true,
+  //       driver:driver
+  //     })
+  //   })
 
-  },
+  // },
+
   bindcontroltap: (e)=>{
     console.log("hello")
     this.movetoPosition();
@@ -157,6 +165,7 @@ Page({
     // wx.redirectTo({
     //   url: "/pages/cancel/cancel"
     // })
+
     let _this = this
     wx.showModal({
       title: '提示',
@@ -166,13 +175,16 @@ Page({
           _this.sendSocketMessage("passenger,cancelOrder")
           wx.showToast({
             title: '取消中',
-            icon: 'loading'
+            icon: 'loading',
+            success: function(e){
+              setTimeout(function () {
+                wx.redirectTo({
+                  url: '/pages/index/index',
+                })
+              }, 2000);
+              
+            }
           })
-          setTimeout(() => {
-            wx.redirectTo({
-              url: '/pages/index/index',
-            })
-          }, 2000)
 
         } else if (res.cancel) {
         }
@@ -182,7 +194,7 @@ Page({
   
   toEvaluation(){
     wx.redirectTo({
-      url:"/pages/evaluation/evaluation",
+      url:"/pages/evaluation/evaluation?orderId=" + this.data.orderId,
     })
   },
   onReady: function () {

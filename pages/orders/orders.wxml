@@ -11,7 +11,7 @@
     <swiper-item id="allPage">
       <scroll-view scroll-y>
         <block wx:for="{{allList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
             <view class='content'>
               <view class='st'>
                 <view class='info'>{{item.driverInfo.driverName}}</view>
@@ -44,7 +44,7 @@
     <swiper-item id="comPage">
        <scroll-view scroll-y>
         <block wx:for="{{comList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
             <view class='content'>
               <view class='st'>
                 <view class='info'>{{item.driverInfo.driverName}}</view>
@@ -77,7 +77,7 @@
     <swiper-item id="uncomPage">
     <scroll-view scroll-y>
         <block wx:for="{{uncomList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}'> 
+          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
             <view class='content'>
               <view class='st'>
                 <view class='info'>{{item.driverInfo.driverName}}</view>

@@ -36,7 +36,8 @@ Page({
       orderId: options.id,
       driverName: options.driverName,
       driverLevelStar: options.driverLevelStar,
-      driverPhoneNumber: options.driverPhoneNumber
+      driverPhoneNumber: options.driverPhoneNumber,
+      carNumber: options.carNumber
     })
   },
 
@@ -74,7 +75,7 @@ Page({
       }
       console.log('提交投诉',param)
       util.request({
-        url: "http://localhost:8000/api/passenger/addComplaintInfoByOrderId",
+        url: `${app.globalData.baseUrl}/api/passenger/addComplaintInfoByOrderId`,
         method: "post",
         data: param
       }).then((res) => {
@@ -84,11 +85,13 @@ Page({
     
     wx.showLoading({
       title: '提交中',
+      success: function(e) {
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '/pages/message/message',
+          })
+        }, 2000);
+      }
     })
-    setTimeout(() => {
-      wx.navigateTo({
-        url: '/pages/message/message',
-      })
-    }, 2000)
   }
 });

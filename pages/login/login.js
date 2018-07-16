@@ -46,7 +46,7 @@ Page({
   },
   // 登录
   login: function () {
-    app.globalData.userInfo = {phone: this.data.phone}
+    app.globalData.userInfo.phone = this.data.phone
     // console.log(this.data.phone)
     // console.log(app.globalData.userInfo.phone)
     // console.log(app.globalData.userInfo)
@@ -55,7 +55,7 @@ Page({
       passengerPhoneNumber: this.data.phone
     }
     util.request({
-      url: "http://localhost:8000/api/passenger/bindPassengerPhoneNumber",
+      url: `${app.globalData.baseUrl}/api/passenger/bindPassengerPhoneNumber`,
       method: "post",
       data: param
     }).then((res) => {

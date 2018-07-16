@@ -61,7 +61,8 @@ Page({
   // console.log(app.globalData.play)
     this.setData({
       play: app.globalData.play,
-      id: options.id
+      orderId: options.orderId,
+      driver: options.driver
     })
     // console.log('评价：', this.data.id)
     // console.log('play:'+this.data.play)
@@ -102,12 +103,12 @@ Page({
         isStable: isStable,
         isKnow: isKnow,
         isGood: isGood,
-        orderId: that.data.id,
+        orderId: that.data.orderId,
         commentPoint: point
       }
       // console.log('评价传值：',param)
       util.request({
-        url: "http://localhost:8000/api/passenger/addCommentInfoByOrderId",
+        url: `${app.globalData.baseUrl}/api/passenger/addCommentInfoByOrderId`,
         method: "post",
         data: param
       }).then((res) => {
@@ -116,13 +117,16 @@ Page({
     }, 900)
     
     wx.showLoading({
-      title: '提交中'
+      title: '提交中',
+      success: function(e){
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        }, 2000);
+        
+      }
     })
-    setTimeout(() => {
-      wx.redirectTo({
-        url: '/pages/index/index',
-      })
-    }, 2000)
   },
   // 拨打电话
   calling: function () {

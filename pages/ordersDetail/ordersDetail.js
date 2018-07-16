@@ -27,7 +27,7 @@ Page({
   toEvaluation: function(){
     var that = this
     wx.navigateTo({
-      url: '/pages/evaluationafter/evaluationafter?id=' + this.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber,
+      url: '/pages/evaluationafter/evaluationafter?id=' + this.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber + '&carNumber=' + this.data.carNumber,
       success: function(e){
         //  console.log('跳转评价成功')
       },
@@ -40,7 +40,7 @@ Page({
   toComplain: function(){
     var that = this
     wx.navigateTo({
-      url: '/pages/complain/complain?id=' + that.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber,
+      url: '/pages/complain/complain?id=' + that.data.id + '&driverName=' + this.data.driverName + '&driverLevelStar=' + this.data.driverLevelStar + '&driverPhoneNumber=' + this.data.driverPhoneNumber + '&carNumber=' + this.data.carNumber,
       success: function (e) {
         //  console.log('跳转投诉成功')
       },
@@ -58,7 +58,7 @@ Page({
     }
     // console.log(param)
     util.request({
-      url: "http://localhost:8000/api/passenger/deleteCommentInfoByCommentId",
+      url: `${app.globalData.baseUrl}/api/passenger/deleteCommentInfoByCommentId`,
       method: "post",
       data: param
     }).then((res) => {
@@ -82,7 +82,8 @@ Page({
       driverName: options.driverName,
       driverLevelStar: options.driverLevelStar,
       driverPhoneNumber: options.driverPhoneNumber,
-      orderStatus: options.orderStatus
+      orderStatus: options.orderStatus,
+      carNumber: options.carNumber
     })
     // 订单是否已完成=>按钮是否显示
     if (that.data.orderStatus == "未完成"){
@@ -96,7 +97,7 @@ Page({
       }
       // console.log(this.options.id)
       util.request({
-        url: "http://localhost:8000/api/passenger/getCommendInfoByOrderId",
+        url: `${app.globalData.baseUrl}/api/passenger/getCommendInfoByOrderId`,
         method: "post",
         data: param
       }).then((res) => {
