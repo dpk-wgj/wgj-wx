@@ -33,19 +33,10 @@ App({
               if(res2.status === 1){
                 // console.log(res2)
                 this.globalData.userInfo = res2.result.passenger
+                // console.log(this.globalData.userInfo)
               }              // console.log("后台请求登录：", res2)
               // this.globalData.passengerId = res2.result.passenger.passengerId
               // console.log(this.globalData.passengerId)
-              // util.request({
-              //   url: "http://localhost:8000/api/getUserInfoById",
-              //   method: "post",
-              //   data: {
-              //     "userId": 4
-              //   }
-              // }).then(res => {
-              //   // console.log(res)
-                
-              // })
 
             })
  

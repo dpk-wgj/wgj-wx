@@ -46,20 +46,22 @@ Page({
   },
   // 登录
   login: function () {
-    app.globalData.userInfo.phone = this.data.phone
+    app.globalData.userInfo.passengerPhoneNumber = this.data.phone
     // console.log(this.data.phone)
     // console.log(app.globalData.userInfo.phone)
     // console.log(app.globalData.userInfo)
     let param = {
-      passengerId: app.globalData.passengerId,
+      passengerId: app.globalData.userInfo.passengerId,
       passengerPhoneNumber: this.data.phone
     }
+    // console.log('userInfo:',app.globalData.userInfo)
+    // console.log(param)
     util.request({
       url: `${app.globalData.baseUrl}/api/passenger/bindPassengerPhoneNumber`,
       method: "post",
       data: param
     }).then((res) => {
-      // console.log(res)
+      console.log(res)
       wx.navigateTo({
         url: '/pages/index/index',
       })
