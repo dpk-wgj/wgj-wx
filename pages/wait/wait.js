@@ -8,7 +8,8 @@ Page({
   time: '00:00',
   randomTime: 100,
   flag: false,
-  socketTimer: null
+  socketTimer: null,
+  cancel: false
   },
 
   onLoad(option){
@@ -163,20 +164,20 @@ Page({
   // 取消订单
   toCancel(){
     var cancelId = this.data.orderId
-    wx.showModal({
-      content: '确定退出等待返回首页吗',
-      cancelColor: '#cccccc',
-      confirmColor: '#fc9c56',
-      success: function (res) {
-        // console.log(res)
-        if (res.confirm) {
-          wx.redirectTo({
-            url: "/pages/index/index?cancel=" + true + "&cancelId=" + cancelId,
-          })
+      wx.showModal({
+        content: '确定退出等待返回首页吗',
+        cancelColor: '#cccccc',
+        confirmColor: '#fc9c56',
+        success: function (res2) {
+          // console.log(res)
+          if (res2.confirm) {
+            
+            wx.navigateTo({
+              url: '/pages/index/index?cancelId=' + cancelId + '&cancel=true' ,
+            })
+          }
         }
-      }
-    })
-   
+       })
   },
 
   backIndex(){

@@ -15,8 +15,7 @@ Page({
   },
   onLoad: function (option) {
     this.setData({
-      // orderId: option.orderId
-      orderId: 483
+      orderId: option.orderId
     })
 
     let driverInfo = app.globalData.driverInfo
@@ -63,57 +62,6 @@ Page({
       canICancel: true
     })
     // console.log("12121",this.data.driver.driverInfo.driverName)
-
-    // 无用
-  //   let { bluraddress,strLatitude,strLongitude,endLatitude,endLongitude} = app.globalData
-  //   this.setData({
-  //     markers: [{
-  //       iconPath: "../../assets/images/str.png",
-  //       id: 0,
-  //       latitude: strLatitude,
-  //       longitude:strLongitude,
-  //       width: 30,
-  //       height: 30
-  //     },{
-  //       iconPath: "../../assets/images/end.png",
-  //       id: 0,
-  //       latitude: endLatitude,
-  //       longitude:endLongitude,
-  //       width: 30,
-  //       height: 30
-  //     }],
-  //     polyline: [{
-  //       points: [{
-  //         longitude: strLongitude,
-  //         latitude: strLatitude
-  //       }, {
-  //         longitude:endLongitude,
-  //         latitude:endLatitude
-  //       }],
-  //       color:"red",
-  //       width: 4,
-  //       dottedLine: true
-  //     }],
-  
-  //   });
-  // wx.getSystemInfo({
-  //   success: (res)=>{
-  //     this.setData({
-  //       controls:[{
-  //         id: 1,
-  //         iconPath: '../../assets/images/mapCart.png',
-  //         position: {
-  //           left: res.windowWidth/2 - 20,
-  //           top: res.windowHeight/2 - 80,
-  //           width: 22,
-  //           height: 45
-  //           },
-  //         clickable: true
-  //       }],
-     
-  //     })
-  //   }
-  // })
   
   },
 
@@ -131,27 +79,7 @@ Page({
     this.mapCtx = wx.createMapContext("didiMap");
     this.movetoPosition();
   },
-  // 无用
-  // requesDriver(){
-  //   util.request({
-  //     url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-  //     // mock: false,
-
-  //   }).then((res)=>{
-      
-  //     const drivers = res.data.drivers
-  //     const driver = drivers[Math.floor(Math.random()*drivers.length)];
-  //     wx.setStorage({
-  //       key:"driver",
-  //       data:driver
-  //     });
-  //     this.setData({
-  //       hiddenLoading:true,
-  //       driver:driver
-  //     })
-  //   })
-
-  // },
+  
 
   bindcontroltap: (e)=>{
     console.log("hello")
@@ -169,9 +97,6 @@ Page({
   },
   // 取消订单
   toCancel(){
-    // wx.redirectTo({
-    //   url: "/pages/cancel/cancel"
-    // })
 
     let _this = this
     wx.showModal({
@@ -184,6 +109,22 @@ Page({
             title: '取消中',
             icon: 'loading',
             success: function(e){
+              let params = {
+                orderId: _this.data.orderId
+              }
+              console.log('params:', params)
+              util.request({
+                url: `${app.globalData.baseUrl}/api/passenger/updateOrderInfoByOrderId`,
+                method: 'post',
+                data: params
+              }).then(res => {
+                console.log(res)
+                if (res.status === 1) {
+                  wx.redirectTo({
+                    url: "/pages/index/index?cancel=" + true + "&cancelId=" + cancelId,
+                  })
+                }
+              })
               setTimeout(function () {
                 wx.redirectTo({
                   url: '/pages/index/index',

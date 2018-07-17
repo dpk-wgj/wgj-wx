@@ -60,6 +60,7 @@ Page({
         })
       }
   },
+  // 切换手机号
   toTel: function(e){
     wx.navigateTo({
       url: '/pages/tel/tel',

@@ -47,6 +47,7 @@ Page({
   // 登录
   login: function () {
     app.globalData.userInfo.passengerPhoneNumber = this.data.phone
+    console.log('绑定后：', app.globalData.userInfo)
     // console.log(this.data.phone)
     // console.log(app.globalData.userInfo.phone)
     // console.log(app.globalData.userInfo)
@@ -61,7 +62,7 @@ Page({
       method: "post",
       data: param
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       wx.navigateTo({
         url: '/pages/index/index',
       })

@@ -10,7 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    test: ''
+    test: '',
+    time: false
   },
   bindAction: function(){
     wx.showModal({
@@ -32,19 +33,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var latitude = 28.3448795492
-    var longitude = 119.7814268657
-    qqmapsdk.reverseGeocoder({
-      location: {
-        latitude: latitude,
-        longitude: longitude
-      },
-      success: function (addressRes) {
-        var address = addressRes.result.formatted_addresses.recommend;
-        console.log(address)
+    // var latitude = 28.3448795492
+    // var longitude = 119.7814268657
+    // qqmapsdk.reverseGeocoder({
+    //   location: {
+    //     latitude: latitude,
+    //     longitude: longitude
+    //   },
+    //   success: function (addressRes) {
+    //     var address = addressRes.result.formatted_addresses.recommend;
+    //     console.log(address)
 
-      }
-    })
+    //   }
+    // })
   },
 
   /**
@@ -58,7 +59,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var i = 0
+    setTimeout(() => {
+      i++
+      console.log(i)
+    }, 300000)
   },
 
   /**

@@ -1,4 +1,5 @@
-// pages/login/login.js
+
+import util from '../../utils/index';
 const app = getApp()
 Page({
 
@@ -45,9 +46,22 @@ Page({
   },
   // 登录
   login: function () {
-    app.globalData.userInfo = {phone: this.data.phone}
-    wx.navigateTo({
-      url: '/pages/my/my',
+    app.globalData.userInfo.passengerPhoneNumber = this.data.phone
+    let param = {
+      passengerId: app.globalData.userInfo.passengerId,
+      passengerPhoneNumber: this.data.phone
+    }
+    // console.log('userInfo:',app.globalData.userInfo)
+    // console.log(param)
+    util.request({
+      url: `${app.globalData.baseUrl}/api/passenger/bindPassengerPhoneNumber`,
+      method: "post",
+      data: param
+    }).then((res) => {
+      // console.log(res)
+      wx.navigateTo({
+        url: '/pages/index/index',
+      })
     })
   }
 

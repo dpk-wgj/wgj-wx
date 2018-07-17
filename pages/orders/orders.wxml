@@ -1,109 +1,33 @@
 <view class='container'>
-<!-- 头部导航  -->
-  <view class="header">
-    <block wx:for="{{swiperTitle}}" wx:key="">
-      <view class="title {{index==currentPage?'selected':''}}" data-index="{{index}}"
-      bindtap="turnPage">{{item.text}}</view>
-    </block> 
-  </view>
-  <swiper class="swiper" current="{{currentPage}}" bindchange="turnTitle" style="height:{{scrollHeight}}px;">
-    <!-- 全部  -->
-    <!-- <swiper-item id="allPage">
-      <scroll-view scroll-y>
-        <block wx:for="{{allList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
-            <view class='content'>
-              <view class='st'>
-                <view class='info'>{{item.driverInfo.driverName}}</view>
-                <view class='status'>
-                  <text>{{item.orderInfo.orderStatus}}</text>
-                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
-                </view>
-              </view>
-              <view class='con'>
-                <view class='time'>
-                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.startLocation}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.endLocation}}</text>
-                </view>
+  <scroll-view scroll-y>
+    <block wx:for="{{orderList}}" wx:key="list">
+      <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
+        <view class='content'>
+          <view class='st'>
+            <view class='info'>{{item.driverInfo.driverName}}</view>
+            <view class='status'>
+              <text>{{item.orderInfo.orderStatus}}</text>
+              <image src='../../assets/images/more.png' mode='aspectFit'></image>
+            </view>
+          </view>
+          <view class='con'>
+            <view class='time' style='display:flex;'>
+              <image src='../../assets/images/time.png' mode='aspectFit'></image>
+              <view>
+                {{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}
               </view>
             </view>
-          </navigator> 
-        </block>
-      </scroll-view>
-    </swiper-item> -->
-
-    <!--已完成  -->
-    <swiper-item id="comPage">
-       <scroll-view scroll-y>
-        <block wx:for="{{comList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
-            <view class='content'>
-              <view class='st'>
-                <view class='info'>{{item.driverInfo.driverName}}</view>
-                <view class='status'>
-                  <text>{{item.orderInfo.orderStatus}}</text>
-                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
-                </view>
-              </view>
-              <view class='con'>
-                <view class='time'>
-                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.startLocation}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.endLocation}}</text>
-                </view>
-              </view>
+            <view class='time'>
+              <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
+              <text>{{item.orderInfo.startLocation}}</text>
             </view>
-          </navigator> 
-        </block>
-      </scroll-view>
-    </swiper-item>
-
-    <!--未完成  -->
-    <swiper-item id="uncomPage">
-    <scroll-view scroll-y>
-        <block wx:for="{{uncomList}}" wx:key="list">
-          <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
-            <view class='content'>
-              <view class='st'>
-                <view class='info'>{{item.driverInfo.driverName}}</view>
-                <view class='status'>
-                  <text>{{item.orderInfo.orderStatus}}</text>
-                  <image src='../../assets/images/more.png' mode='aspectFit'></image>
-                </view>
-              </view>
-              <view class='con'>
-                <view class='time'>
-                  <image src='../../assets/images/time.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.date}}{{item.orderInfo.startTime}} - {{item.orderInfo.endTime}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/redcircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.startLocation}}</text>
-                </view>
-                <view class='time'>
-                  <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
-                  <text>{{item.orderInfo.endLocation}}</text>
-                </view>
-              </view>
+            <view class='time'>
+              <image src='../../assets/images/bulecircle.png' mode='aspectFit'></image>
+              <text>{{item.orderInfo.endLocation}}</text>
             </view>
-          </navigator> 
-        </block>
-      </scroll-view>
-    </swiper-item>
-  </swiper>
+          </view>
+        </view>
+      </navigator> 
+    </block>
+  </scroll-view>
 </view>

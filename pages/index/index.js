@@ -38,7 +38,7 @@ Page({
           method: 'post',
           data: params
         }).then(res => {
-          // console.log(res)
+          console.log(res)
         })
       }
       
@@ -58,19 +58,15 @@ Page({
         })
         // console.log('onLoad,startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
         // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
-        if(options.overtime){
-          wx.showToast({
-            title: '请重新叫车',
-            icon: 'none',
-          })
-        }
+        
       }, 1000)
     },
     // 一键叫车
     callingCar(e){
       var that = this
       const destination = this.data.destination
-      if (app.globalData.userInfo.phone === undefined){
+
+      if (app.globalData.userInfo.passengerPhoneNumber == null){
         wx.showToast({
           title: '未绑定手机号',
           icon: 'none',
@@ -94,8 +90,8 @@ Page({
       } else {
         //创建订单
         let params = {
-          "startLocation": this.data.startLongitude + "," + this.data.startLatitude,
-          "endLocation": this.data.endLongitude + "," + this.data.endLatitude,
+          "startLocation":this.data.address + "," + this.data.startLongitude + "," + this.data.startLatitude,
+          "endLocation": this.data.destination + "," + this.data.endLongitude + "," + this.data.endLatitude,
           "locationInfo": this.data.startLongitude + "," + this.data.startLatitude + "-" + this.data.endLongitude + "," + this.data.endLatitude
         }
         console.log('params:',params)
@@ -104,7 +100,7 @@ Page({
           method: 'post',
           data: params
         }).then(res => {
-          console.log(res)
+          // console.log(res)
           if(res.status === 1){
             console.log("创建订单成功",res.result.orderId)
             wx.navigateTo({
@@ -196,7 +192,7 @@ Page({
       // console.log(app.globalData.userInfo.phone)
       // console.log(app.globalData.userInfo.captcha)
     // 如果全局未存手机号进入登录页
-      if (app.globalData.userInfo && app.globalData.userInfo.phone){
+      if (app.globalData.userInfo && app.globalData.userInfo.passengerPhoneNumber){
         wx.navigateTo({
           url: "/pages/my/my",
         })
