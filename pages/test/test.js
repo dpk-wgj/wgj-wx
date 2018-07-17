@@ -1,4 +1,9 @@
 // pages/test/test.js
+var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
+var qqmapsdk;
+qqmapsdk = new QQMapWX({
+  key: 'DHNBZ-2ZLKK-T7IJJ-AXSQW-WX5L6-A6FJZ'
+});
 Page({
 
   /**
@@ -27,7 +32,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var latitude = 28.3448795492
+    var longitude = 119.7814268657
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      success: function (addressRes) {
+        var address = addressRes.result.formatted_addresses.recommend;
+        console.log(address)
+
+      }
+    })
   },
 
   /**

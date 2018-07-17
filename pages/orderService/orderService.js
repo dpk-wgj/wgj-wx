@@ -41,7 +41,14 @@ Page({
         wx.redirectTo({
           url: '/pages/evaluation/evaluation?orderId=' + _this.data.orderId + '&driver=' + driverInfo,
         })
-      }
+      }else if(res.status === 3){//司机端按下转派
+          wx.closeSocket({})
+          wx.redirectTo({
+            url: `/pages/wait/wait?orderId=${option.orderId}&isChangeDriver=true`,
+          })
+          console.log("转派",res)
+
+        }
     })
 
 

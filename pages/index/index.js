@@ -95,10 +95,10 @@ Page({
         //创建订单
         let params = {
           "startLocation": this.data.startLongitude + "," + this.data.startLatitude,
-          "endLocation": this.data.endLongitude + "," + this.data.endtLatitude,
+          "endLocation": this.data.endLongitude + "," + this.data.endLatitude,
           "locationInfo": this.data.startLongitude + "," + this.data.startLatitude + "-" + this.data.endLongitude + "," + this.data.endLatitude
         }
-        // console.log('params:',params)
+        console.log('params:',params)
         util.request({
           url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
           method: 'post',
@@ -197,15 +197,14 @@ Page({
       // console.log(app.globalData.userInfo.captcha)
     // 如果全局未存手机号进入登录页
       if (app.globalData.userInfo && app.globalData.userInfo.phone){
-      
-      wx.navigateTo({
-        url: "/pages/my/my",
-      })
-    }else{
         wx.navigateTo({
-        url:  "/pages/login/login",
+          url: "/pages/my/my",
         })
-    }
+      }else{
+          wx.navigateTo({
+          url:  "/pages/login/login",
+          })
+      } 
     },
     onChange(e){
         const currentCost = e.target.dataset.index;

@@ -1,34 +1,36 @@
 <view class="container">
-   <view class="location">
-    <view class="location-city">
-      <text>青田</text>
+    <view class="location">
+        <view class="location-city" bindtap="switchCity">
+            <text>青田</text>
+        </view>
+        <input type="text" class="location-input" value="{{value}}"  bindinput="searchInputend"placeholder="你在哪儿上车"placeholder-style="color:#cccccc"/>
+        <navigator url="/pages/index/index" redirect ><view class="location-cancel">取消</view></navigator>
     </view>
-    <input type="text" class="location-input"placeholder="你在哪儿上车"placeholder-style="color:#cccccc"/>
-    <navigator url="/pages/index/index" redirect ><view class="location-cancel">取消</view></navigator>
-  </view>
-
-   <map class="didiMap" id="didiMap"
-   latitude="{{latitude}}"
-    longitude="{{longitude}}"
-     scale="{{scale}}"
-      bindregionchange="bindregionchange"
-       polyline="{{polyline}}" 
-       markers="{{markers}}"
-        controls="{{controls}}" 
-    bindmarkertap="bindmarkertap"  
-    bindcontroltap="controltap" 
-    show-location>
-    <cover-view class="address">
-      <cover-image style="width: 80rpx;height: 80rpx;" src="../../assets/images/address.png"></cover-image>
-      
-      <cover-view class="address-desc">
-        <cover-view class="blur">{{bluraddress}}</cover-view>
-      <cover-view class="detailed"> {{address}}</cover-view> 
-      
-      
-      </cover-view>
-      <cover-view class="address-btn" bindtap="toIndex">确定</cover-view>
-    </cover-view>
+    <view class="addressList">
+    <scroll-view  scroll-with-animation="{{true}}" >
     
-    </map>
-  </view>
+        <view wx:if="{{!value==''}}" class="destination" wx:for="{{address}}" data-destination="{{item.title}}" data-end="{{item.address}}" bindtap="toIndex" wx:key="{{item.id}}">
+               <view class="destination-content">
+                   <view class="content-image">
+                   <image src="../../assets/images/clock.png"></image>
+                </view>
+                   <view class="content">
+                        <text class="content-name">{{item.title}}</text>
+                    <text class="content-detail">{{item.address}}</text>
+                   </view>
+               </view> 
+        </view>
+          <view wx:if="{{value==''}}" class="destination" wx:for="{{ entity}}" data-destination="{{item.title}}" data-end="{{item.address}}" bindtap="toIndex" wx:key="{{item.id}}">
+               <view class="destination-content">
+                   <view class="content-image">
+                   <image src="../../assets/images/clock.png"></image>
+                </view>
+                   <view class="content">
+                        <text class="content-name">{{item.title}}</text>
+                    <text class="content-detail">{{item.address}}</text>
+                   </view>
+               </view> 
+        </view>
+    </scroll-view>
+</view>
+</view>

@@ -60,9 +60,9 @@ Page({
       data: param
     }).then((res) => {
       // console.log(res)
-    })
-    wx.navigateTo({
-      url: '/pages/index/index',
+      wx.navigateTo({
+        url: '/pages/index/index',
+      })
     })
   }
 

@@ -1,115 +1,60 @@
+import util from '../../utils/index';
+
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key:'DHNBZ-2ZLKK-T7IJJ-AXSQW-WX5L6-A6FJZ'
 });
-const app = getApp()
+const app = getApp();
 Page({
   data: {
-    scale: 16,
-    latitude: 0,
-    longitude: 0,
     address: '',
     bluraddress: '',
   },
-  onLoad: function (options) {
-    wx.getLocation({
-      type: "gcj02",
-      success:(res)=>{
-        // console.log(res)
-        this.setData({
-          longitude:res.longitude,
-          latitude: res.latitude
-        })
-     
-    var that = this;
-    qqmapsdk.reverseGeocoder({
-      location: {
-        latitude:  res.latitude,
-        longitude: res.longitude,
-    },
-      success: function (res) {
-        app.globalData.bluraddress=location
-        that.setData({
-          address: res.result.address,
-          bluraddress: res.result.formatted_addresses.recommend
-        });
-      },
-    
-    });
-      }
-      })
-
-    // this.moveToLocation();
-
-    wx.getSystemInfo({
-      success: (res)=>{
-        this.setData({
-          controls:[{
-            id: 1,
-            iconPath: '../../assets/images/marker.png',
-            position: {
-              left: res.windowWidth/2 - 11,
-              top: res.windowHeight/2 - 45,
-              width: 22,
-              height: 45
-              },
-            clickable: true
-          }],
-        })
-      }
-    })
-  },
-
-  onReady: function(){
-    this.mapCtx = wx.createMapContext("didiMap"); // 地图组件的id
-    this.movetoPosition()
-
-  },
-  controltap: function(e){
-  
-    console.log(e.controlId)
-    if(e.controlId==1){
-      this.movetoLocation();
-    }
-  
-  },
-  bindregionchange: function(e){
-    var that = this
-    this.mapCtx.getCenterLocation({
-      success: function (res) {
-        app.globalData.strLatitude=res.latitude
-        app.globalData.strLongitude= res.longitude
-        // console.log(app.globalData.strLatitude, app.globalData.strLongitude)
-      qqmapsdk.reverseGeocoder({
-        location: {
-          latitude:  res.latitude,
-          longitude: res.longitude,
-      },
-      success: function (res) {
-        
-        that.setData({
-          address: res.result.address,
-          bluraddress: res.result.formatted_addresses.recommend
-        })
-      },
-      });
-       
-      }
-    })
-
-  },
-  movetoPosition: function(){
-    this.mapCtx.moveToLocation();
-  },
-  // 确定
-toIndex(){
-  let  bluraddress = this.data.bluraddress;
- app.globalData.bluraddress=bluraddress;
-  wx.redirectTo({
-    url: "/pages/index/index",
-  })
+onLoad(){
 },
-  
+  // 跳转到首页
+  toIndex(e){
+    const destination = e.currentTarget.dataset.destination;
+    const endAddress =  e.currentTarget.dataset.end;
+    qqmapsdk.geocoder({
+      address: endAddress,
+      success: function(res){
+        app.globalData.strLatitude=res.result.location.lat;
+        app.globalData.strLongitude= res.result.location.lng;
+        // console.log('搜索到:',app.globalData.endLongitude, app.globalData.endLatitude)
+      }
+    })
+    app.globalData.bluraddress=destination,
+    wx.redirectTo({
+      url: "/pages/index/index",
+    })
+  },
+
+  switchCity(e){
+    qqmapsdk.getCityList({
+      success: function(res){
+        console.log(res)
+      }
+    })
+  },
+  searchInputend(e){
+   
+    var that = this;
+    var  value = e.detail.value
+    var address = that.address;
+   
+    qqmapsdk.getSuggestion({
+      keyword: value,
+      region: '青田',
+      success: function(res){
+        let data = res.data
+      that.setData({
+        address: data,
+        value
+      })
+      }
+    })
+  },
   
 })

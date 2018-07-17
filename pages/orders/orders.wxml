@@ -8,7 +8,7 @@
   </view>
   <swiper class="swiper" current="{{currentPage}}" bindchange="turnTitle" style="height:{{scrollHeight}}px;">
     <!-- 全部  -->
-    <swiper-item id="allPage">
+    <!-- <swiper-item id="allPage">
       <scroll-view scroll-y>
         <block wx:for="{{allList}}" wx:key="list">
           <navigator url='/pages/ordersDetail/ordersDetail?id={{item.orderInfo.orderId}}&startTime={{item.orderInfo.startTime}}&endTime={{item.orderInfo.endTime}}&startLocation={{item.orderInfo.startLocation}}&endLocation={{item.orderInfo.endLocation}}&driverName={{item.driverInfo.driverName}}&driverLevelStar={{item.driverInfo.driverLevelStar}}&driverPhoneNumber={{item.driverInfo.driverPhoneNumber}}&orderStatus={{item.orderInfo.orderStatus}}&carNumber={{item.carInfo.carNumber}}'> 
@@ -38,7 +38,7 @@
           </navigator> 
         </block>
       </scroll-view>
-    </swiper-item>
+    </swiper-item> -->
 
     <!--已完成  -->
     <swiper-item id="comPage">

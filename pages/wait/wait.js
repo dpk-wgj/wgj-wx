@@ -7,20 +7,30 @@ Page({
   waitTimer: null,
   time: '00:00',
   randomTime: 100,
-  flag: false
+  flag: false,
+  socketTimer: null
   },
 
   onLoad(option){
+    if (option.isChangeDriver){
+      wx.showToast({
+        title: '司机申请改派',
+        icon: 'none',
+        duration: 2000,
+      })
+    }
     let userId = app.globalData.userInfo.passengerId
     console.log("呼车传过来的订单id：", option.orderId, app.globalData.userInfo)
     this.setData({
       orderId: option.orderId
     })
     let _this = this
-    let socketTimer
     /**
      * 连接websocket
-     */
+     */    
+    if (app.globalData.socketOpen){
+      wx.closeSocket({})
+    }    
     wx.connectSocket({
       url: `${app.globalData.baseWsUrl}/ws/passenger/${userId}/${option.orderId}`
     })
@@ -30,23 +40,8 @@ Page({
     })
       wx.onSocketOpen(function (res) {
         console.log('WebSocket连接已打开！')
-        let t = 0
         _this.sendSocketMessage("passenger,toWait")
-        socketTimer = setInterval(() => {
-          t++
-          _this.sendSocketMessage("passenger,toWait")
-          wx.getLocation({
-            type: "gcj02",
-            success: (res) => {
-              console.log("ws中获取经纬度", res)
-              let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
-              _this.setData({
-                longitude: res.longitude,
-                latitude: res.latitude
-              })
-            }
-          })
-        }, 1000)
+        _this.requestDriver()
         app.globalData.socketOpen = true
         for (var i = 0; i < app.globalData.socketMsgQueue.length; i++) {
           _this.sendSocketMessage(app.globalData.socketMsgQueue[i])
@@ -54,13 +49,13 @@ Page({
         app.globalData.socketMsgQueue = []
       })
     
-
     wx.onSocketMessage(function (res) {
       res = JSON.parse(res.data)
       console.log('收到服务器内容：', res)
       if (res.status === 1) {
         app.globalData.driverInfo = res.result
-        clearInterval(socketTimer)
+        console.log("乘客端停止请求司机，清除定时器")
+        clearInterval(_this.socketTimer)        
         // wx.closeSocket()
         wx.redirectTo({
           url: `/pages/orderService/orderService?orderId=` + _this.data.orderId,
@@ -71,7 +66,6 @@ Page({
       app.globalData.socketOpen = false
       console.log('WebSocket 已关闭！')
     })
-    console.log("是否打开：", app.globalData.socketOpen)
   },
 
 
@@ -84,6 +78,25 @@ Page({
       app.globalData.socketMsgQueue.push(msg)
     }
   },  
+  requestDriver: function(){
+    let t = 0
+    let _this = this
+    this.socketTimer = setInterval(() => {
+      t++
+      _this.sendSocketMessage("passenger,toWait")
+      wx.getLocation({
+        type: "gcj02",
+        success: (res) => {
+          console.log("ws中获取经纬度", res)
+          let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
+          _this.setData({
+            longitude: res.longitude,
+            latitude: res.latitude
+          })
+        }
+      })
+    }, 1000)
+  },
   parseTime: function(time){
   var time = time.toString();
     return time[1]?time:'0'+time;
@@ -92,7 +105,7 @@ Page({
 countInterval: function () {
   var curr = 0;
   var timer = new Date(0, 0);
-  var randomTime = 300;
+  var randomTime = 600;
   // console.log(randomTime)
   this.countTimer = setInterval(() => {
     // if (this.data.count <= randomTime) {
