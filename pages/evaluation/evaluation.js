@@ -49,21 +49,21 @@ Page({
   },
 
   onLoad(options){
-    wx.getStorage({
-      key:'driver',
-      success: (res)=>{
-          // console.log(res.data)
-          this.setData({
-            driver:res.data
-          })
-      } 
-    })
-  // console.log(app.globalData.play)
+    app.globalData.driverInfo.driverLevelStar /= 20
+    console.log(app.globalData.driverInfo)
     this.setData({
       play: app.globalData.play,
+      driver: app.globalData.driverInfo,
       orderId: options.orderId,
-      driver: options.driver
+      // driver: options.driverInfo,
+      // car: options.carInfo
     })
+    console.log('driver:', this.data.driver)
+    console.log('name:', this.data.driver.driverInfo.driverName)
+    console.log('orderId:', options.orderId)
+    // console.log('driver:', options.driverInfo)
+    // console.log('car:',options.carInfo)
+    // console.log('评价界面接收到司机信息：', this.data.driver)
     // console.log('评价：', this.data.id)
     // console.log('play:'+this.data.play)
   },

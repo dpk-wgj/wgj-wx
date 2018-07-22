@@ -11,19 +11,25 @@ Page({
    */
   data: {
     test: '',
-    time: false
+    time: false,
+    str: '17855896632',
+    str1: '17855896632'
   },
   bindAction: function(){
-    wx.showModal({
-      title: '。。。',
-      content: '。。。',
-      success: function(res){
-        if(res.confirm){
-          console.log('ok')
-          this.test()
-        }
-      }
-    })
+    // wx.showModal({
+    //   title: '。。。',
+    //   content: '。。。',
+    //   success: function(res){
+    //     if(res.confirm){
+    //       console.log('ok')
+    //       this.test()
+    //     }
+    //   }
+    // })
+    var str = '17858906508'
+    var after = str.substr(0, parseInt(str.split('').length / 3)) + '****' + str.substr(parseInt(str.split('').length / 3 + 4), str.split('').length)
+    console.log(str)
+    console.log(after)
   },
   test: function(){
     console.log('test')
@@ -33,6 +39,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var str = this.data.str1
+    var after = str.substr(0, parseInt(str.split('').length / 3)) + '****' + str.substr(parseInt(str.split('').length / 3 + 4), str.split('').length)
+    this.setData({
+      str1: after
+    })
     // var latitude = 28.3448795492
     // var longitude = 119.7814268657
     // qqmapsdk.reverseGeocoder({

@@ -12,7 +12,7 @@ Page({
     address: []
   },
 onLoad(){
-  this.requestHistory();
+  // this.requestHistory();
 },
 requestHistory(e){
   util.request({

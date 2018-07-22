@@ -42,8 +42,8 @@ Page({
         })
       }
       
-      this.requestCart();
-      this.requestWaitingtime();
+      // this.requestCart();
+      // this.requestWaitingtime();
       this.hasMessage();
       var that = this
       setTimeout(function () {
@@ -110,22 +110,22 @@ Page({
         })
       }
     },
-    requestCart(e){
-        util.request({
-            url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-            mock: false,
-          }).then((res)=>{
+    // requestCart(e){
+    //     util.request({
+    //         url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
+    //         mock: false,
+    //       }).then((res)=>{
        
-            const navData = res.data.navData;
-            const imgUrls = res.data.imgUrls;
-            const cost = res.data.cost
-            this.setData({
-                navData,
-                imgUrls,
-                cost
-            })
-          })
-    },
+    //         const navData = res.data.navData;
+    //         const imgUrls = res.data.imgUrls;
+    //         const cost = res.data.cost
+    //         this.setData({
+    //             navData,
+    //             imgUrls,
+    //             cost
+    //         })
+    //       })
+    // },
     onShow(){
         // this.setData({
         //     address:app.globalData.bluraddress,
@@ -135,23 +135,23 @@ Page({
       
         
     },
-    requestWaitingtime(){
-        setTimeout(() => {
-            util.request({
-                url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-                mock: false,
-                data: {
-                }
-              }).then((res)=>{
-              const arr = res.data.waitingTimes;
-                var index = Math.floor((Math.random()*arr.length));
-                this.setData({
-                isLoading:false,
-                waitingTimes: arr[index]
-                })
-              })
-        }, 1000);
-    },
+    // requestWaitingtime(){
+    //     setTimeout(() => {
+    //         util.request({
+    //             url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
+    //             mock: false,
+    //             data: {
+    //             }
+    //           }).then((res)=>{
+    //           const arr = res.data.waitingTimes;
+    //             var index = Math.floor((Math.random()*arr.length));
+    //             this.setData({
+    //             isLoading:false,
+    //             waitingTimes: arr[index]
+    //             })
+    //           })
+    //     }, 1000);
+    // },
     switchNav(event){
      
         this.requestWaitingtime();

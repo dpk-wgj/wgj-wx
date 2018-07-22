@@ -16,23 +16,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    // setTimeout(function () {
-      // console.log(app.globalData.userInfo)
-      // that.setData({
-
-      // })
-    // }, 1000)
-    
-      // wx.getUserInfo({
-      //   success: function (res) {
-      //     console.log(res.userInfo)
-      //     that.setData({
-      //       avatar: res.userInfo.avatarUrl,
-      //       nickName: res.userInfo.nickName 
-      //     })
-      //   }
-      // })
-
       if (app.globalData.userInfo) {
         this.setData({
           userInfo: app.globalData.userInfo,
@@ -59,21 +42,24 @@ Page({
           }
         })
       }
+      // console.log(this.data.userInfo.passengerPhoneNumber)
+      var info = this.data.userInfo
+      var str = this.data.userInfo.passengerPhoneNumber
+      var after = str.substr(0, parseInt(str.split('').length / 3)) + '****' + str.substr(parseInt(str.split('').length / 3 + 4), str.split('').length)
+      console.log('手机号转换：',after)
+      info.passengerPhoneNumber = after
+      this.setData({
+        userInfo: info
+      })
+      
   },
   // 切换手机号
   toTel: function(e){
+    var title = "切换手机号"
     wx.navigateTo({
-      url: '/pages/tel/tel',
+      url: '/pages/login/login?title=' + title + '&change=true',
     })
-  },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
+  }, 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

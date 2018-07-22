@@ -11,11 +11,13 @@ Page({
   data: {
     scale: 14,
     hiddenLoading:false,
-    canICancel: true
+    canICancel: true,
+    count: 0
   },
   onLoad: function (option) {
     this.setData({
-      orderId: option.orderId
+      orderId: option.orderId,
+      driverInfo: app.globalData.driverInfo
     })
 
     let driverInfo = app.globalData.driverInfo
@@ -36,10 +38,12 @@ Page({
         })
         console.log("司机端接到了乘客！！！！！")
       }else if(res.status === 2){
-        console.log("本次派送已经结束了")
+        console.log("本次派送已经结束了,传司机信息：", _this.data.driverInfo)
+        wx.closeSocket()
         wx.redirectTo({
-          url: '/pages/evaluation/evaluation?orderId=' + _this.data.orderId + '&driver=' + driverInfo,
+          url: '/pages/evaluation/evaluation?orderId=' + _this.data.orderId
         })
+        
       }else if(res.status === 3){//司机端按下转派
           wx.closeSocket({})
           wx.redirectTo({
@@ -56,6 +60,7 @@ Page({
       data: driverInfo
     });
     // console.log("dasdasdas", driverInfo.driverInfo.driverName)
+    driverInfo.driverInfo.driverLevelStar /= 20
     this.setData({
       hiddenLoading: true,
       driver: driverInfo,
@@ -78,8 +83,37 @@ Page({
     // this.requesDriver();
     this.mapCtx = wx.createMapContext("didiMap");
     this.movetoPosition();
+    var randomTime = 300;
+    var timer = new Date(0, 0);
+    var curr = 0;
+    this.countTimer = setInterval(() => {
+      if (this.data.count <= randomTime) {
+        timer.setMinutes(curr / 60);
+        timer.setSeconds(curr % 60);
+        curr++;
+        // this.drawProgress(this.data.count / (60 / 2))
+        this.data.count++;
+        // console.log('curr:',curr)
+      } else {
+        this.setData({
+          canICancel: false
+        })
+        // console.log('五分钟已到，无法取消订单')
+        clearInterval(this.countTimer);
+      }
+    }, 1000)
   },
   
+  drawProgressbg: function () {
+    var ctx = wx.createCanvasContext('canvasProgressbg');
+    ctx.setLineWidth(4);
+    ctx.setStrokeStyle("#e5e5e5");
+    ctx.setLineCap("round");
+    ctx.beginPath();
+    ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+    ctx.stroke();
+    ctx.draw();
+  },
 
   bindcontroltap: (e)=>{
     console.log("hello")
@@ -121,7 +155,7 @@ Page({
                 console.log(res)
                 if (res.status === 1) {
                   wx.redirectTo({
-                    url: "/pages/index/index?cancel=" + true + "&cancelId=" + cancelId,
+                    url: "/pages/index/index?cancel=" + true + "&cancelId=" + _this.data.orderId,
                   })
                 }
               })
@@ -142,7 +176,7 @@ Page({
   
   toEvaluation(){
     wx.redirectTo({
-      url:"/pages/evaluation/evaluation?orderId=" + this.data.orderId,
+      url: "/pages/evaluation/evaluation?orderId=" + this.data.orderId + '&driver=' + app.globalData.driverInfo,
     })
   },
   onReady: function () {
@@ -160,9 +194,9 @@ Page({
   // 拨打电话
   calling: function () {
     var that = this;
+    console.log('app.driverInfo',app.globalData.driverInfo)
     wx.makePhoneCall({
-      // phoneNumber: this.phone,
-      phoneNumber: "12345678900",
+      phoneNumber: app.globalData.driverInfo.driverInfo.driverPhoneNumber,
       success: function (){
         console.log("拨打电话成功")
       },

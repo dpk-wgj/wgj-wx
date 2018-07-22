@@ -1,3 +1,5 @@
 <view class='container'>
   <button bindtap="bindAction" class="btn-login" >跳转</button>
+  <view>{{str}}</view>
+  <view>{{str1}}</view>
 </view>
