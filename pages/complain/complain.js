@@ -79,19 +79,22 @@ Page({
         method: "post",
         data: param
       }).then((res) => {
-        // console.log(res)
+        console.log('提交投诉：',res)
+        if(res.status == 1){
+          wx.showLoading({
+            title: '提交中',
+            success: function (e) {
+              setTimeout(function () {
+                wx.redirectTo({
+                  url: '/pages/message/message',
+                })
+              }, 2000);
+            }
+          })
+        }
       })
     }, 1000)
     
-    wx.showLoading({
-      title: '提交中',
-      success: function(e) {
-        setTimeout(function () {
-          wx.redirectTo({
-            url: '/pages/message/message',
-          })
-        }, 2000);
-      }
-    })
+    
   }
 });

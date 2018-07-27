@@ -23,7 +23,7 @@ Page({
     let driverInfo = app.globalData.driverInfo
     console.log("接收到的司机信息：", driverInfo)
     let userId = app.globalData.userInfo.passengerId
-    console.log("呼车传过来的订单id：", option.orderId)
+    console.log("wait转到orderService呼车传过来的订单id：", option.orderId)
     
     let _this = this
     
@@ -37,20 +37,18 @@ Page({
           canICancel: false
         })
         console.log("司机端接到了乘客！！！！！")
-      }else if(res.status === 2){
+      }else if(res.status === 2){//已到达目的地
         console.log("本次派送已经结束了,传司机信息：", _this.data.driverInfo)
         wx.closeSocket()
         wx.redirectTo({
           url: '/pages/evaluation/evaluation?orderId=' + _this.data.orderId
         })
-        
       }else if(res.status === 3){//司机端按下转派
-          wx.closeSocket({})
+          wx.closeSocket()
           wx.redirectTo({
             url: `/pages/wait/wait?orderId=${option.orderId}&isChangeDriver=true`,
           })
           console.log("转派",res)
-
         }
     })
 
@@ -59,14 +57,14 @@ Page({
       key: "driverInfo",
       data: driverInfo
     });
-    // console.log("dasdasdas", driverInfo.driverInfo.driverName)
+    // console.log("dasdasdas", driverInfo.driverInfo.driverLevelStar)
     driverInfo.driverInfo.driverLevelStar /= 20
     this.setData({
       hiddenLoading: true,
       driver: driverInfo,
       canICancel: true
     })
-    // console.log("12121",this.data.driver.driverInfo.driverName)
+    // console.log("12121", this.data.driver.driverInfo.driverLevelStar)
   
   },
 
@@ -103,7 +101,7 @@ Page({
       }
     }, 1000)
   },
-  
+
   drawProgressbg: function () {
     var ctx = wx.createCanvasContext('canvasProgressbg');
     ctx.setLineWidth(4);
@@ -159,11 +157,11 @@ Page({
                   })
                 }
               })
-              setTimeout(function () {
-                wx.redirectTo({
-                  url: '/pages/index/index',
-                })
-              }, 2000);
+              // setTimeout(function () {
+              //   wx.redirectTo({
+              //     url: '/pages/index/index',
+              //   })
+              // }, 2000);
               
             }
           })
@@ -201,7 +199,7 @@ Page({
         console.log("拨打电话成功")
       },
       fail: function() {
-        console.log("拨打电话失败")
+        console.log("取消拨打电话")
       }
     })
   }

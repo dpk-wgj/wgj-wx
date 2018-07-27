@@ -24,9 +24,12 @@ Page({
         startLatitude: '',
         startLongitude: '',
         endLatitude: '',
-        endLongitude: ''
+        endLongitude: '',
+        scale: 14,
+        
     },
     onLoad: function(options) {
+      
       // 取消订单
       if(options.cancel){
         let params = {
@@ -38,15 +41,43 @@ Page({
           method: 'post',
           data: params
         }).then(res => {
-          console.log(res)
+          console.log('取消订单：',res)
         })
       }
       
       // this.requestCart();
       // this.requestWaitingtime();
-      this.hasMessage();
+      // this.hasMessage();
       var that = this
       setTimeout(function () {
+        var markers = []
+        var m = {}
+        // 获取司机位置
+        util.request({
+          url: `${app.globalData.baseUrl}/api/passenger/getAllCarLocation`,
+          method: 'get'
+        }).then(res => {
+          console.log('获取司机位置信息：', res)
+          for (let driver of res.result) {
+            var str = driver.driverInfo.driverLocation;
+            // console.log('str:',str)
+            var arr = str.split(',');
+            var longitude = arr[0];
+            var latitude = arr[1];
+            var img = "../../assets/images/car.png";
+            // driver.driverInfo.longitude = longitude;
+            // driver.driverInfo.latitude = latitude;
+            // driver.driverInfo.iconPath = img;
+            // console.log('driver:',driver)
+            // console.log('res driver:', res.result)
+            m.longitude = longitude;
+            m.latitude = latitude;
+            m.iconPath = img;
+            // console.log('m：',m)
+            markers.push(m)
+          }
+        })
+        // console.log(app.globalData.userInfo)
         that.setData({
           address: app.globalData.bluraddress,
           startLatitude: app.globalData.strLatitude,
@@ -56,8 +87,29 @@ Page({
           destination: app.globalData.destination,
           currentTab: app.globalData.id
         })
+        let str = {
+          iconPath: "../../assets/images/str.png",
+          latitude: that.data.startLatitude,
+          longitude: that.data.startLongitude,
+        }
+        let end = {
+          iconPath: "../../assets/images/end.png",
+          latitude: that.data.endLatitude,
+          longitude: that.data.endLongitude,
+        }
+        markers.push(str)
+        markers.push(end)
+        that.setData({
+          markers: markers
+        })
+        // console.log('markers:', markers)
+        // console.log('this.data.markers:', that.data.markers)
         // console.log('onLoad,startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
         // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
+        
+        if (that.data.endLongitude != null && that.data.endLatitude != null){
+          that.includePoints()
+        }
         
       }, 1000)
     },
@@ -110,48 +162,30 @@ Page({
         })
       }
     },
-    // requestCart(e){
-    //     util.request({
-    //         url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-    //         mock: false,
-    //       }).then((res)=>{
-       
-    //         const navData = res.data.navData;
-    //         const imgUrls = res.data.imgUrls;
-    //         const cost = res.data.cost
-    //         this.setData({
-    //             navData,
-    //             imgUrls,
-    //             cost
-    //         })
-    //       })
-    // },
     onShow(){
-        // this.setData({
-        //     address:app.globalData.bluraddress,
-        //     destination:app.globalData.destination,
-        //     currentTab:app.globalData.id,
-        // })
-      
         
     },
-    // requestWaitingtime(){
-    //     setTimeout(() => {
-    //         util.request({
-    //             url: 'https://www.easy-mock.com/mock/5aded45053796b38dd26e970/comments#!method=get',
-    //             mock: false,
-    //             data: {
-    //             }
-    //           }).then((res)=>{
-    //           const arr = res.data.waitingTimes;
-    //             var index = Math.floor((Math.random()*arr.length));
-    //             this.setData({
-    //             isLoading:false,
-    //             waitingTimes: arr[index]
-    //             })
-    //           })
-    //     }, 1000);
-    // },
+
+    onReady(){
+      this.mapCtx = wx.createMapContext('map')
+    },
+    // 缩放
+    includePoints: function () {
+      var that = this
+      this.mapCtx.includePoints({
+        padding: [10],
+        points: [{
+          latitude: that.data.startLatitude,
+          longitude: that.data.startLongitude,
+        }, {
+          latitude: that.data.endLatitude,
+          longitude: that.data.endLongitude,
+        }]
+      })
+      // console.log('startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
+      // console.log('endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
+    },
+
     switchNav(event){
      
         this.requestWaitingtime();
@@ -217,33 +251,5 @@ Page({
       })
     },
 
-    // 获取位置
-    // getLoc: function(){
-    //   var that = this;
-    //   wx.getLocation({
-    //     type: 'wgs84',
-    //     success: function(res) {
-    //       console.log(res)
-    //       qqmapsdk.reverseGeocoder({
-    //         location: {
-    //           latitude: res.latitude,
-    //           longitude: res.longitude
-    //         },
-    //         success: function (addressRes) {
-    //           var address = addressRes.result.formatted_addresses.recommend;
-    //           // console.log(address)
-    //           app.globalData.bluraddress = address;
-    //           app.globalData.strLatitude = addressRes.result.location.lat;
-    //           app.globalData.strLongitude = addressRes.result.location.lng;
-    //           that.setData({
-    //             address: app.globalData.bluraddress,
-    //           })
-    //           console.log('index.app:' + app.globalData.bluraddress)
-    //           console.log('index.address:' + that.data.address)
-    //         }
-    //       })
-    //     },
-    //   })
-    // }
 
 })

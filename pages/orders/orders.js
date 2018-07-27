@@ -49,78 +49,6 @@ Page({
    */
   onLoad: function (options) {
 
-
-
-    // var that = this
-    // util.request({
-    //   url: `${app.globalData.baseUrl}/api/passenger/getOrderInfoByPassengerId`,
-    //   method: "get"
-    // }).then((res) => {
-    //   console.log(res)
-    //   for (var i = 0; i < res.result.length; i++) {
-    //     var startTime = that.startTimeFormat(res.result[i].orderInfo.startTime)
-    //     res.result[i].orderInfo.startTime = startTime
-    //     var endTime = that.endTimeFormat(res.result[i].orderInfo.endTime)
-    //     res.result[i].orderInfo.endTime = endTime
-    //     if (res.result[i].orderInfo.orderStatus == 3) {        //正确 == 3
-    //       res.result[i].orderInfo.orderStatus = "已完成"
-    //     } else {
-    //       if (res.result[i].orderInfo.orderStatus == 0) {
-    //         res.result[i].driverInfo.driverName = "司机未接单"
-    //       }
-    //       res.result[i].orderInfo.endTime = ''
-    //       res.result[i].orderInfo.orderStatus = "未完成"
-    //     }
-    //   }
-    //   // all.push(uncom)
-    //   that.setData({
-    //     orderList: res.result
-    //   })
-
-    //   // 转换位置信息
-    //   var all = this.data.orderList
-    //   // console.log('all',all)
-    //   // console.log(all[0].orderInfo)
-    //   for (let i = 0; i < all.length; i++) {
-    //     let startStr = all[i].orderInfo.startLocation
-    //     let start = startStr.split(',')
-    //     let startLocation;
-    //     qqmapsdk.reverseGeocoder({
-    //       location: {
-    //         latitude: start[1],
-    //         longitude: start[0]
-    //       },
-    //       success: function (addressRes) {
-    //         startLocation = addressRes.result.formatted_addresses.recommend;
-    //         all[i].orderInfo.startLocation = startLocation
-    //         that.setData({
-    //           orderList: all
-    //         })
-    //       }
-    //     })
-    //     let endStr = all[i].orderInfo.endLocation
-    //     let end = endStr.split(',')
-    //     let endLocation;
-    //     qqmapsdk.reverseGeocoder({
-    //       location: {
-    //         latitude: end[1],
-    //         longitude: end[0]
-    //       },
-    //       success: function (addressRes) {
-    //         endLocation = addressRes.result.formatted_addresses.recommend;
-    //         all[i].orderInfo.endLocation = endLocation
-    //         that.setData({
-    //           orderList: all
-    //         })
-    //       }
-    //     })
-    //   }
-   
-
-
-
-    // })
-
   },
 
   /**
@@ -139,37 +67,35 @@ Page({
       url: `${app.globalData.baseUrl}/api/passenger/getOrderInfoByPassengerId`,
       method: "get"
     }).then((res) => {
-      console.log(res)
-      for (var i = 0; i < res.result.length; i++) {
-        var startTime = that.startTimeFormat(res.result[i].orderInfo.startTime)
-        res.result[i].orderInfo.startTime = startTime
-        var endTime = that.endTimeFormat(res.result[i].orderInfo.endTime)
-        res.result[i].orderInfo.endTime = endTime
-        var startStr = res.result[i].orderInfo.startLocation
-        var start = startStr.split(',')
-        res.result[i].orderInfo.startLocation = start[0]
-        var endStr = res.result[i].orderInfo.endLocation
-        var end = endStr.split(',')
-        res.result[i].orderInfo.endLocation = end[0]
-        if (res.result[i].orderInfo.orderStatus == 3) {        //正确 == 3
-          res.result[i].orderInfo.orderStatus = "已完成"
-        } else {
-          if (res.result[i].orderInfo.orderStatus == 0) {
-            res.result[i].driverInfo.driverName = "司机未接单"
+      console.log('获取订单：',res)
+      if(res.status == 1){
+        for (var i = 0; i < res.result.length; i++) {
+          var startTime = that.startTimeFormat(res.result[i].orderInfo.startTime)
+          res.result[i].orderInfo.startTime = startTime
+          var endTime = that.endTimeFormat(res.result[i].orderInfo.endTime)
+          res.result[i].orderInfo.endTime = endTime
+          var startStr = res.result[i].orderInfo.startLocation
+          var start = startStr.split(',')
+          res.result[i].orderInfo.startLocation = start[0]
+          var endStr = res.result[i].orderInfo.endLocation
+          var end = endStr.split(',')
+          res.result[i].orderInfo.endLocation = end[0]
+          if (res.result[i].orderInfo.orderStatus == 3) {        //正确 == 3
+            res.result[i].orderInfo.orderStatus = "已完成"
+          } else {
+            if (res.result[i].orderInfo.orderStatus == 0) {
+              res.result[i].driverInfo.driverName = "司机未接单"
+            }
+            res.result[i].orderInfo.endTime = ''
+            res.result[i].orderInfo.orderStatus = "未完成"
           }
-          res.result[i].orderInfo.endTime = ''
-          res.result[i].orderInfo.orderStatus = "未完成"
         }
+        var all = res.result
+        all.reverse()
+        that.setData({
+          orderList: all
+        })
       }
-      var all = res.result
-      all.reverse()
-      that.setData({
-        orderList: all
-      })
-
-     
-       
-        
       
     })
   },

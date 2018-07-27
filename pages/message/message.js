@@ -74,20 +74,20 @@ Page({
       url: `${app.globalData.baseUrl}/api/passenger/getComplaintInfoByPassengerId`,
       method: "post"
     }).then((res) => {
-      // console.log(res)
+      console.log('投诉res:',res)
       var list1 = []
       var list2=[]
       var result1
       var result2
       for(var i=0; i<res.result.length; i++){
-        if (res.result[i].complaintStatus == 0) {    //未反馈状态
+        if (res.result[i].complaintStatus == 1 || res.result[i].complaintStatus == 2) {    //未反馈状态
           result1 = res.result[i]
           // console.log('result', i, result1)
           result1.complaintCreateTime = that.timeFormat(result1.complaintCreateTime)
           list1.push(result1)
           // console.log('list', list1)
           
-        } else{     //反馈状态
+        } else{     //已反馈状态
           var result2 = res.result[i]
           result2.complaintCreateTime = that.timeFormat(result2.complaintCreateTime)
           result2.complaintFeedbackTime = that.timeFormat(result2.complaintFeedbackTime)

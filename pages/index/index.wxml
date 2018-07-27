@@ -13,24 +13,27 @@
       </view>
     </navigator>
   </view>
+
+  <!-- 地图 -->
+  <view class='map'>
+    <map id="map" longitude="{{startLongitude}}" latitude="{{startLatitude}}" 
+    scale="{{scale}}" markers="{{markers}}" show-location></map>
+  </view>
+      
+
   <!-- 位置信息 -->
-  <repeat>
+    <!-- <repeat>  -->
     <view class="content">
-      <!-- <view class="didi-time">{{waitingTimes}}</view>   -->
-      <!-- <import  src="/templates/sprinner.wxml" /> -->
-      <!-- <template is="sprinner" data='{{isLoading}}'></template>  -->
-      <view class="circle-str"></view>
+      <view class="circle-str"></view> 
       <navigator url= "/pages/starting/starting" redirect > 
-        <view class="didi-input-str" style="color: #333333">{{address}}</view>
+        <view class="input-str" style="color: #333333">{{address}}</view>
       </navigator>
-      <navigator url=  "/pages/destination/destination" redirect >
-        <input type="text" class="didi-input-end" value="{{destination}}"  style="color: #333333" placeholder="你要去哪儿" placeholder-color="#ccccccc" focus="{{false}}"/>
+       <navigator url=  "/pages/destination/destination" redirect >
+        <input type="text" class="input-end" value="{{destination}}"  style="color: #333333" placeholder="你要去哪儿" placeholder-color="#ccccccc" focus="{{false}}"/>
       </navigator>
-      <view class="circle-end"></view>
-      <button class="didi-btn" bindtap="callingCar">一键叫车</button>
+      <view class="circle-end"></view>  
+        <button class="btn" bindtap="callingCar">一键叫车</button>        
+           <!-- <button class="btn" bindtap="includePoints">位置</button>        -->
     </view>
-    <swiper class="tab-box"  current="{{currentTab}}"  bindchange="switchTab">        
-      <swiper-item class="tab-express"></swiper-item>
-    </swiper> 
-  </repeat>
+   <!-- </repeat>   -->
 </view>

@@ -1,5 +1,4 @@
-<view class='container'>
-  <button bindtap="bindAction" class="btn-login" >跳转</button>
-  <view>{{str}}</view>
-  <view>{{str1}}</view>
-</view>
+<map id="map" show-location />
+
+<!-- <button type="primary" bindtap="includePoints">缩放视野展示所有经纬度</button> -->
+ <button type="primary">缩放视野展示所有经纬度</button> 

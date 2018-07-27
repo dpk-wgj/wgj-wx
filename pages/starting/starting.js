@@ -17,12 +17,19 @@ onLoad(){
   toIndex(e){
     const destination = e.currentTarget.dataset.destination;
     const endAddress =  e.currentTarget.dataset.end;
+    console.log('e:', e.currentTarget.dataset)
     qqmapsdk.geocoder({
       address: endAddress,
       success: function(res){
+        console.log('搜索到起始位置：', res.result)
         app.globalData.strLatitude=res.result.location.lat;
         app.globalData.strLongitude= res.result.location.lng;
         // console.log('搜索到:',app.globalData.endLongitude, app.globalData.endLatitude)
+      },
+      fail: function(res){
+        console.log('搜索失败：', res)
+        app.globalData.strLatitude = 0;
+        app.globalData.strLongitude = 0;
       }
     })
     app.globalData.bluraddress=destination,

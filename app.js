@@ -22,16 +22,16 @@ App({
             // console.log("登录：", res1)
             this.globalData.openid = res1.openid
             let param = {
-              passengerWxId: "cqj",//this.globalData.openid,
-              // driverName: 
+              passengerWxId: this.globalData.openid,//this.globalData.openid
             }
             util.request({
               url: `${this.globalData.baseUrl}/public/passenger/login`,
               method: "post",
               data: param
             }).then(res2 => {
+              // console.log('是否登录：', res2)
               if(res2.status === 1){
-                // console.log("后台请求登录：", res2)
+                console.log("后台请求登录：", res2)
                 this.globalData.userInfo = res2.result.passenger
                 // console.log(this.globalData.userInfo)
               }              
@@ -53,6 +53,7 @@ App({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
+        // console.log('res',res)
         qqmapsdk.reverseGeocoder({
           location: {
             latitude: res.latitude,
@@ -60,7 +61,7 @@ App({
           },
           success: function (addressRes) {
             var address = addressRes.result.formatted_addresses.recommend;
-            // console.log(address)
+            console.log(address)
             that.globalData.bluraddress = address;
             that.globalData.strLatitude = addressRes.result.location.lat;
             that.globalData.strLongitude = addressRes.result.location.lng;
@@ -68,23 +69,24 @@ App({
         })
       }
     })
-    // 获取用户信息
   },
   globalData: {
-    baseUrl: 'http://localhost:8000',
-    baseWsUrl: 'ws://localhost:8000',
+    baseUrl: 'http://120.79.251.229:8000',
+    baseWsUrl: 'ws://120.79.251.229:8000',
+    // baseUrl: 'http://localhost:8000',
+    // baseWsUrl: 'ws://localhost:8000',
     passengerId: 0,
     userInfo: null,
     driverInfo: null,
     socketOpen: false,
     socketMsgQueue: [],
-    bluraddress: '公交站',
+    bluraddress: '请自行输入',
     destination: '',
     id: '快车',
-    strLatitude: 0,
-    strLongitude: 0,
-    endLatitude: 0,
-    endLongitude: 0,
+    strLatitude: null,
+    strLongitude: null,
+    endLatitude: null,
+    endLongitude: null,
     play: '18.7',
     openid: "",
     appid: 'wx8884af693e78552c',
