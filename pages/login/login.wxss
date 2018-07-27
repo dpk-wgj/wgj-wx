@@ -73,7 +73,7 @@
   color: rgb(150,150,150)
  }
 .cd .btn{
-  width: 108rpx;
+  width: 120rpx;
   height: 30px;
   font-size: 27rpx;
   line-height: 30px;

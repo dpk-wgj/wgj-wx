@@ -1,4 +1,4 @@
-var util = require('../../utils/util.js');
+import util from '../../utils/index';
 const app = getApp()
 Page({
   data: {
@@ -21,7 +21,7 @@ Page({
       })
     }
     let userId = app.globalData.userInfo.passengerId
-    console.log("呼车传过来的订单id：", option.orderId, app.globalData.userInfo)
+    console.log("orderService转到wait呼车传过来的订单id：", option.orderId, app.globalData.userInfo)
     this.setData({
       orderId: option.orderId
     })
@@ -88,8 +88,8 @@ Page({
       wx.getLocation({
         type: "gcj02",
         success: (res) => {
-          console.log("ws中获取经纬度", res)
-          let driverLoc = `{"passengerId":3,"passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
+          // console.log("ws中获取经纬度", res)
+          let driverLoc = `{"passengerId":"${app.globalData.userInfo.passengerId}","passengerLocation":"${res.longitude}${t},${res.latitude}-${res.longitude}${t},${res.latitude}"}`
           _this.setData({
             longitude: res.longitude,
             latitude: res.latitude
@@ -102,7 +102,59 @@ Page({
   var time = time.toString();
     return time[1]?time:'0'+time;
 },
-// 动画
+
+  onShow: function() {
+    this.setData({
+      address: app.globalData.bluraddress,
+    })
+  },
+  onReady: function () {
+    this.drawProgressbg();
+    this.countInterval();
+    this.drawProgress();
+  },
+  
+  drawProgress: function (step){ 
+    var context = wx.createCanvasContext('canvasProgress'); 
+    context.setLineWidth(4);
+    context.setStrokeStyle("#fbcb02");
+    context.setLineCap('round')
+    context.beginPath();
+      // 参数step 为绘制的圆环周长，从0到2为一周 。 -Math.PI / 2 将起始角设在12点钟位置 ，结束角 通过改变 step 的值确定
+    context.arc(110, 110, 100, -Math.PI /2, step*Math.PI /2-Math.PI /2, false);
+    context.stroke();
+    context.draw()
+  },
+
+  // 取消订单
+  toCancel() {
+    let _this = this
+    let params = {
+      orderId: _this.data.orderId
+    }
+    console.log('params:', params)
+    util.request({
+      url: `${app.globalData.baseUrl}/api/passenger/cancelOrderForPassenger`,
+      method: 'post',
+      data: params
+    }).then(res => {
+      console.log('取消订单res：',res)
+      if (res.status === 1) {
+        wx.showToast({
+          title: '取消中',
+          icon: 'loading',
+          success: function(e){
+            wx.closeSocket()
+            wx.redirectTo({
+              url: "/pages/index/index",
+            })
+          }
+        })
+        
+      }
+    })
+    
+  },
   countInterval: function () {
     var curr = 0;
     var timer = new Date(0, 0);
@@ -128,58 +180,16 @@ Page({
       }
     }, 1000)
   },
-
-  drawProgressbg: function(){
-   var ctx = wx.createCanvasContext('canvasProgressbg');
-   ctx.setLineWidth(4);
-   ctx.setStrokeStyle("#e5e5e5");
-   ctx.setLineCap("round");
-   ctx.beginPath();
-   ctx.arc(110,110,100,0,2*Math.PI,false);
-   ctx.stroke();
-   ctx.draw();
+  drawProgressbg: function () {
+    var ctx = wx.createCanvasContext('canvasProgressbg');
+    ctx.setLineWidth(4);
+    ctx.setStrokeStyle("#e5e5e5");
+    ctx.setLineCap("round");
+    ctx.beginPath();
+    ctx.arc(110, 110, 100, 0, 2 * Math.PI, false);
+    ctx.stroke();
+    ctx.draw();
   },
-  onShow: function() {
-    this.setData({
-      address: app.globalData.bluraddress,
-    })
-  },
-  onReady: function () {
-    this.drawProgressbg();
-    this.countInterval();
-    this.drawProgress();
-  },
-  
-  drawProgress: function (step){ 
-    var context = wx.createCanvasContext('canvasProgress'); 
-    context.setLineWidth(4);
-    context.setStrokeStyle("#fbcb02");
-    context.setLineCap('round')
-    context.beginPath();
-      // 参数step 为绘制的圆环周长，从0到2为一周 。 -Math.PI / 2 将起始角设在12点钟位置 ，结束角 通过改变 step 的值确定
-    context.arc(110, 110, 100, -Math.PI /2, step*Math.PI /2-Math.PI /2, false);
-    context.stroke();
-    context.draw()
-  },
-  // 取消订单
-  toCancel(){
-    var cancelId = this.data.orderId
-      wx.showModal({
-        content: '确定退出等待返回首页吗',
-        cancelColor: '#cccccc',
-        confirmColor: '#fc9c56',
-        success: function (res2) {
-          // console.log(res)
-          if (res2.confirm) {
-            
-            wx.navigateTo({
-              url: '/pages/index/index?cancelId=' + cancelId + '&cancel=true' ,
-            })
-          }
-        }
-       })
-  },
-
   backIndex(){
     wx.redirectTo({
       url:  "/pages/index/index",

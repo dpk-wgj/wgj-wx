@@ -70,7 +70,7 @@ Page({
   },
   onLoad(options) {
     var that = this
-    // console.log(options)
+    console.log('options:',options)
     // console.log(app.globalData.play)
     this.setData({
       play: app.globalData.play,
@@ -80,7 +80,7 @@ Page({
       startLocation: options.startLocation,
       endLocation: options.endLocation,
       driverName: options.driverName,
-      driverLevelStar: options.driverLevelStar,
+      driverLevelStar: options.driverLevelStar/20,
       driverPhoneNumber: options.driverPhoneNumber,
       orderStatus: options.orderStatus,
       carNumber: options.carNumber

@@ -49,6 +49,7 @@ Page({
   },
 
   onLoad(options){
+    console.log('评价options:', options)
     app.globalData.driverInfo.driverLevelStar /= 20
     console.log(app.globalData.driverInfo)
     this.setData({
@@ -58,9 +59,9 @@ Page({
       // driver: options.driverInfo,
       // car: options.carInfo
     })
-    console.log('driver:', this.data.driver)
-    console.log('name:', this.data.driver.driverInfo.driverName)
-    console.log('orderId:', options.orderId)
+    // console.log('driver:', this.data.driver)
+    // console.log('name:', this.data.driver.driverInfo.driverName)
+    // console.log('orderId:', options.orderId)
     // console.log('driver:', options.driverInfo)
     // console.log('car:',options.carInfo)
     // console.log('评价界面接收到司机信息：', this.data.driver)
@@ -84,11 +85,11 @@ Page({
       var isGood = 0;
       // console.log('btn:' + this.data.content)
       // console.log(this.data.checkedList)
-      for (var i = 0; i < this.data.checkedList.length; i++){
+      for (var i = 0; i < this.data.checkedList.length; i++) {
         var is = this.data.checkedList[i]
-        if (is == 0){
+        if (is == 0) {
           isClear = 1;
-        } else if(is == 1){
+        } else if (is == 1) {
           isStable = 1;
         } else if (is == 2) {
           isKnow = 1;
@@ -106,46 +107,34 @@ Page({
         orderId: that.data.orderId,
         commentPoint: point
       }
-      // console.log('评价传值：',param)
+      console.log('评价传值：', param)
       util.request({
         url: `${app.globalData.baseUrl}/api/passenger/addCommentInfoByOrderId`,
         method: "post",
         data: param
       }).then((res) => {
-        // console.log(res)
+        console.log(res)
       })
     }, 900)
-    
+
     wx.showLoading({
       title: '提交中',
-      success: function(e){
+      success: function (e) {
         setTimeout(function () {
           wx.redirectTo({
             url: '/pages/index/index',
           })
         }, 2000);
-        
+
       }
     })
   },
   // 拨打电话
   calling: function () {
     var that = this;
-    // wx.request({
-    //   url: '',
-    //   method: 'GET',
-    //   header: {
-    //     'content-type': 'application/json'
-    //   },
-    //   success: function (res) {
-    //     that.setData({
-    //       phone: res.data.phone
-    //     })
-    //   }
-    // })
     wx.makePhoneCall({
       // phoneNumber: this.phone,
-      phoneNumber: "12345678900",
+      phoneNumber: app.globalData.driverInfo.driverInfo.driverPhoneNumber,
       success: function () {
         console.log("拨打电话成功")
       },
