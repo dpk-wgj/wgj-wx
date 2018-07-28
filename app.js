@@ -53,13 +53,14 @@ App({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
-        // console.log('res',res)
+        // console.log('app.js获取位置res：',res)
         qqmapsdk.reverseGeocoder({
           location: {
             latitude: res.latitude,
             longitude: res.longitude
           },
           success: function (addressRes) {
+            // console.log('经纬度转化为位置:', addressRes.result.address)
             var address = addressRes.result.formatted_addresses.recommend;
             console.log(address)
             that.globalData.bluraddress = address;
@@ -71,10 +72,10 @@ App({
     })
   },
   globalData: {
-    baseUrl: 'http://120.79.251.229:8000',
-    baseWsUrl: 'ws://120.79.251.229:8000',
-    // baseUrl: 'http://localhost:8000',
-    // baseWsUrl: 'ws://localhost:8000',
+    // baseUrl: 'http://120.79.251.229:8000',
+    // baseWsUrl: 'ws://120.79.251.229:8000',
+    baseUrl: 'http://localhost:8000',
+    baseWsUrl: 'ws://localhost:8000',
     passengerId: 0,
     userInfo: null,
     driverInfo: null,
