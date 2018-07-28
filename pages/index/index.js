@@ -44,38 +44,46 @@ Page({
           console.log('取消订单：',res)
         })
       }
-      
+
       // this.requestCart();
       // this.requestWaitingtime();
       // this.hasMessage();
       var that = this
       setTimeout(function () {
+        // 获取司机位置
         var markers = []
         var m = {}
-        // 获取司机位置
         util.request({
           url: `${app.globalData.baseUrl}/api/passenger/getAllCarLocation`,
           method: 'get'
         }).then(res => {
           console.log('获取司机位置信息：', res)
-          for (let driver of res.result) {
-            var str = driver.driverInfo.driverLocation;
-            // console.log('str:',str)
-            var arr = str.split(',');
-            var longitude = arr[0];
-            var latitude = arr[1];
-            var img = "../../assets/images/car.png";
-            // driver.driverInfo.longitude = longitude;
-            // driver.driverInfo.latitude = latitude;
-            // driver.driverInfo.iconPath = img;
-            // console.log('driver:',driver)
-            // console.log('res driver:', res.result)
-            m.longitude = longitude;
-            m.latitude = latitude;
-            m.iconPath = img;
-            // console.log('m：',m)
-            markers.push(m)
+          if (res.status == 1) {
+            for (let driver of res.result) {
+              var str = driver.driverInfo.driverLocation;
+              // console.log('str:',str)
+              var arr = str.split(',');
+              var longitude = arr[0];
+              var latitude = arr[1];
+              var img = "../../assets/images/car.png";
+              // driver.driverInfo.longitude = longitude;
+              // driver.driverInfo.latitude = latitude;
+              // driver.driverInfo.iconPath = img;
+              // console.log('driver:',driver)
+              // console.log('res driver:', res.result)
+              m.longitude = longitude;
+              m.latitude = latitude;
+              m.iconPath = img;
+              // console.log('m：',m)
+              markers.push(m)
+            }
+          } else if (res.status == -1) {
+            wx.showToast({
+              title: '获取司机位置失败',
+              icon: 'none'
+            })
           }
+
         })
         // console.log(app.globalData.userInfo)
         that.setData({
