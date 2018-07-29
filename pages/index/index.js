@@ -116,7 +116,7 @@ Page({
         // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
         
         if (that.data.endLongitude != null && that.data.endLatitude != null){
-          that.includePoints()
+          that.include()
         }
         
       }, 1000)
@@ -178,7 +178,7 @@ Page({
       this.mapCtx = wx.createMapContext('map')
     },
     // 缩放
-    includePoints: function () {
+    include: function () {
       var that = this
       this.mapCtx.includePoints({
         padding: [10],

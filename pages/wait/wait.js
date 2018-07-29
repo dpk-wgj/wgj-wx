@@ -56,7 +56,8 @@ Page({
       if (res.status === 1) {
         app.globalData.driverInfo = res.result
         console.log("乘客端停止请求司机，清除定时器")
-        clearInterval(_this.socketTimer)        
+        clearInterval(_this.socketTimer) 
+        clearInterval(_this.countTimer)       
         // wx.closeSocket()
         wx.redirectTo({
           url: `/pages/orderService/orderService?orderId=` + _this.data.orderId,
@@ -158,26 +159,15 @@ Page({
   countInterval: function () {
     var curr = 0;
     var timer = new Date(0, 0);
-    var randomTime = Math.floor(1000 * Math.random());
     this.countTimer = setInterval(() => {
-      if (this.data.count <= randomTime) {
-        this.setData({
-          time: this.parseTime(timer.getMinutes()) + ":" + this.parseTime(timer.getSeconds()),
-        });
-        timer.setMinutes(curr / 60);
-        timer.setSeconds(curr % 60);
-        curr++;
-        this.drawProgress(this.data.count / (60 / 2))
-        this.data.count++;
-      } else {
-        this.setData({
-          progress_txt: "匹配成功"
-        });
-        wx.redirectTo({
-          url: "/pages/orderService/orderService",
-        });
-        clearInterval(this.countTimer);
-      }
+      this.setData({
+        time: this.parseTime(timer.getMinutes()) + ":" + this.parseTime(timer.getSeconds()),
+      });
+      timer.setMinutes(curr / 60);
+      timer.setSeconds(curr % 60);
+      curr++;
+      this.drawProgress(this.data.count / (60 / 2))
+      this.data.count++;
     }, 1000)
   },
   drawProgressbg: function () {
