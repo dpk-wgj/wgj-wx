@@ -53,18 +53,6 @@ Page({
         // 获取司机位置
         var markers = []
         var m = {}
-        let str = {
-          iconPath: "../../assets/images/str.png",
-          latitude: app.globalData.strLatitude,
-          longitude: app.globalData.strLongitude,
-        }
-        let end = {
-          iconPath: "../../assets/images/end.png",
-          latitude: app.globalData.endLatitude,
-          longitude: app.globalData.endLongitude, 
-        }
-        markers.push(str)
-        markers.push(end)
         util.request({
           url: `${app.globalData.baseUrl}/api/passenger/getAllCarLocation`,
           method: 'get'
@@ -88,8 +76,6 @@ Page({
               m.iconPath = img;
               // console.log('m：',m)
               markers.push(m)
-
-              
             }
           } else if (res.status == -1) {
             wx.showToast({
@@ -97,11 +83,7 @@ Page({
               icon: 'none'
             })
           }
-          that.setData({
-            markers: markers
-          })
-          // console.log('markers:', markers)
-          // console.log('this.data.markers:', that.data.markers)
+
         })
         // console.log(app.globalData.userInfo)
         that.setData({
@@ -113,8 +95,23 @@ Page({
           destination: app.globalData.destination,
           currentTab: app.globalData.id
         })
-        
-        
+        let str = {
+          iconPath: "../../assets/images/str.png",
+          latitude: that.data.startLatitude,
+          longitude: that.data.startLongitude,
+        }
+        let end = {
+          iconPath: "../../assets/images/end.png",
+          latitude: that.data.endLatitude,
+          longitude: that.data.endLongitude,
+        }
+        markers.push(str)
+        markers.push(end)
+        that.setData({
+          markers: markers
+        })
+        // console.log('markers:', markers)
+        // console.log('this.data.markers:', that.data.markers)
         // console.log('onLoad,startLocation:', that.data.startLongitude + "," + that.data.startLatitude)
         // console.log('onLoad,endLocation:', that.data.endLongitude + "," + that.data.endLatitude)
         
@@ -157,13 +154,13 @@ Page({
           "endLocation": this.data.destination + "," + this.data.endLongitude + "," + this.data.endLatitude,
           "locationInfo": this.data.startLongitude + "," + this.data.startLatitude + "-" + this.data.endLongitude + "," + this.data.endLatitude
         }
-        console.log('创建订单传值:',params)
+        console.log('params:',params)
         util.request({
           url: `${app.globalData.baseUrl}/api/passenger/addOrderInfo`,
           method: 'post',
           data: params
         }).then(res => {
-          console.log('叫车创建订单返回值：',res)
+          // console.log(res)
           if(res.status === 1){
             console.log("创建订单成功",res.result.orderId)
             wx.navigateTo({
@@ -184,7 +181,7 @@ Page({
     include: function () {
       var that = this
       this.mapCtx.includePoints({
-        padding: [20],
+        padding: [10],
         points: [{
           latitude: that.data.startLatitude,
           longitude: that.data.startLongitude,
