@@ -95,6 +95,12 @@ Page({
         that.setData({
           orderList: all
         })
+      } else if(res.status == -1){
+        wx.showToast({
+          title: '获取订单异常，请稍后再试',
+          icon: 'none',
+          duration: 2000
+        })
       }
       
     })

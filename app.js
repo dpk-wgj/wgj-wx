@@ -62,7 +62,7 @@ App({
           success: function (addressRes) {
             // console.log('经纬度转化为位置:', addressRes.result.address)
             var address = addressRes.result.formatted_addresses.recommend;
-            console.log(address)
+            console.log('获取地址：',address)
             that.globalData.bluraddress = address;
             that.globalData.strLatitude = addressRes.result.location.lat;
             that.globalData.strLongitude = addressRes.result.location.lng;
@@ -72,10 +72,10 @@ App({
     })
   },
   globalData: {
-    // baseUrl: 'http://120.79.251.229:8000',
-    // baseWsUrl: 'ws://120.79.251.229:8000',
-    baseUrl: 'http://localhost:8000',
-    baseWsUrl: 'ws://localhost:8000',
+    baseUrl: 'http://120.79.251.229:8000',
+    baseWsUrl: 'ws://120.79.251.229:8000',
+    // baseUrl: 'http://localhost:8000',
+    // baseWsUrl: 'ws://localhost:8000',
     passengerId: 0,
     userInfo: null,
     driverInfo: null,

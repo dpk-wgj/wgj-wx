@@ -17,7 +17,7 @@
   <!-- 地图 -->
   <view class='map'>
     <map id="map" longitude="{{startLongitude}}" latitude="{{startLatitude}}" 
-    scale="{{scale}}" markers="{{markers}}" show-location></map>
+    scale="{{scale}}" markers="{{markers}}"></map>
   </view>
       
 
