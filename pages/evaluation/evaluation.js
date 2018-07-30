@@ -108,13 +108,27 @@ Page({
         commentPoint: point
       }
       console.log('评价传值：', param)
-      util.request({
-        url: `${app.globalData.baseUrl}/api/passenger/addCommentInfoByOrderId`,
-        method: "post",
-        data: param
-      }).then((res) => {
-        console.log(res)
-      })
+      if (param.commentContent == null){
+        setTimeout(function(){
+          util.request({
+            url: `${app.globalData.baseUrl}/api/passenger/addCommentInfoByOrderId`,
+            method: "post",
+            data: param
+          }).then((res) => {
+            console.log(res)
+          })
+        },1000)
+        
+      } else{
+        util.request({
+          url: `${app.globalData.baseUrl}/api/passenger/addCommentInfoByOrderId`,
+          method: "post",
+          data: param
+        }).then((res) => {
+          console.log(res)
+        })
+      }
+      
     }, 900)
 
     wx.showLoading({

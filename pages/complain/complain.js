@@ -74,25 +74,49 @@ Page({
         passengerId: app.globalData.passengerId
       }
       console.log('提交投诉',param)
-      util.request({
-        url: `${app.globalData.baseUrl}/api/passenger/addComplaintInfoByOrderId`,
-        method: "post",
-        data: param
-      }).then((res) => {
-        console.log('提交投诉：',res)
-        if(res.status == 1){
-          wx.showLoading({
-            title: '提交中',
-            success: function (e) {
-              setTimeout(function () {
-                wx.redirectTo({
-                  url: '/pages/message/message',
-                })
-              }, 2000);
+      if (param.complaintContent == ""){
+        setTimeout(function(){
+          util.request({
+            url: `${app.globalData.baseUrl}/api/passenger/addComplaintInfoByOrderId`,
+            method: "post",
+            data: param
+          }).then((res) => {
+            console.log('提交投诉迟：', res)
+            if (res.status == 1) {
+              wx.showLoading({
+                title: '提交中',
+                success: function (e) {
+                  setTimeout(function () {
+                    wx.redirectTo({
+                      url: '/pages/message/message',
+                    })
+                  }, 2000);
+                }
+              })
             }
           })
-        }
-      })
+        })
+      } else{
+        util.request({
+          url: `${app.globalData.baseUrl}/api/passenger/addComplaintInfoByOrderId`,
+          method: "post",
+          data: param
+        }).then((res) => {
+          console.log('提交投诉：', res)
+          if (res.status == 1) {
+            wx.showLoading({
+              title: '提交中',
+              success: function (e) {
+                setTimeout(function () {
+                  wx.redirectTo({
+                    url: '/pages/message/message',
+                  })
+                }, 2000);
+              }
+            })
+          }
+        })
+      }
     }, 1000)
     
     
